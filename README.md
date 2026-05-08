@@ -84,7 +84,11 @@ When you trigger the Expert agent, it creates:
 
 ## Documentation
 
-Full documentation can be published to your team's Confluence space using the framework's steering files as source material. See `.kiro/steering/` for all workflow and standards documentation.
+- [QARC Summary](https://qubeyond.atlassian.net/wiki/spaces/POS/pages/3098738744)
+- [QARC Architecture & Roadmap](https://qubeyond.atlassian.net/wiki/spaces/POS/pages/3099262997)
+- [Pipeline Trigger Flow](https://qubeyond.atlassian.net/wiki/spaces/POS/pages/3098247267)
+
+See `.kiro/steering/` for all workflow and standards documentation.
 
 ---
 
