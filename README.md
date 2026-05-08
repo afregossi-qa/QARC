@@ -96,3 +96,9 @@ See `.kiro/steering/` for all workflow and standards documentation.
 
 **Agostina Fregossi** — Architecture design & implementation  
 **Kiro AI** — Execution engine
+
+---
+
+## Contributing
+
+This framework is a starting point, not a finished product. The agents, hooks, and steering files are designed to be extended and adapted. If you find a better way to structure test cases, a smarter hook trigger, or a new agent workflow — improve it. The Shared Brain will learn from your changes.
