@@ -1,6 +1,6 @@
 # QARC — AI-Powered QA Pipeline Framework
 
-An AI-assisted QA pipeline that automates the lifecycle of test documentation for POS feature tickets — from ticket analysis to test plan generation, evidence review, and production readiness verdicts.
+An AI-assisted QA pipeline that automates the lifecycle of test documentation — from ticket analysis to test plan generation, evidence review, and production readiness verdicts.
 
 **Human-in-the-loop:** AI agents generate artifacts, humans validate and approve at every gate. No output advances without explicit human sign-off.
 
@@ -40,13 +40,14 @@ Every transition requires human approval via file-rename convention:
 
 | Folder | Content |
 |--------|---------|
-| `.kiro/agents/` | 10 core agent configurations |
-| `.kiro/hooks/` | 15 event-driven pipeline hooks |
+| `.kiro/agents/` | 11 core agent configurations |
+| `.kiro/hooks/` | 18 event-driven pipeline hooks |
 | `.kiro/steering/` | Domain knowledge, workflow rules, standards |
 | `.kiro/skills/` | Reusable procedural instructions |
-| `.kiro/memory` | Cognitive memory (lessons learned, patterns) |
+| `.kiro/memory/` | Cognitive memory protocol + investigation template |
+| `.kiro/memory-templates/` | Starter templates for memory files |
 | `.kiro/mcp-servers/` | Custom AIO Tests MCP server |
-| `Tools/` | LiteDB readers for POS database analysis |
+| `Tools/` | LiteDB readers for local database analysis |
 
 ---
 

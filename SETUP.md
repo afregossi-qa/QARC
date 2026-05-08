@@ -46,18 +46,24 @@ These files teach the agents about YOUR project. Edit them:
 
 ---
 
-## 4. Populate Memory (Optional)
+## 4. Populate Memory
 
-The `.kiro/memory/` folder is the framework's learning system:
+The `.kiro/memory/` folder is the framework's learning system. Copy the templates to get started:
 
-| File | What to add |
+```bash
+cp .kiro/memory-templates/lessons_learned.md .kiro/memory/lessons_learned.md
+cp .kiro/memory-templates/pattern_registry.md .kiro/memory/pattern_registry.md
+cp .kiro/memory-templates/project_context.md .kiro/memory/project_context.md
+```
+
+| File | What it does |
 |------|-------------|
 | `project_context.md` | Your module map, service relationships, environment architecture |
 | `lessons_learned.md` | Grows automatically as agents discover patterns |
 | `pattern_registry.md` | Grows automatically as you diagnose issues |
-| `cognitive-memory-protocol.md` | **Don't edit** — this is the protocol definition |
+| `cognitive-memory-protocol.md` | **Don't edit** — this is the protocol definition (already in `.kiro/memory/`) |
 
-These files start empty (with templates). They fill up as you use the pipeline.
+These files start empty. They fill up as you use the pipeline — the Shared Brain hook auto-appends after every Reviewer report.
 
 ---
 
