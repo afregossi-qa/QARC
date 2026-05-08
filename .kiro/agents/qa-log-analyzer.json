@@ -13,8 +13,6 @@
   },
   "powers": [
     "filesystem",
-    "mcp:pos-field-logs",
-    "mcp:pos-database-explorer",
     "mcp:atlassian-jira-confluence"
   ]
 }
