@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Post Test Cases API",
+  "description": "Triggers QA-AIO-Direct-Agent when a FINAL_TEST_CASES file is renamed to _API.md in any 2_Validator/ folder, automatically syncing test cases to AIO Tests.",
+  "version": "2",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/2_Validator/FINAL_TEST_CASES_*_API.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are acting as the QA-AIO-Direct-Agent.\n\nA FINAL_TEST_CASES file was just renamed to _API.md, triggering AIO sync.\n\n**Auto-detect the ticket folder** from the edited file path (extract the parent of 2_Validator/).\n\nThen execute the full sync workflow:\n\n1. **READ INPUTS**: Read the FINAL_TEST_CASES_*_API.md file that triggered this hook.\n\n2. **CHECK EXISTING**: Read AIO_SYNC_LOG.md from the ticket root (if exists) to find previously synced case keys.\n\n3. **SYNC TO AIO**: Follow @qa-aio-workflow.md and @AIO-API-Mapper.md strictly.\n   - Title format: `POS-XXXX | {Feature Brief} : {Test Case Title}` (extract ticket ID and derive brief from folder name)\n   - Description: MUST include `**Test Data:**` section\n   - Automation Status: ALWAYS `To Be Automated`\n   - Use aio-tests MCP server, target 'AI Generated' folder\n   - If cases exist in sync log → update. If new → create.\n\n4. **GENERATE LOG**: If AIO_SYNC_LOG.md already exists in the ticket root, overwrite it (not create a second file). Write AIO_SYNC_LOG.md to ticket root following the reference format (see POS-10267 sync log). Include: Sync Summary, Update History, Test Case Mapping, Priority Distribution, AIO Tests Links, Notes with ⚠️ manual action reminder.\n\nFollow @context_efficiency.md rules. Write only to ticket root. Stop after saving."
+  },
+  "workspaceFolderName": "TestCasesIdentification&Design",
+  "shortName": "trigger-aio-on-api-rename"
+}

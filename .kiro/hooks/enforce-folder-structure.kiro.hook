@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Enforce Folder Structure",
+  "description": "Before any write to a ticket folder, validate the target path follows the structure.md convention. Block writes to ticket root for files that belong in numbered subfolders.",
+  "version": "4",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": ["write"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "STRUCTURE ENFORCEMENT CHECK:\n\nBefore proceeding with this write operation, validate the target path:\n\n1. If the file is being written to a ticket folder (pattern: `**/POS-*/**` or `**/{year}/Q{N}/Version {N}/**/`):\n\n   MUST go in 1_Expert/:\n   - logic_explanation*.md\n   - test_plan*.md\n   - manual_input*.md\n   - *_analysis*.md\n\n   MUST go in 2_Validator/:\n   - FINAL_TEST_CASES*.md\n   - POS-*_TCMS_Import.csv\n   - FINAL_QA_SUMMARY*.md\n   - *_PENDING.md, *_OK.md, *_API.md\n\n   MUST go in 3_Evidence/:\n   - *.json (API responses, logs)\n   - *.png, *.jpg (screenshots)\n   - EVIDENCE_READY.md\n   - EVIDENCE_GAP_REPORT.md\n\n   MUST go in 4_Reviewer/:\n   - EXECUTION_FINDINGS*.md\n   - FINAL_CLOSURE_REPORT*.md\n   - *_REMEDIATE.md\n\n   ALLOWED in 5_Snapshots/:\n   - Any file (timestamped backup copies of agent outputs)\n\n   ALLOWED in 6_Automation/:\n   - REGRESSION_TEST_CASES*.md\n   - automation_steps*.md\n   - Automation_Blueprint*.md\n   - scripts/*.py, scripts/*.java\n   - logs/*\n   - *.md, *.py, *.java (any automation artifact)\n\n   ALLOWED at ticket root:\n   - QA_DASHBOARD.md\n   - PROGRESS_TRACKER.md\n   - SUMMARY.md\n   - AIO_SYNC_LOG.md\n   - REMEDIATION_LOG.md\n   - .state.json\n   - .phase-trigger.md\n   - Automation_Blueprint*.md\n   - .env\n\n2. If the target path violates these rules:\n   - BLOCK the write\n   - Respond with: 'BLOCKED: {filename} must be written to {correct_folder}/ per structure.md'\n   - Suggest the corrected path\n\n3. If the target path is valid, respond: 'APPROVED: Path follows structure convention' and proceed."
+  }
+}

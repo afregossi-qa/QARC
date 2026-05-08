@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Update QA Dashboard",
+  "description": "When FINAL_CLOSURE_REPORT is validated and saved, invoke QA-Dashboard-Agent to update dashboard and summary",
+  "version": "2",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/4_Reviewer/FINAL_CLOSURE_REPORT_*_VALIDATED.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are acting as the QA-Dashboard-Agent. Read @context_efficiency.md and @dashboard_standards.md steering files. Use the @LifecycleStateScraper.md skill to scan 1_Expert/, 2_Validator/, and 4_Reviewer/ subfolders — only read headers/metadata to identify phases and extract key metrics (do not read full test plans). Use the @ExecutiveDocumentGenerator.md skill to build the QA_DASHBOARD.md and SUMMARY.md following @dashboard_standards.md layout. Limit narrative summaries to 200 words max. Write QA_DASHBOARD.md and SUMMARY.md to the ticket root folder. Stop after saving."
+  },
+  "workspaceFolderName": "TestCasesIdentification&Design",
+  "shortName": "trigger-dashboard"
+}

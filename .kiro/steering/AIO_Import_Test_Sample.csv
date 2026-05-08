@@ -1,0 +1,36 @@
+Folder,Requirements,Existing Case ID,Summary,Description,Precondition,Test Steps,Expected Result,Priority,Tags,Automation Status,AI-Automated,AI-Generated
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-001,"QA-SAMPLE - Full Sync on Fresh Startup","Verify the application performs full sync for all collections on a fresh startup without any modifiedFrom parameter
+
+Test Data:
+- Collection A: 50 items expected
+- Collection B: 30 items expected
+- Environment: Dev","- Application v226 deployed
+- API accessible (configurations.dev.qubeyond.com)
+- Network monitoring tools available (Fiddler or Charles Proxy)
+- Till claimed","Launch application (fresh startup)","All collections sync successfully via full sync. No modifiedFrom parameter sent. Data persisted to local database. Timestamps stored for future delta syncs.",Critical,"QA-SAMPLE,DeltaBased,Integration,Startup","To be Automated",No,Yes
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-001,"QA-SAMPLE - Full Sync on Fresh Startup","","","Monitor ALL outbound API calls during initialization using network monitoring tool","API calls captured for all collection endpoints",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-001,"QA-SAMPLE - Full Sync on Fresh Startup","","","Verify call to GET /api/v4/collection-a WITHOUT modifiedFrom parameter","Full sync request sent for Collection A (no query parameter on startup)",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-001,"QA-SAMPLE - Full Sync on Fresh Startup","","","Verify call to GET /api/v4/collection-b WITHOUT modifiedFrom parameter","Full sync request sent for Collection B (no query parameter on startup)",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-001,"QA-SAMPLE - Full Sync on Fresh Startup","","","Verify response envelope contains isFullDataset: true for both collections","Both responses show isFullDataset: true with full data arrays",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-001,"QA-SAMPLE - Full Sync on Fresh Startup","","","Inspect Collection A in local database","50 items present with correct fields",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-001,"QA-SAMPLE - Full Sync on Fresh Startup","","","Inspect Collection B in local database","30 items present with correct fields",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-001,"QA-SAMPLE - Full Sync on Fresh Startup","","","Verify timestamps stored for both collections","Timestamps exist in sync metadata for Collection A and Collection B",,"","",,,
+
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-002,"QA-SAMPLE - Incremental Sync After Update","Verify incremental sync returns only modified records after an update is made in the backend
+
+CRITICAL: Application must be running (not restarted) for background sync to use incremental mode.
+
+Test Data:
+- Stored timestamp from previous sync (TC-001)
+- Modification: Update one item in Collection A (e.g., change title)
+- Expected: Only the modified item returned in delta response","- Application has completed initial full sync (TC-001 completed)
+- Application is currently RUNNING (not restarted)
+- Timestamp stored for Collection A from previous sync
+- One item modified in backend after last sync","Verify application is currently running (not restarted since TC-001)","Incremental sync returns only the modified record. Upsert logic applies changes without affecting unmodified records. Timestamp updated to new value.",High,"QA-SAMPLE,DeltaBased,Background","To be Automated",No,Yes
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-002,"QA-SAMPLE - Incremental Sync After Update","","","Record current state of Collection A (count and sample records)","50 items documented with current field values",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-002,"QA-SAMPLE - Incremental Sync After Update","","","Modify one item in Collection A via backend (e.g., change title)","Change saved in backend system",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-002,"QA-SAMPLE - Incremental Sync After Update","","","Wait for background sync cycle","Background sync initiated",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-002,"QA-SAMPLE - Incremental Sync After Update","","","Monitor API call for GET /api/v4/collection-a?modifiedFrom={stored_timestamp}","URL contains ?modifiedFrom={stored_timestamp} confirming incremental mode",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-002,"QA-SAMPLE - Incremental Sync After Update","","","Verify response contains only the modified item","isFullDataset: false with only 1 modified record in response",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-002,"QA-SAMPLE - Incremental Sync After Update","","","Inspect Collection A in local database","Modified record upserted with updated title. All other 49 items unchanged.",,"","",,,
+"QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-002,"QA-SAMPLE - Incremental Sync After Update","","","Verify timestamp updated after successful sync","New timestamp stored, replacing previous one. Chronological order maintained.",,"","",,,

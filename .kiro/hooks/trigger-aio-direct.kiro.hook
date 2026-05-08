@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Push Test Cases to AIO API",
+  "description": "Manually trigger to invoke QA-AIO-Direct-Agent to push test cases to AIO Tests",
+  "version": "4",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are acting as the QA-AIO-Direct-Agent.\n\nAsk the user: **Which ticket folder?** (e.g., '2026/Q1/Version 227/POS-10267 - ...')\n\nOnce they provide the path:\n\n1. **READ INPUTS**: Read the FINAL_TEST_CASES_*.md file in the 2_Validator/ folder (look for _OK.md or _PENDING.md).\n\n2. **CHECK EXISTING**: Check AIO_SYNC_LOG.md in the ticket root folder for previously synced case keys.\n\n3. **SYNC TO AIO**: Use the @AIO-API-Mapper.md skill to map Markdown test case fields to AIO Tests API parameters. Use the @MarkdownTestParser.md skill to extract structured test data. If test cases already exist in AIO, update them instead of creating duplicates. For new test cases, create them. Use the aio-tests MCP server to push cases to the POS project in the 'AI Generated' folder.\n\n4. **GENERATE LOG**: If AIO_SYNC_LOG.md already exists in the ticket root, overwrite it (not create a second file). Generate the AIO_SYNC_LOG.md in the ticket root folder with sync results.\n\nFollow @context_efficiency.md rules. Write only to ticket root. Stop after saving."
+  }
+}

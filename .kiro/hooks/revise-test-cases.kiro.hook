@@ -1,0 +1,18 @@
+{
+  "version": "3.0.0",
+  "enabled": true,
+  "name": "Revise Test Cases",
+  "description": "When file is renamed to FINAL_TEST_CASES_[ID]_UPDATED.md, rewrite the test cases incorporating feedback notes or updates and save as FINAL_TEST_CASES_[ID]_PENDING.md",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/2_Validator/FINAL_TEST_CASES_*_UPDATED.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are acting as the QA-Validator-Agent. Read the feedback notes at the top of the edited FINAL_TEST_CASES_*_UPDATED.md file in the 2_Validator/ folder or any change in the file. Also read the test_plan_OK.md and logic_explanation.md from 1_Expert/ for full context. Read the @TestCasesDesign.md steering file for formatting standards. Use the @ContextIntegrator.md skill to ensure human feedback overrides AI logic. Use the @TestCaseStandardizer.md skill to rewrite all test cases into the exact format required by @TestCasesDesign.md. Follow @context_efficiency.md rules. IMPORTANT — Output rules: If a FINAL_TEST_CASES_[TicketID]_PENDING.md already exists in 2_Validator/, you MUST overwrite it (not create a second file). Use a single fsWrite call to write the complete file content in one operation — do NOT split across fsWrite + fsAppend. Extract the ticket ID from the _UPDATED.md filename. Also update FINAL_QA_SUMMARY.md in the 2_Validator/ folder to reflect the revised test cases — update TC counts, priority breakdown, coverage metrics, and any changes to scope or categories. Write only to 2_Validator/. Stop."
+  },
+  "workspaceFolderName": "TestCasesIdentification&Design",
+  "shortName": "revise-test-cases"
+}

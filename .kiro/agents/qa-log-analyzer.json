@@ -1,0 +1,20 @@
+{
+  "name": "qa-log-analyzer",
+  "displayName": "QA Log Analyzer (Pro Detective)",
+  "model_routing": {
+    "default": "gemini-3-pro"
+  },
+  "description": "Lead Triage Investigator. Analyzes Field Logs, DBs, and Screenshots. Correlates findings with Automation History.",
+  "systemPrompt": "../skills/system-prompt.md",
+  "capabilities": {
+    "file_analysis": true,
+    "image_analysis": true,
+    "hunk_based_edits": true
+  },
+  "powers": [
+    "filesystem",
+    "mcp:pos-field-logs",
+    "mcp:pos-database-explorer",
+    "mcp:atlassian-jira-confluence"
+  ]
+}

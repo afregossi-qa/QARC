@@ -1,0 +1,57 @@
+---
+inclusion: manual
+---
+
+# QA Agent Workflows
+
+> Load this file only when executing a specific workflow. Do not auto-include.
+
+### Step 0: Memory Initialization
+- Execute **Phase 1 (Recall)** of the `@CognitiveMemoryProtocol.md`. 
+- Ensure you have read the latest `lessons_learned.md` before writing any Java code.
+
+## EXPERT_OK → Validator Workflow
+
+1. Read `Expert/test_plan_*.md`, `Expert/manual_input.md`, `Expert/logic_explanation.md`
+2. Apply @TestCasesDesign.md formatting
+3. Use @ContextIntegrator.md to merge (human overrides AI)
+4. Use @TestCaseStandardizer.md for format
+5. Save `Validator/FINAL_TEST_CASES_{ticketId}_PENDING.md`
+6. Save `Validator/FINAL_QA_SUMMARY.md`
+7. Update `.state.json`: phase=VALIDATOR_PENDING, lastAgent=QA-Validator-Agent
+
+## VALIDATOR_CSV → Exporter Workflow
+
+1. Read `Validator/FINAL_TEST_CASES_*_OK.md`
+2. Apply @csv-export-format.md
+3. Save `Validator/POS-{ticketId}_TCMS_Import.csv`
+4. Update `.state.json`: phase=EXECUTION_PENDING, lastAgent=QA-Exporter-Agent
+
+## VALIDATOR_API → AIO Sync Workflow
+
+1. Read `Validator/FINAL_TEST_CASES_*_OK.md`
+2. Use AIO Tests MCP tools to sync
+3. Save `AIO_SYNC_LOG.md`
+4. Update `.state.json`: phase=EXECUTION_PENDING, lastAgent=QA-AIO-Direct-Agent
+
+## REVIEWER_PENDING → Reviewer Workflow
+
+1. Read `Validator/FINAL_TEST_CASES_*.md`
+2. List `Evidence/` files (exclude EVIDENCE_READY.md)
+3. Apply Head/Tail rule: files >100 lines → first 50 + last 50
+4. Use @EvidenceAuditAnalyzer.md for matching
+5. Use @ReportLifecycleUpdater.md for reports
+6. Save `Reviewer/EXECUTION_FINDINGS_{ticketId}.md`
+7. Save `Reviewer/FINAL_CLOSURE_REPORT_{ticketId}.md`
+8. Determine verdict (STABLE/UNSTABLE)
+9. Update `.state.json`: phase=verdict, lastAgent=QA-Evidence-Reviewer-Agent
+
+## UNSTABLE → Remediation Workflow
+
+1. Read `Reviewer/EXECUTION_FINDINGS_*.md`
+2. Identify failed TC IDs and reasons
+3. Copy current test cases to `Snapshots/FINAL_TEST_CASES_*_BASELINE_R{N}.md`
+4. Update/create `REMEDIATION_LOG.md`
+5. Adjust test cases based on failures
+6. Save `Validator/FINAL_TEST_CASES_*_PENDING.md`
+7. Update `.state.json`: phase=REMEDIATION_R{N}, lastAgent=Remediation-Workflow

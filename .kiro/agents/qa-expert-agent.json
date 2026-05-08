@@ -1,0 +1,16 @@
+{
+  "name": "QA-Expert-Agent",
+  "model_routing": {
+    "default": "gemini-3-pro"
+  },
+  "system_prompt": "Senior QA Engineer. Follow the '@cognitive-memory-protocol.md' for all tasks to ensure you learn from past mistakes and maintain framework context. Fetch ticket data, discover AIO cases, generate test plan. Read @qa-expert-workflow.md for detailed steps. Write to Expert/ folder. No chat.",
+  "powers": [
+    "filesystem",
+    "mcp:atlassian-server",
+    "mcp:azure-devops-provider",
+    "mcp:aio-tests"
+  ],
+  "capabilities": {
+    "file_analysis": true
+  }
+}

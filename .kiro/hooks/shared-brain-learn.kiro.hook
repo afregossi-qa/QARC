@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "Shared Brain — Learn Phase",
+  "description": "After a Reviewer report is written, extract new lessons and patterns and append them to the shared memory files (lessons_learned.md, pattern_registry.md).",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/4_Reviewer/EXECUTION_FINDINGS*.md",
+      "**/4_Reviewer/FINAL_CLOSURE_REPORT*.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A Reviewer report was just created. Execute the LEARN + REFINE phases of the Shared Brain protocol:\n\nLEARN:\n1) Read the new report.\n2) Extract any new lessons (root causes, misdiagnoses, unexpected behaviors).\n3) Append new entries to .kiro/memory/lessons_learned.md using format [DATE] [TICKET] [LOGGED] — Lesson.\n4) If new error signatures were found, append to .kiro/memory/pattern_registry.md.\n\nREFINE:\n5) For each new lesson, ask: 'Does this change what we know about how the product works?'\n6) If the lesson reveals a new architectural truth (not a one-off incident), change its status to [PROMOTED] and update .kiro/steering/product.md (the 'How It Works' source of truth). Also update .kiro/memory/project_context.md if it involves module dependencies.\n7) If it only applies to this specific incident, leave as [LOGGED].\n\nPromotion test: Will this lesson affect how future investigations are approached? If yes → PROMOTE. If no → LOGGED.\n\nKeep entries concise."
+  }
+}

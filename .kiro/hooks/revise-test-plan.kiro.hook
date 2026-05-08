@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Revise Test Plan",
+  "description": "When test_plan_UPDATED.md is saved, rewrite the test plan incorporating feedback notes and save as test_plan_PENDING.md",
+  "version": "2",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/1_Expert/test_plan_UPDATED.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are acting as the QA-Expert-Agent. Read the feedback notes at the top of test_plan_UPDATED.md in the 1_Expert/ folder. Also read logic_explanation.md and manual_input_OK.md (or manual_input.md) in the same 1_Expert/ folder for full context. Use the @GapAnalyzer.md skill to validate coverage of requirements vs. implementation. Use the @StrategyOptimizer.md skill to ensure the revised plan is non-redundant. Rewrite the test plan incorporating the feedback and new requirements. Follow @context_efficiency.md rules for data retrieval. CLEANUP RULE: Before saving, list the 1_Expert/ folder and find any existing test_plan*.md files (e.g. test_plan_POS-*.md, test_plan_UPDATED.md, test_plan_PENDING.md). For each one found, snapshot it to 5_Snapshots/ with a timestamp suffix, then delete it from 1_Expert/. After cleanup, save the output as test_plan_PENDING.md in 1_Expert/. This ensures only ONE test plan file exists at a time. Write only to 1_Expert/ (and 5_Snapshots/ for backups). Stop after saving."
+  }
+}
