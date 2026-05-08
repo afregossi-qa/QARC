@@ -1,5 +1,7 @@
 # QARC — AI-Powered QA Pipeline Framework
 
+> **This framework is a starting point.** It requires human surveillance at all times — agents generate artifacts, but you review, approve, and course-correct. Expect to make improvements and adjustments as you use it. The pipeline learns from your feedback through the Shared Brain, but it's your judgment that drives quality.
+
 An AI-assisted QA pipeline that automates the lifecycle of test documentation — from ticket analysis to test plan generation, evidence review, and production readiness verdicts.
 
 **Human-in-the-loop:** AI agents generate artifacts, humans validate and approve at every gate. No output advances without explicit human sign-off.
