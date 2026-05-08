@@ -34,14 +34,14 @@ Z_OtherTickets/
 # Project-specific specs (not part of generic framework)
 .kiro/specs/expired-job-title-filtering/
 
-# Memory (symlink to shared brain — local only)
-.kiro/memory
-
-# Memory content files at symlink target (populated at runtime by agents)
+# Memory content files (project-specific, populated at runtime by agents)
 .kiro/memory/lessons_learned.md
 .kiro/memory/pattern_registry.md
 .kiro/memory/project_context.md
 .kiro/memory/templates/hotfix_triage_requests.md
+
+# Field triage work (local investigations, not part of framework distribution)
+field-triage/
 
 # Automation-related (not part of core QA lifecycle — documented separately)
 POS_Automation_BACK/
