@@ -38,6 +38,12 @@ Every transition requires human approval via file-rename convention:
 
 ---
 
+## No Model Training Required
+
+QARC doesn't fine-tune or train any AI model. It uses **context engineering** — steering files, memory files, skills, and structured prompts shape how a general-purpose LLM behaves. All the "intelligence" lives in the repo as markdown files that you can read, edit, and version control. When you improve a steering file or add a lesson to memory, every agent immediately benefits on the next run. No retraining, no datasets, no GPU time.
+
+---
+
 ## What's in This Repo
 
 | Folder | Content |
