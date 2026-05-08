@@ -40,7 +40,7 @@ Every transition requires human approval via file-rename convention:
 
 | Folder | Content |
 |--------|---------|
-| `.kiro/agents/` | 11 core agent configurations |
+| `.kiro/agents/` | 8 core agent configurations |
 | `.kiro/hooks/` | 18 event-driven pipeline hooks |
 | `.kiro/steering/` | Domain knowledge, workflow rules, standards |
 | `.kiro/skills/` | Reusable procedural instructions |
