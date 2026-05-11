@@ -89,7 +89,7 @@ When you trigger the Expert agent, it creates:
 ```
 {year}/Q{quarter}/Version {version}/PROJ-{TICKET} - {description}/
 ├── 1_Expert/       ← Test plan, logic analysis, manual input
-├── 2_Validator/    ← Structured test cases, CSV export
+├── 2_Validator/    ← Structured test cases, for AIO posting or CSV export
 ├── 3_Evidence/     ← Screenshots, logs, API captures
 ├── 4_Reviewer/     ← Execution findings, closure report
 └── 5_Snapshots/    ← Auto-backups before overwrites
