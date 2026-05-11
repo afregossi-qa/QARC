@@ -34,11 +34,8 @@ Z_OtherTickets/
 # Project-specific specs (not part of generic framework)
 .kiro/specs/expired-job-title-filtering/
 
-# Memory content files (project-specific, populated at runtime by agents)
-.kiro/memory/lessons_learned.md
-.kiro/memory/pattern_registry.md
-.kiro/memory/project_context.md
-.kiro/memory/templates/hotfix_triage_requests.md
+# Memory (project-specific, populated at runtime by agents)
+.kiro/memory/
 
 # Field triage work (local investigations, not part of framework distribution)
 field-triage/
