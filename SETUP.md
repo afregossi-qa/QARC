@@ -74,6 +74,7 @@ These files start empty. They fill up as you use the pipeline — the Shared Bra
    ```
    @QA-Expert-Agent Analyze ticket PROJ-123
    ```
+   Or go to Hooks and start "Trigger Expert Analysis" hook.
 3. The agent creates the folder structure and generates:
    - `1_Expert/logic_explanation.md`
    - `1_Expert/test_plan_PROJ-123.md`
