@@ -1,4 +1,4 @@
-# AIO API Mapper Skill
+# Skill: AIO-API-Mapper
 
 Maps test case data from Markdown files to AIO Tests MCP server API calls.
 

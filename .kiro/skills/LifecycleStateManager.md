@@ -1,4 +1,4 @@
-# Lifecycle State Manager Skill
+# Skill: Lifecycle-State-Manager
 
 ## Purpose
 Manages the `.state.json` file in ticket folders to track pipeline phase transitions.
