@@ -65,7 +65,7 @@ When a `HOTFIX_TRIAGE_REQUEST.md` is detected:
 ---
 
 ## 📝 PHASE 2: ACTIONABLE OUTPUT (Reporting)
-Generate the following files inside the `POS-{ticket}/` folder:
+Generate the following files inside the `POS-{ticket}/` folder (or the relevant ticket's `3_Evidence/` folder if working within the QA pipeline structure). **NEVER output investigation results only in chat — all findings MUST be persisted as files.**
 
 1. **investigation_report.md**: Use the **Relational Template**. Focus on the **[FOR_AUTOMATION]** section to explain why current tests missed this.
 2. **ANALYSIS_SUMMARY.md**: Concise root cause, impact scope, and evidence bullets linked to shared memory.
