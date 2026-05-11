@@ -5,7 +5,7 @@
     "default": "gemini-3-pro"
   },
   "description": "Lead Triage Investigator. Analyzes Field Logs, DBs, and Screenshots. Correlates findings with Automation History.",
-  "systemPrompt": "../skills/system-prompt.md",
+  "systemPrompt": "../skills/qa-log-analyzer-prompt.md",
   "capabilities": {
     "file_analysis": true,
     "image_analysis": true,
