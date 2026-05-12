@@ -2,7 +2,7 @@
   "enabled": true,
   "name": "Snapshot Before Write",
   "description": "Before any write operation to 1_Expert/, 2_Validator/, or 4_Reviewer/ folders, check if the target file already exists. If it does, copy it to 5_Snapshots/ with a timestamp suffix for rollback purposes.",
-  "version": "2",
+  "version": "3",
   "when": {
     "type": "preToolUse",
     "toolTypes": [
@@ -11,6 +11,6 @@
   },
   "then": {
     "type": "askAgent",
-    "prompt": "Before proceeding with this write operation, check if the target file already exists in a 1_Expert/, 2_Validator/, or 4_Reviewer/ folder. If it does, copy the existing file to a 5_Snapshots/ subfolder within the same ticket directory, appending a timestamp to the filename (e.g., FINAL_TEST_CASES_POS-XXXX_PENDING_2026-03-18T10-15-00.md). If the file does not exist yet, or the write target is not in 1_Expert/2_Validator/4_Reviewer, skip the snapshot and proceed normally. Do NOT snapshot .gitkeep files or files in 3_Evidence/."
+    "prompt": "FAST-PATH CHECK: Look at the target file path of this write operation. If the path does NOT contain '/1_Expert/', '/2_Validator/', or '/4_Reviewer/', respond 'SKIP: Not a snapshotable path' and proceed immediately — do NOT read any files or perform any other action.\n\nONLY if the path DOES contain one of those folders: Check if the target file already exists. If it does, copy the existing file to a 5_Snapshots/ subfolder within the same ticket directory, appending a timestamp to the filename (e.g., FINAL_TEST_CASES_POS-XXXX_PENDING_2026-03-18T10-15-00.md). If the file does not exist yet, skip the snapshot and proceed normally. Do NOT snapshot .gitkeep files or files in 3_Evidence/."
   }
 }
