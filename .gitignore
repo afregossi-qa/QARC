@@ -47,6 +47,8 @@ POS_Automation_BACK/
 .kiro/agents/qa-automation-step-translator.json
 .kiro/agents/qa-regression-architect-agent.json
 .kiro/agents/qa-maintenance-agent.json
+.kiro/agents/qa-debug-detective-agent.json
+.kiro/agents/qa-detective-agent.json
 .kiro/skills/AutomationArchitectPipeline.md
 .kiro/skills/AutomationCandidateScraper.md
 .kiro/skills/Hotfix-Logic.md
@@ -63,6 +65,7 @@ POS_Automation_BACK/
 .kiro/steering/qa-executor-workflow.md
 .kiro/specs/qa-architect-test-analysis-enhancement/
 .kiro/hooks/trigger-architect.kiro.hook
+.kiro/hooks/trigger-debug-detective.kiro.hook
 .kiro/hooks/execute-api-tests-on-edit.kiro.hook
 .kiro/hooks/execute-api-tests.kiro.hook
 .kiro/hooks/run-automation-backend.kiro.hook
