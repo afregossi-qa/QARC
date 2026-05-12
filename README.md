@@ -48,13 +48,12 @@ QARC doesn't fine-tune or train any AI model. It uses **context engineering** â€
 
 | Folder | Content |
 |--------|---------|
-| `.kiro/agents/` | 7 core pipeline agents |
-| `.kiro/hooks/` | 18 event-driven pipeline hooks |
+| `.kiro/agents/` | 6 core pipeline agents |
+| `.kiro/hooks/` | 17 event-driven pipeline hooks |
 | `.kiro/steering/` | Domain knowledge, workflow rules, standards |
 | `.kiro/skills/` | Reusable procedural instructions |
 | `.kiro/memory-templates/` | Starter templates for memory files |
 | `.kiro/mcp-servers/` | Custom AIO Tests MCP server |
-| `Tools/` | LiteDB readers for local database analysis |
 
 ---
 
