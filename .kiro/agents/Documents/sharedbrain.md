@@ -15,7 +15,7 @@ This system fixes that by creating a **single, shared consciousness**.
 - **Shared Memory Vault**: An in-repo folder (`.kiro/memory/`) that stores the squad's history and travels with the workspace.
 - **Auto-Include Steering**: The `.kiro/steering/shared-brain.md` file (inclusion: auto) ensures every agent reads memory before starting.
 - **Learn Hook**: The `shared-brain-learn` hook automatically extracts lessons from Reviewer reports and appends them to memory.
-- **Forensic Triangulation**: The ability of the QA Log Analyzer (Pro) to correlate Vision (Screenshots) + Logs (Timestamped events) + Data (SQLite states).
+- **Forensic Triangulation**: The ability of the QA Field Triage Agent to correlate Vision (Screenshots) + Logs (Timestamped events) + Data (SQLite states).
 
 ---
 
@@ -41,7 +41,7 @@ A Hotfix Triage Request is dropped into the shared folder. It contains the Jira 
 
 ### Step 2: Forensic Triangulation
 
-The QA Log Analyzer Pro (powered by Gemini 3 Pro) performs a three-point check:
+The QA Field Triage Agent (powered by Gemini 3 Pro) performs a three-point check:
 
 - **Vision**: It "sees" the time on the POS screenshot (e.g., 12:04 PM).
 - **Logs**: It jumps to 12:04 PM in the production logs to find the exact exception.
