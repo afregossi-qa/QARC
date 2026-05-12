@@ -55,6 +55,12 @@ QARC doesn't fine-tune or train any AI model. It uses **context engineering** �
 | `.kiro/memory-templates/` | Starter templates for memory files |
 | `.kiro/mcp-servers/` | Custom AIO Tests MCP server |
 
+> **Additional Flows (In Progress):** Two flows integrate with the core pipeline but are not yet published:
+> - **Field Bug Triage Flow** — Investigates production incidents using POS logs, local databases, and screenshots. Findings feed back into the Expert phase as domain knowledge via `manual_input.md`.
+> - **Automation Flow** — Converts validated test cases into executable automation scripts. Regression candidates identified by the Reviewer feed into automation backlog.
+>
+> Both are working locally and will be published once stable.
+
 ---
 
 ## Setup Requirements
