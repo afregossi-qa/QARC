@@ -1,3 +1,8 @@
+---
+inclusion: manual
+description: Deprecated state machine documentation - kept for audit reference only
+---
+
 # Ticket Lifecycle State Machine
 
 > **DEPRECATION NOTICE (v5.1 — April 17, 2026):** State-based routing via `.state.json` + `advance-phase.ps1` has been deprecated. Kiro's `fileCreated` event does not reliably detect files created by external processes (PowerShell), causing the router hook to miss triggers. The pipeline has reverted to file-rename triggers (suffix convention) as the primary mechanism. The `.state.json` files remain for reference/audit but are no longer used to drive pipeline transitions.

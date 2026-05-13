@@ -1,0 +1,13 @@
+{
+  "name": "LEARN — Debug Detective Output",
+  "version": "1.1.0",
+  "description": "Captures lessons and error patterns from Debug Detective outputs into the Shared Brain.",
+  "when": {
+    "type": "fileCreated",
+    "patterns": ["**/3_Evidence/DEBUG_REPORT*.md", "**/DEBUG_REPORT*.md"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "LEARN phase (lightweight) — Debug Detective output.\n\nA new Debug Detective file has been created. Your job is to check if it contains any knowledge worth saving to the Shared Brain.\n\nRead the newly created file. Look only for the following — do not invent findings:\n- Root cause patterns that match, extend, or contradict existing entries in pattern_registry.md\n- Diagnostic steps or queries that proved effective in identifying this issue\n- Service interaction failures or dependencies not previously documented\n\nFor findings that relate to an existing pattern_registry.md entry:\n1. Open pattern_registry.md and locate the related entry.\n2. If the new finding adds meaningfully to it (e.g. a better diagnostic step), append a note below the existing entry tagged with the current ticket ID. Do not rewrite the existing entry.\n\nFor genuinely new patterns:\n1. Confirm the pattern does not exist in pattern_registry.md. If it does, skip.\n2. If new, append to pattern_registry.md using this exact format:\n\n### {Error Name}\n  {Exact log line or pattern}\n- Cause: {root cause}\n- Diagnosis: {steps to confirm}\n- Resolution: {fix or workaround}\n- Ticket: {ticket ID}\n\nFor new lessons:\n1. Open lessons_learned.md and scan for a similar entry. If similar exists, skip.\n2. If genuinely new, append one line using this format:\n   [DATE] [TICKET-ID] [LOGGED] [FIELD] — {concise lesson in one sentence}\n\nRules:\n- Do NOT evaluate any finding for promotion to product.md\n- Do NOT modify project_context.md\n- Do NOT rewrite or edit existing entries unless adding a note to an existing pattern\n- If nothing new is found, do nothing and do not write anything"
+  }
+}
