@@ -12,6 +12,6 @@
   },
   "then": {
     "type": "askAgent",
-    "prompt": "A memory file was just updated (lessons_learned.md, pattern_registry.md, or project_context.md). Commit the changes:\n\n1. Run: git add .kiro/memory/lessons_learned.md .kiro/memory/pattern_registry.md .kiro/memory/project_context.md .kiro/steering/product.md\n2. Run: git commit -m \"memory: shared brain learn phase update\"\n\nIf the files are not tracked (symlink scenario), skip the commit silently."
+    "prompt": "A memory file was just updated (lessons_learned.md, pattern_registry.md, or project_context.md). Commit the changes:\n\n1. Run: git add .kiro/memory/products/pos/lessons_learned.md .kiro/memory/products/pos/pattern_registry.md .kiro/memory/products/pos/project_context.md .kiro/steering/product.md\n2. Run: git commit -m \"memory: shared brain learn phase update\"\n\nIf the files are not tracked (symlink scenario), skip the commit silently."
   }
 }

@@ -86,7 +86,7 @@ After pushing, generate `AIO_SYNC_LOG.md` in the ticket folder with:
 
 ## Known Folder IDs (Cache)
 Update this list as new folders are discovered:
-- `227734` — POS-9970 - Implement Delta based config download - Menu Lookup
+- `227734` — PROJ-4570 - Implement feature - Module C
 - `227628` — Parent folder (Delta config downloads)
 
 ## Error Handling
@@ -100,9 +100,9 @@ Before calling `create_case` or `update_case`, verify EVERY case against this ch
 
 | # | Check | WRONG Example | CORRECT Example |
 |---|-------|---------------|-----------------|
-| 1 | Title format: `POS-XXXX \| {Brief} : {Title}` | `TC-POS-10563-01: Normal open` | `POS-10563 \| TC Activity Reload : Normal open — Time Clock Activity loads data` |
-| 2 | Title has NO local TC ID prefix | `TC-POS-10563-01: ...` | `POS-10563 \| TC Activity Reload : ...` |
-| 3 | Description includes `**Test Data:**` section | `Verify that closing...` (no test data) | `Verify that closing...\n\n**Test Data:**\n- POS terminal configured...` |
+| 1 | Title format: `POS-XXXX \| {Brief} : {Title}` | `TC-PROJ-1234-01: Normal open` | `PROJ-1234 \| Feature Name : Normal open — Time Clock Activity loads data` |
+| 2 | Title has NO local TC ID prefix | `TC-PROJ-1234-01: ...` | `PROJ-1234 \| Feature Name : ...` |
+| 3 | Description includes `**Test Data:**` section | `Verify that closing...` (no test data) | `Verify that closing...\n\n**Test Data:**\n- POS Module Bured...` |
 | 4 | `automationStatus` = `To Be Automated` | `Manual` | `To Be Automated` |
 | 5 | `priority` uses AIO values | `P0`, `P1`, `High` from source | `Critical`, `High`, `Medium` |
 | 6 | Steps stripped of numbering | `1. Launch POS...` | `Launch POS...` |

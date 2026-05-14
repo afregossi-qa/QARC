@@ -5,10 +5,10 @@ Ensure all pipeline agents operate with full project context and contribute to t
 
 ## Phase 1: The Recall (Input)
 BEFORE executing any task, the agent must:
-1. **Context Scan**: Read `.kiro/memory/project_context.md` to understand module dependencies.
+1. **Context Scan**: Read `.kiro/memory/products/pos/project_context.md` to understand module dependencies.
 2. **Domain Knowledge**: Check for `manual_input.md` in the ticket's `1_Expert/` folder — it contains human observations and product behavior notes that take precedence over assumptions.
-3. **Mistake Avoidance**: Read `.kiro/memory/lessons_learned.md`. If the current task involves a documented "Issue," apply the "Lesson" immediately.
-4. **Pattern Matching**: Read `.kiro/memory/pattern_registry.md` to reuse successful test patterns, edge case categories, or verification approaches.
+3. **Mistake Avoidance**: Read `.kiro/memory/products/pos/lessons_learned.md`. If the current task involves a documented "Issue," apply the "Lesson" immediately.
+4. **Pattern Matching**: Read `.kiro/memory/products/pos/pattern_registry.md` to reuse successful test patterns, edge case categories, or verification approaches.
 
 ## Phase 2: The Relate (Execution)
 During execution, the agent must:

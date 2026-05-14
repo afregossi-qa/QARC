@@ -9,9 +9,9 @@ inclusion: manual
 
 If memory files don't exist yet, copy the templates:
 ```
-cp .kiro/memory-templates/lessons_learned.md .kiro/memory/lessons_learned.md
-cp .kiro/memory-templates/pattern_registry.md .kiro/memory/pattern_registry.md
-cp .kiro/memory-templates/project_context.md .kiro/memory/project_context.md
+cp .kiro/memory-templates/lessons_learned.md .kiro/memory/products/pos/lessons_learned.md
+cp .kiro/memory-templates/pattern_registry.md .kiro/memory/products/pos/pattern_registry.md
+cp .kiro/memory-templates/project_context.md .kiro/memory/products/pos/project_context.md
 cp .kiro/memory-templates/cognitive-memory-protocol.md .kiro/memory/cognitive-memory-protocol.md
 cp .kiro/memory-templates/relational-investigation-template.md .kiro/memory/relational-investigation-template.md
 ```
@@ -32,9 +32,9 @@ Connect the current task to the broader system:
 
 When you discover something new during execution:
 
-- **New lesson**: Append to `.kiro/memory/lessons_learned.md` using format: `[DATE] [TICKET] [STATUS] — Lesson`
-- **New error pattern**: Append to `.kiro/memory/pattern_registry.md` with signature, cause, diagnosis, resolution
-- **New module/service info**: Append to `.kiro/memory/project_context.md` in the appropriate section
+- **New lesson**: Append to `.kiro/memory/products/pos/lessons_learned.md` using format: `[DATE] [TICKET] [STATUS] — Lesson`
+- **New error pattern**: Append to `.kiro/memory/products/pos/pattern_registry.md` with signature, cause, diagnosis, resolution
+- **New module/service info**: Append to `.kiro/memory/products/pos/project_context.md` in the appropriate section
 
 Tags: `[FIELD]` for production insights, `[AUTO]` for test design insights, `[FRAMEWORK]` for pipeline insights.
 

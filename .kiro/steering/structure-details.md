@@ -18,8 +18,8 @@ fileMatchPattern: "**/1_Expert/**,**/2_Validator/**,**/3_Evidence/**,**/4_Review
 2026/
 └── Q1/
     └── Version 225/
-        ├── POS-9967 - Implement Delta based config download - Employee and Job Title/
-        └── POS-10302 - Implement Delta based config download - SharedEmployee/
+        ├── PROJ-4567 - Implement feature - Module A/
+        └── PROJ-5678 - Implement feature - Module Name/
 ```
 - Create `{year}/{quarter}/` folders as needed
 - Create a `Version {number}/` folder inside the quarter for each sprint
