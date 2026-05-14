@@ -1,1 +1,130 @@
-# QARC Setup GuideHow to adapt this framework to your project.---## 1. Prerequisites- [Kiro IDE](https://kiro.dev) installed- [uv](https://docs.astral.sh/uv/getting-started/installation/) G«ˆ Python package runner (for Atlassian MCP server)- [Node.js](https://nodejs.org/) G«ˆ runs the AIO Tests MCP server and Azure DevOps MCP- A Jira project with tickets to test- (Optional) AIO Tests for test case management- (Optional) Azure DevOps for PR review integration---## 2. Configure MCP Servers```bashcp .kiro/settings/mcp.example.json .kiro/settings/mcp.json```Edit `.kiro/settings/mcp.json` and fill in:| Server | Credential | Where to get it ||--------|-----------|-----------------|| Atlassian | API Token | [Atlassian API Tokens](https://id.atlassian.com/manage-profile/security/api-tokens) || Azure DevOps | PAT | Azure DevOps GÂ∆ User Settings GÂ∆ Personal Access Tokens (Code Read scope) || AIO Tests | API Token | AIO Tests GÂ∆ Settings GÂ∆ API |**Disable servers you don't use** by setting `"disabled": true` in the config.---## 3. Customize Steering FilesThese files teach the agents about YOUR project. Edit them:| File | Purpose | Priority ||------|---------|----------|| `.kiro/steering/product.md` | Your product's domain, features, business concepts | **High** || `.kiro/steering/tech.md` | Your tech stack, API patterns, test commands | **High** || `.kiro/steering/structure.md` | Folder conventions (usually fine as-is) | Low |---## 4. Initialize MemoryThe Shared Brain uses a structured memory layout. Copy templates to create your working memory:```bash# Create the memory folder structuremkdir -p .kiro/memory/universalmkdir -p .kiro/memory/products/your-productmkdir -p .kiro/memory/platform/your-platform# Copy templatescp .kiro/memory-templates/universal/*.md .kiro/memory/universal/cp .kiro/memory-templates/products/pos/*.md .kiro/memory/products/your-product/```Then update `.kiro/steering/shared-brain.md` to point to your product folder:```markdown1. `.kiro/memory/universal/lessons_learned.md`2. `.kiro/memory/universal/pattern_registry.md`3. `.kiro/memory/products/your-product/lessons_learned.md`4. `.kiro/memory/products/your-product/pattern_registry.md`5. `.kiro/memory/products/your-product/project_context.md````| File | What it does ||------|-------------|| `universal/` | Cross-product knowledge G«ˆ shared across all projects || `products/{name}/project_context.md` | Your module map, service relationships, architecture || `products/{name}/lessons_learned.md` | Grows automatically as agents discover patterns || `products/{name}/pattern_registry.md` | Grows automatically as you diagnose issues |These files start empty. They fill up as you use the pipeline G«ˆ LEARN hooks auto-append after every agent run.---## 5. Run Your First Pipeline1. Open Kiro IDE with this workspace2. Click the **"Trigger Expert"** button in the hooks panel3. Provide your Jira ticket ID and sprint version4. The agent creates the folder structure and generates:   - `1_Expert/logic_explanation.md`   - `1_Expert/test_plan_PENDING.md`   - `1_Expert/manual_input.md`5. Review the outputs, then rename `test_plan_PENDING.md` GÂ∆ `test_plan_OK.md`6. The Validator hook triggers automaticallySee `ONBOARDING.md` for the full step-by-step walkthrough.---## 6. Folder Structure Created at Runtime```{year}/Q{quarter}/Version {version}/PROJ-{TICKET} - {description}/Gˆ£Gˆ«Gˆ« 1_Expert/       GÂ… Test plan, logic analysis, manual inputGˆ£Gˆ«Gˆ« 2_Validator/    GÂ… Structured test cases, CSV exportGˆ£Gˆ«Gˆ« 3_Evidence/     GÂ… Screenshots, logs, API capturesGˆ£Gˆ«Gˆ« 4_Reviewer/     GÂ… Execution findings, closure reportGˆˆGˆ«Gˆ« 5_Snapshots/    GÂ… Auto-backups before overwrites```---## 7. Customization Tips- **Don't need AIO Tests?** Disable the server and skip the Exporter agent- **Don't use Azure DevOps?** Disable the server G«ˆ Expert will rely on Jira only- **Want to add a custom agent?** Create a new `.json` in `.kiro/agents/`- **Want to change hook behavior?** Edit files in `.kiro/hooks/`- **Want to add domain knowledge?** Edit `.kiro/steering/product.md`---## 8. Troubleshooting| Problem | Solution ||---------|----------|| MCP server won't connect | Run `uvx mcp-atlassian` manually to check for errors || Agent doesn't trigger | Check hook file patterns match your folder structure || Wrong folder structure | Verify `.kiro/steering/structure.md` matches your convention || Agent hallucinates | Add more context to `product.md` and `project_context.md` |
+# QARC Setup Guide
+
+How to adapt this framework to your project.
+
+---
+
+## 1. Prerequisites
+
+- [Kiro IDE](https://kiro.dev) installed
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) ‚Äî Python package runner (for Atlassian MCP server)
+- [Node.js](https://nodejs.org/) ‚Äî runs the AIO Tests MCP server and Azure DevOps MCP
+- A Jira project with tickets to test
+- (Optional) AIO Tests for test case management
+- (Optional) Azure DevOps for PR review integration
+
+---
+
+## 2. Configure MCP Servers
+
+```bash
+cp .kiro/settings/mcp.example.json .kiro/settings/mcp.json
+```
+
+Edit `.kiro/settings/mcp.json` and fill in:
+
+| Server | Credential | Where to get it |
+|--------|-----------|-----------------|
+| Atlassian | API Token | [Atlassian API Tokens](https://id.atlassian.com/manage-profile/security/api-tokens) |
+| Azure DevOps | PAT | Azure DevOps ‚Üí User Settings ‚Üí Personal Access Tokens (Code Read scope) |
+| AIO Tests | API Token | AIO Tests ‚Üí Settings ‚Üí API |
+
+**Disable servers you don't use** by setting `"disabled": true` in the config.
+
+---
+
+## 3. Customize Steering Files
+
+These files teach the agents about YOUR project. Edit them:
+
+| File | Purpose | Priority |
+|------|---------|----------|
+| `.kiro/steering/product.md` | Your product's domain, features, business concepts | **High** |
+| `.kiro/steering/tech.md` | Your tech stack, API patterns, test commands | **High** |
+| `.kiro/steering/structure.md` | Folder conventions (usually fine as-is) | Low |
+
+---
+
+## 4. Initialize Memory
+
+The Shared Brain uses a structured memory layout. Copy templates to create your working memory:
+
+```bash
+# Create the memory folder structure
+mkdir -p .kiro/memory/universal
+mkdir -p .kiro/memory/products/your-product
+mkdir -p .kiro/memory/platform/your-platform
+
+# Copy templates
+cp .kiro/memory-templates/universal/*.md .kiro/memory/universal/
+cp .kiro/memory-templates/products/pos/*.md .kiro/memory/products/your-product/
+```
+
+Then update `.kiro/steering/shared-brain.md` to point to your product folder:
+
+```markdown
+1. `.kiro/memory/universal/lessons_learned.md`
+2. `.kiro/memory/universal/pattern_registry.md`
+3. `.kiro/memory/products/your-product/lessons_learned.md`
+4. `.kiro/memory/products/your-product/pattern_registry.md`
+5. `.kiro/memory/products/your-product/project_context.md`
+```
+
+| File | What it does |
+|------|-------------|
+| `universal/` | Cross-product knowledge ‚Äî shared across all projects |
+| `products/{name}/project_context.md` | Your module map, service relationships, architecture |
+| `products/{name}/lessons_learned.md` | Grows automatically as agents discover patterns |
+| `products/{name}/pattern_registry.md` | Grows automatically as you diagnose issues |
+
+These files start empty. They fill up as you use the pipeline ‚Äî LEARN hooks auto-append after every agent run.
+
+---
+
+## 5. Run Your First Pipeline
+
+1. Open Kiro IDE with this workspace
+2. Click the **"Trigger Expert"** button in the hooks panel
+3. Provide your Jira ticket ID and sprint version
+4. The agent creates the folder structure and generates:
+   - `1_Expert/logic_explanation.md`
+   - `1_Expert/test_plan_PENDING.md`
+   - `1_Expert/manual_input.md`
+5. Review the outputs, then rename `test_plan_PENDING.md` ‚Üí `test_plan_OK.md`
+6. The Validator hook triggers automatically
+
+See `ONBOARDING.md` for the full step-by-step walkthrough.
+
+---
+
+## 6. Folder Structure Created at Runtime
+
+```
+{year}/Q{quarter}/Version {version}/PROJ-{TICKET} - {description}/
+‚îú‚îÄ‚îÄ 1_Expert/       ‚Üê Test plan, logic analysis, manual input
+‚îú‚îÄ‚îÄ 2_Validator/    ‚Üê Structured test cases, CSV export
+‚îú‚îÄ‚îÄ 3_Evidence/     ‚Üê Screenshots, logs, API captures
+‚îú‚îÄ‚îÄ 4_Reviewer/     ‚Üê Execution findings, closure report
+‚îî‚îÄ‚îÄ 5_Snapshots/    ‚Üê Auto-backups before overwrites
+```
+
+---
+
+## 7. Customization Tips
+
+- **Don't need AIO Tests?** Disable the server and skip the Exporter agent
+- **Don't use Azure DevOps?** Disable the server ‚Äî Expert will rely on Jira only
+- **Want to add a custom agent?** Create a new `.json` in `.kiro/agents/`
+- **Want to change hook behavior?** Edit files in `.kiro/hooks/`
+- **Want to add domain knowledge?** Edit `.kiro/steering/product.md`
+
+---
+
+## 8. Troubleshooting
+
+| Problem | Solution |
+|---------|----------|
+| MCP server won't connect | Run `uvx mcp-atlassian` manually to check for errors |
+| Agent doesn't trigger | Check hook file patterns match your folder structure |
+| Wrong folder structure | Verify `.kiro/steering/structure.md` matches your convention |
+| Agent hallucinates | Add more context to `product.md` and `project_context.md` |

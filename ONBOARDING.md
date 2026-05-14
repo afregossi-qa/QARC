@@ -1,1 +1,92 @@
-# QARC GÇö Onboarding Guide> Get your first ticket through the pipeline in under 30 minutes.## Prerequisites- Kiro IDE installed- Jira access (for ticket fetching)- AIO Tests access (optional GÇö for TCMS sync)## Step 1: Configure MCP ServersEdit `.kiro/settings/mcp.json` with your credentials:- **Atlassian** GÇö Jira + Confluence (required)- **Azure DevOps** GÇö PRs and commits (optional)- **AIO Tests** GÇö TCMS sync (optional)See `SETUP.md` for detailed MCP configuration.## Step 2: Fill Product ContextEdit these steering files with your product's information:- `.kiro/steering/product.md` GÇö What your product does, key features, domain terms- `.kiro/steering/tech.md` GÇö Tech stack, APIs, sync patterns, testing approachThese give agents the context they need to generate relevant test plans.## Step 3: Run Your First Ticket1. Click the **"Trigger Expert"** button in Kiro's hook panel2. Provide your Jira ticket ID (e.g., PROJ-1234) and sprint version3. The Expert agent fetches the ticket, linked PRs, and Confluence docs4. Review the generated files in `1_Expert/`:   - `logic_explanation.md` GÇö Logic audit and gap analysis   - `test_plan_PENDING.md` GÇö Draft test plan   - `manual_input.md` GÇö Template for your observations## Step 4: Approve and Advance1. Fill `manual_input.md` with any observations from exploratory testing2. Rename it to `manual_input_OK.md` GÇö this triggers test plan revision3. Review `test_plan_PENDING.md`:   - Approve GåÆ rename to `test_plan_OK.md` (triggers Validator)   - Request changes GåÆ rename to `test_plan_UPDATED.md` (triggers revision)## Step 5: Validate Test Cases1. The Validator generates `2_Validator/FINAL_TEST_CASES_*_PENDING.md`2. Review the structured test cases3. Approve GåÆ rename to `_OK.md`, `_CSV.md` (export), or `_API.md` (AIO sync)## Step 6: Execute and Review1. Execute tests manually and drop evidence (JSON logs, screenshots) into `3_Evidence/`2. Click **"Trigger Reviewer"** button3. The Reviewer audits evidence against test cases and produces a verdict## Pipeline Flow Summary```Expert GåÆ [human review] GåÆ Validator GåÆ [human review] GåÆ Export/AIO                                                            Gåô                                              Drop evidence to 3_Evidence/                                                            Gåô                                              Reviewer GåÆ STABLE or UNSTABLE```## Key Concepts- **Suffix convention**: `_PENDING` (draft) GåÆ `_OK` (approved) GåÆ next stage- **Human-in-the-loop**: Nothing advances without your explicit rename- **Shared Brain**: Agents learn from past tickets automatically- **Snapshots**: Files are backed up before any overwrite (in `5_Snapshots/`)## Folder Structure```{year}/Q{N}/Version {V}/PROJ-{ticket} - {description}/Gö£GöÇGöÇ 1_Expert/       # Test plan, logic analysisGö£GöÇGöÇ 2_Validator/    # Structured test casesGö£GöÇGöÇ 3_Evidence/     # Raw execution dataGö£GöÇGöÇ 4_Reviewer/     # Findings and closure reportGööGöÇGöÇ 5_Snapshots/    # Auto-backups```## Need Help?- `SETUP.md` GÇö MCP server configuration- `.kiro/steering/` GÇö All framework rules and workflows- `.kiro/memory/` GÇö Shared Brain knowledge base (grows as you work)
+# QARC â€” Onboarding Guide
+
+> Get your first ticket through the pipeline in under 30 minutes.
+
+## Prerequisites
+
+- Kiro IDE installed
+- Jira access (for ticket fetching)
+- AIO Tests access (optional â€” for TCMS sync)
+
+## Step 1: Configure MCP Servers
+
+Edit `.kiro/settings/mcp.json` with your credentials:
+
+- **Atlassian** â€” Jira + Confluence (required)
+- **Azure DevOps** â€” PRs and commits (optional)
+- **AIO Tests** â€” TCMS sync (optional)
+
+See `SETUP.md` for detailed MCP configuration.
+
+## Step 2: Fill Product Context
+
+Edit these steering files with your product's information:
+
+- `.kiro/steering/product.md` â€” What your product does, key features, domain terms
+- `.kiro/steering/tech.md` â€” Tech stack, APIs, sync patterns, testing approach
+
+These give agents the context they need to generate relevant test plans.
+
+## Step 3: Run Your First Ticket
+
+1. Click the **"Trigger Expert"** button in Kiro's hook panel
+2. Provide your Jira ticket ID (e.g., PROJ-1234) and sprint version
+3. The Expert agent fetches the ticket, linked PRs, and Confluence docs
+4. Review the generated files in `1_Expert/`:
+   - `logic_explanation.md` â€” Logic audit and gap analysis
+   - `test_plan_PENDING.md` â€” Draft test plan
+   - `manual_input.md` â€” Template for your observations
+
+## Step 4: Approve and Advance
+
+1. Fill `manual_input.md` with any observations from exploratory testing
+2. Rename it to `manual_input_OK.md` â€” this triggers test plan revision
+3. Review `test_plan_PENDING.md`:
+   - Approve â†’ rename to `test_plan_OK.md` (triggers Validator)
+   - Request changes â†’ rename to `test_plan_UPDATED.md` (triggers revision)
+
+## Step 5: Validate Test Cases
+
+1. The Validator generates `2_Validator/FINAL_TEST_CASES_*_PENDING.md`
+2. Review the structured test cases
+3. Approve â†’ rename to `_OK.md`, `_CSV.md` (export), or `_API.md` (AIO sync)
+
+## Step 6: Execute and Review
+
+1. Execute tests manually and drop evidence (JSON logs, screenshots) into `3_Evidence/`
+2. Click **"Trigger Reviewer"** button
+3. The Reviewer audits evidence against test cases and produces a verdict
+
+## Pipeline Flow Summary
+
+```
+Expert â†’ [human review] â†’ Validator â†’ [human review] â†’ Export/AIO
+                                                         â†“
+                                       Drop evidence to 3_Evidence/
+                                                         â†“
+                                       Reviewer â†’ STABLE or UNSTABLE
+```
+
+## Key Concepts
+
+- **Suffix convention**: `_PENDING` (draft) â†’ `_OK` (approved) â†’ next stage
+- **Human-in-the-loop**: Nothing advances without your explicit rename
+- **Shared Brain**: Agents learn from past tickets automatically
+- **Snapshots**: Files are backed up before any overwrite (in `5_Snapshots/`)
+
+## Folder Structure
+
+```
+{year}/Q{N}/Version {V}/PROJ-{ticket} - {description}/
+â”œâ”€â”€ 1_Expert/       # Test plan, logic analysis
+â”œâ”€â”€ 2_Validator/    # Structured test cases
+â”œâ”€â”€ 3_Evidence/     # Raw execution data
+â”œâ”€â”€ 4_Reviewer/     # Findings and closure report
+â””â”€â”€ 5_Snapshots/    # Auto-backups
+```
+
+## Need Help?
+
+- `SETUP.md` â€” MCP server configuration
+- `.kiro/steering/` â€” All framework rules and workflows
+- `.kiro/memory/` â€” Shared Brain knowledge base (grows as you work)

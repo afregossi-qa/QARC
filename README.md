@@ -1,1 +1,165 @@
-# QARC G«ˆ AI-Powered QA Pipeline Framework> **This framework is a starting point.** It requires human surveillance at all times G«ˆ agents generate artifacts, but you review, approve, and course-correct. Expect to make improvements and adjustments as you use it. The pipeline learns from your feedback through the Shared Brain, but it's your judgment that drives quality.An AI-assisted QA pipeline that automates the lifecycle of test documentation G«ˆ from ticket analysis to test plan generation, evidence review, and production readiness verdicts.**Human-in-the-loop:** AI agents generate artifacts, humans validate and approve at every gate. No output advances without explicit human sign-off.**Platform:** Built for [Kiro IDE](https://kiro.dev) using its native agents, hooks, steering, and MCP protocol.---## Quick Start1. Clone this repo2. Open the folder in Kiro IDE3. Follow `SETUP.md` to configure MCP servers and credentials4. Follow `ONBOARDING.md` to run your first ticket---## How It Works```GÊ· Expert    GÂ∆ Fetches Jira + PRs + Confluence + Human Input GÂ∆ generates test planGÊÌ Validator GÂ∆ Structures test cases with steps, priorities, tagsGÊÛ Export    GÂ∆ Direct push to AIO Tests or CSV for TCMS importGÊ˙ Execute   GÂ∆ Human runs tests, drops evidenceGÊÒ Reviewer  GÂ∆ AI audits evidence + Human Input GÂ∆ STABLE or UNSTABLE verdictGÊ— Closure   GÂ∆ Dashboard + archive (or remediation loop)```Every transition requires human approval via file-rename convention:- `_PENDING.md` GÂ∆ agent draft, awaiting review- `_OK.md` GÂ∆ approved, triggers next stage- `_UPDATED.md` GÂ∆ rejected with feedback, triggers revision---## No Model Training RequiredQARC doesn't fine-tune or train any AI model. It uses **context engineering** G«ˆ steering files, memory files, skills, and structured prompts shape how a general-purpose LLM behaves. All the "intelligence" lives in the repo as markdown files that you can read, edit, and version control. When you improve a steering file or add a lesson to memory, every agent immediately benefits on the next run. No retraining, no datasets, no GPU time.---## What's in This Repo| Folder | Content ||--------|---------|| `.kiro/agents/` | 6 core pipeline agents || `.kiro/hooks/` | Event-driven pipeline hooks || `.kiro/steering/` | Domain knowledge, workflow rules, standards || `.kiro/skills/` | Reusable procedural instructions || `.kiro/memory-templates/` | Starter templates for the Shared Brain || `.kiro/mcp-servers/` | Custom AIO Tests MCP server || `examples/` | Reference implementations by product domain |---## Shared Brain (Cognitive Memory)The pipeline learns across tickets through an append-only knowledge base:```.kiro/memory-templates/Gˆ£Gˆ«Gˆ« universal/          GÂ… Cross-product knowledge (domain-agnostic)Gˆ£Gˆ«Gˆ« products/{name}/    GÂ… Product-specific lessons and patternsGˆˆGˆ«Gˆ« platform/{os}/      GÂ… Platform-specific knowledge```Agents read memory before every task (RECALL) and write back discoveries after (LEARN). Knowledge accumulates automatically G«ˆ no manual logging required.> **V2 in progress:** We're building a smarter retrieval layer that replaces full-file reads with semantic search G«ˆ agents will get only the most relevant lessons for each ticket instead of reading everything. This will include index-first RECALL, confidence scoring, cross-project sharing, and optional vector-based retrieval. The current system works well at small scale; V2 makes it scale indefinitely.---## Setup Requirements- [Kiro IDE](https://kiro.dev)- [uv](https://docs.astral.sh/uv/getting-started/installation/) G«ˆ Python package runner (runs the Atlassian MCP server via `uvx`)- Node.js G«ˆ runs the custom AIO Tests MCP server- npx G«ˆ runs the Azure DevOps MCP server (comes with Node.js)### MCP Credentials Needed| Server | What you need ||--------|---------------|| Atlassian | Jira/Confluence API token ([generate here](https://id.atlassian.com/manage-profile/security/api-tokens)) || Azure DevOps | Personal Access Token with Code (Read) scope || AIO Tests | API token from AIO Tests settings |---## Folder Structure (Created at Runtime)When you trigger the Expert agent, it creates:```{year}/Q{quarter}/Version {version}/PROJ-{TICKET} - {description}/Gˆ£Gˆ«Gˆ« 1_Expert/       GÂ… Test plan, logic analysis, manual inputGˆ£Gˆ«Gˆ« 2_Validator/    GÂ… Structured test cases, CSV exportGˆ£Gˆ«Gˆ« 3_Evidence/     GÂ… Screenshots, logs, API capturesGˆ£Gˆ«Gˆ« 4_Reviewer/     GÂ… Execution findings, closure reportGˆˆGˆ«Gˆ« 5_Snapshots/    GÂ… Auto-backups before overwrites```---## Documentation| File | Purpose ||------|---------|| `README.md` | This file G«ˆ what QARC is || `SETUP.md` | Technical setup (MCP, credentials, prerequisites) || `ONBOARDING.md` | Step-by-step guide to run your first ticket || `examples/pos/README.md` | POS product reference implementation |See `.kiro/steering/` for all workflow and standards documentation.---## Authors**Agostina Fregossi** G«ˆ Architecture design & implementation**Kiro AI** G«ˆ Execution engine---## ContributingThis framework is a starting point, not a finished product. The agents, hooks, and steering files are designed to be extended and adapted. If you find a better way to structure test cases, a smarter hook trigger, or a new agent workflow G«ˆ improve it. The Shared Brain will learn from your changes.---## Agent Design PrinciplesQARC agents are designed to be sharp, efficient, and honest. When extending or creating new agents, follow these principles:### Quality**No chat.** Pipeline agents produce structured output files G«ˆ never conversational responses. Every agent invocation results in a `fsWrite` call, not a chat message.**No assumptions.** If evidence is missing, say so. If a file can't be read, report it. Never fill knowledge gaps with speculation presented as fact. Observations and interpretations are always labeled separately.**No bias.** Agents describe what they see in the evidence, not what they expect to see. A test that passes in one scenario is not assumed to pass in another without evidence.**Cite your evidence.** Every claim must reference a specific file, line number, or timestamp. No unsourced conclusions. If two variables correlate, state the correlation G«ˆ don't claim causation without proof.**RECALL before work.** Read memory files before producing any output. This is the non-negotiable first step of every agent invocation G«ˆ never skip it.**Fail cleanly.** On error, write `{PHASE}_ERROR.md` at ticket root (what failed, the error, what completed) and STOP. Never leave partial outputs without an error file.### Token Efficiency**Lazy loading.** Only read files strictly necessary for the current step. Never pre-load "just in case."**Targeted reads.** Files over 10KB are read in sections (line ranges or selectors), never fully. Logs use the Head/Tail rule (first 50 + last 50 lines unless an error is detected).**Compressed prompts.** Hook prompts reference `@workflow.md` files for detailed steps G«ˆ never embed full workflows inline. Always-on steering files are kept under 1KB each.**Single-file writes.** Use one `fsWrite` per output file. Never split across `fsWrite` + `fsAppend`. Overwrite if exists G«ˆ don't create duplicates.**Folder-locked.** Each agent writes only to its designated folder. No traversing parent directories or reading across ticket boundaries (except Dashboard).### Memory**Append-only.** Agents never delete or edit existing memory entries. They deduplicate before appending.**Deduplicate first.** Before writing to any memory file, scan it for a similar existing entry. If found, skip G«ˆ don't create near-duplicates.**Promote deliberately.** Elevation from `[LOGGED]` to `[PROMOTED]` is a separate, conscious step that only the Reviewer hook performs. Lightweight LEARN hooks never promote.These principles are enforced through steering files (`context_efficiency.md`, `evidence_standards.md`) and guard hooks (`enforce-folder-structure`, `snapshot-before-write`). They're not suggestions G«ˆ they're structural constraints baked into the pipeline.
+# QARC ‚Äî AI-Powered QA Pipeline Framework
+
+> **This framework is a starting point.** It requires human surveillance at all times ‚Äî agents generate artifacts, but you review, approve, and course-correct. Expect to make improvements and adjustments as you use it. The pipeline learns from your feedback through the Shared Brain, but it's your judgment that drives quality.
+
+An AI-assisted QA pipeline that automates the lifecycle of test documentation ‚Äî from ticket analysis to test plan generation, evidence review, and production readiness verdicts.
+
+**Human-in-the-loop:** AI agents generate artifacts, humans validate and approve at every gate. No output advances without explicit human sign-off.
+
+**Platform:** Built for [Kiro IDE](https://kiro.dev) using its native agents, hooks, steering, and MCP protocol.
+
+---
+
+## Quick Start
+
+1. Clone this repo
+2. Open the folder in Kiro IDE
+3. Follow `SETUP.md` to configure MCP servers and credentials
+4. Follow `ONBOARDING.md` to run your first ticket
+
+---
+
+## How It Works
+
+```
+‚ë† Expert    ‚Üí Fetches Jira + PRs + Confluence + Human Input ‚Üí generates test plan
+‚ë° Validator ‚Üí Structures test cases with steps, priorities, tags
+‚ë¢ Export    ‚Üí Direct push to AIO Tests or CSV for TCMS import
+‚ë£ Execute   ‚Üí Human runs tests, drops evidence
+‚ë§ Reviewer  ‚Üí AI audits evidence + Human Input ‚Üí STABLE or UNSTABLE verdict
+‚ë• Closure   ‚Üí Dashboard + archive (or remediation loop)
+```
+
+Every transition requires human approval via file-rename convention:
+- `_PENDING.md` ‚Üí agent draft, awaiting review
+- `_OK.md` ‚Üí approved, triggers next stage
+- `_UPDATED.md` ‚Üí rejected with feedback, triggers revision
+
+---
+
+## No Model Training Required
+
+QARC doesn't fine-tune or train any AI model. It uses **context engineering** ‚Äî steering files, memory files, skills, and structured prompts shape how a general-purpose LLM behaves. All the "intelligence" lives in the repo as markdown files that you can read, edit, and version control. When you improve a steering file or add a lesson to memory, every agent immediately benefits on the next run. No retraining, no datasets, no GPU time.
+
+---
+
+## What's in This Repo
+
+| Folder | Content |
+|--------|---------|
+| `.kiro/agents/` | 6 core pipeline agents |
+| `.kiro/hooks/` | Event-driven pipeline hooks |
+| `.kiro/steering/` | Domain knowledge, workflow rules, standards |
+| `.kiro/skills/` | Reusable procedural instructions |
+| `.kiro/memory-templates/` | Starter templates for the Shared Brain |
+| `.kiro/mcp-servers/` | Custom AIO Tests MCP server |
+| `examples/` | Reference implementations by product domain |
+
+---
+
+## Shared Brain (Cognitive Memory)
+
+The pipeline learns across tickets through an append-only knowledge base:
+
+```
+.kiro/memory-templates/
+‚îú‚îÄ‚îÄ universal/          ‚Üê Cross-product knowledge (domain-agnostic)
+‚îú‚îÄ‚îÄ products/{name}/    ‚Üê Product-specific lessons and patterns
+‚îî‚îÄ‚îÄ platform/{os}/      ‚Üê Platform-specific knowledge
+```
+
+Agents read memory before every task (RECALL) and write back discoveries after (LEARN). Knowledge accumulates automatically ‚Äî no manual logging required.
+
+> **V2 in progress:** We're building a smarter retrieval layer that replaces full-file reads with semantic search ‚Äî agents will get only the most relevant lessons for each ticket instead of reading everything. This will include index-first RECALL, confidence scoring, cross-project sharing, and optional vector-based retrieval. The current system works well at small scale; V2 makes it scale indefinitely.
+
+---
+
+## Setup Requirements
+
+- [Kiro IDE](https://kiro.dev)
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) ‚Äî Python package runner (runs the Atlassian MCP server via `uvx`)
+- Node.js ‚Äî runs the custom AIO Tests MCP server
+- npx ‚Äî runs the Azure DevOps MCP server (comes with Node.js)
+
+### MCP Credentials Needed
+
+| Server | What you need |
+|--------|---------------|
+| Atlassian | Jira/Confluence API token ([generate here](https://id.atlassian.com/manage-profile/security/api-tokens)) |
+| Azure DevOps | Personal Access Token with Code (Read) scope |
+| AIO Tests | API token from AIO Tests settings |
+
+---
+
+## Folder Structure (Created at Runtime)
+
+When you trigger the Expert agent, it creates:
+```
+{year}/Q{quarter}/Version {version}/PROJ-{TICKET} - {description}/
+‚îú‚îÄ‚îÄ 1_Expert/       ‚Üê Test plan, logic analysis, manual input
+‚îú‚îÄ‚îÄ 2_Validator/    ‚Üê Structured test cases, CSV export
+‚îú‚îÄ‚îÄ 3_Evidence/     ‚Üê Screenshots, logs, API captures
+‚îú‚îÄ‚îÄ 4_Reviewer/     ‚Üê Execution findings, closure report
+‚îî‚îÄ‚îÄ 5_Snapshots/    ‚Üê Auto-backups before overwrites
+```
+
+---
+
+## Documentation
+
+| File | Purpose |
+|------|---------|
+| `README.md` | This file ‚Äî what QARC is |
+| `SETUP.md` | Technical setup (MCP, credentials, prerequisites) |
+| `ONBOARDING.md` | Step-by-step guide to run your first ticket |
+| `examples/pos/README.md` | POS product reference implementation |
+
+See `.kiro/steering/` for all workflow and standards documentation.
+
+---
+
+## Agent Design Principles
+
+QARC agents are designed to be sharp, efficient, and honest. When extending or creating new agents, follow these principles:
+
+### Quality
+
+**No chat.** Pipeline agents produce structured output files ‚Äî never conversational responses. Every agent invocation results in a `fsWrite` call, not a chat message.
+
+**No assumptions.** If evidence is missing, say so. If a file can't be read, report it. Never fill knowledge gaps with speculation presented as fact. Observations and interpretations are always labeled separately.
+
+**No bias.** Agents describe what they see in the evidence, not what they expect to see. A test that passes in one scenario is not assumed to pass in another without evidence.
+
+**Cite your evidence.** Every claim must reference a specific file, line number, or timestamp. No unsourced conclusions. If two variables correlate, state the correlation ‚Äî don't claim causation without proof.
+
+**RECALL before work.** Read memory files before producing any output. This is the non-negotiable first step of every agent invocation ‚Äî never skip it.
+
+**Fail cleanly.** On error, write `{PHASE}_ERROR.md` at ticket root (what failed, the error, what completed) and STOP. Never leave partial outputs without an error file.
+
+### Token Efficiency
+
+**Lazy loading.** Only read files strictly necessary for the current step. Never pre-load "just in case."
+
+**Targeted reads.** Files over 10KB are read in sections (line ranges or selectors), never fully. Logs use the Head/Tail rule (first 50 + last 50 lines unless an error is detected).
+
+**Compressed prompts.** Hook prompts reference `@workflow.md` files for detailed steps ‚Äî never embed full workflows inline. Always-on steering files are kept under 1KB each.
+
+**Single-file writes.** Use one `fsWrite` per output file. Never split across `fsWrite` + `fsAppend`. Overwrite if exists ‚Äî don't create duplicates.
+
+**Folder-locked.** Each agent writes only to its designated folder. No traversing parent directories or reading across ticket boundaries (except Dashboard).
+
+### Memory
+
+**Append-only.** Agents never delete or edit existing memory entries. They deduplicate before appending.
+
+**Deduplicate first.** Before writing to any memory file, scan it for a similar existing entry. If found, skip ‚Äî don't create near-duplicates.
+
+**Promote deliberately.** Elevation from `[LOGGED]` to `[PROMOTED]` is a separate, conscious step that only the Reviewer hook performs. Lightweight LEARN hooks never promote.
+
+These principles are enforced through steering files (`context_efficiency.md`, `evidence_standards.md`) and guard hooks (`enforce-folder-structure`, `snapshot-before-write`). They're not suggestions ‚Äî they're structural constraints baked into the pipeline.
+
+---
+
+## Contributing
+
+This framework is a starting point, not a finished product. The agents, hooks, and steering files are designed to be extended and adapted. If you find a better way to structure test cases, a smarter hook trigger, or a new agent workflow ‚Äî improve it. The Shared Brain will learn from your changes.
