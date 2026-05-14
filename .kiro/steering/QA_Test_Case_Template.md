@@ -6,7 +6,7 @@ inclusion: manual
 
 **Purpose:** Standard template for writing test cases that import cleanly into AIO Tests (TCMS). Follow this format so all QA team members produce consistent, importable test cases.
 
-**Based on:** POS-9970 (Menu Lookup Delta Sync) — validated and imported successfully.
+**Based on:** PROJ-4570 (Module C Delta Sync) — validated and imported successfully.
 
 ---
 
@@ -207,10 +207,10 @@ Test Data:
 |--------|------|
 | Delta sync | `DeltaBased` |
 | Employees | `Employees` |
-| Shared Employees | `SharedEmployee` |
+| Shared Employees | `Module Name` |
 | Job Titles | `JobTitle` |
-| Menu Lookups | `MenuLookup`, `PortionType`, `PreparationInstruction`, `Tag` |
-| Terminal Config | `TerminalConfig`, `ScannerModels` |
+| Module Cs | `MenuLookup`, `PortionType`, `PreparationInstruction`, `Tag` |
+| Module B | `TerminalConfig`, `ScannerModels` |
 | Permissions | `PermissionCache` |
 | Error handling | `ErrorHandling` |
 | API validation | `API` |
@@ -248,4 +248,4 @@ Test Data:
 
 **Version:** 1.0
 **Last Updated:** March 17, 2026
-**Based on:** POS-9970, POS-9969, POS-9967, POS-10302 validated test case formats
+**Based on:** PROJ-4570, PROJ-4569, PROJ-4567, PROJ-5678 validated test case formats

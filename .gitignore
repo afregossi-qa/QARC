@@ -37,6 +37,10 @@ Z_OtherTickets/
 # Memory (project-specific, populated at runtime by agents)
 .kiro/memory/
 
+# Example product configs (contain company-specific info)
+examples/pos/product.md
+examples/pos/tech.md
+
 # Field triage work (local investigations, not part of framework distribution)
 field-triage/
 Field-Triage/

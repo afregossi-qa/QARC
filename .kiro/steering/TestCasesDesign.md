@@ -12,26 +12,26 @@ fileMatchPattern: '**/test_plan_*.md,**/*_Test_Cases*.md,**/*_Test_Cases*.csv'
 3. Look for execution flows to guide you in the step creation.
 
 
-# POS-9699 Platform Settings Test Cases
+# PROJ-2346 Platform Settings Test Cases
 
 **Generated from Sources:**
-- **Original JIRA Ticket POS-9699**
+- **Original JIRA Ticket PROJ-2346**
 - **Test Design Notes**
 - **Domain Knowledge: IDEA-2365_Domain_Knowledge.md**
-- **Related Ticket: POS-9698**
+- **Related Ticket: PROJ-2345**
 
 ## Test Summary Matrix
 | Test Case ID | Title | Priority | Test Type | Automation Status | Regression Potential |
 |--------------|-------|----------|-----------|-------------------|---------------------|
-| TC-POS-9699-008 | Pay Per Item - Require Cash Drawer Closure Enabled | High | Positive | Required | High |
-| TC-POS-9699-009 | Pay Per Item - Both Drawer Configurations Enabled | High | Positive | Required | High |
-| TC-POS-9699-010 | Pay Per Item - Require Full Tender Enabled Only | High | Positive | Required | High |
+| TC-PROJ-2346-008 | Pay Per Item - Require Cash Drawer Closure Enabled | High | Positive | Required | High |
+| TC-PROJ-2346-009 | Pay Per Item - Both Drawer Configurations Enabled | High | Positive | Required | High |
+| TC-PROJ-2346-010 | Pay Per Item - Require Full Tender Enabled Only | High | Positive | Required | High |
 
 ---
 
 ## Platform Settings Test Cases
 
-### TC-POS-9699-008: Pay Per Item - Require Cash Drawer Closure Enabled
+### TC-PROJ-2346-008: Pay Per Item - Require Cash Drawer Closure Enabled
 **Priority:** High  
 **Test Type:** Positive  
 **Automation Status:** Required  
@@ -90,7 +90,7 @@ Cash drawer closure required after each pay per item payment
 
 ---
 
-### TC-POS-9699-009: Pay Per Item - Both Drawer Configurations Enabled
+### TC-PROJ-2346-009: Pay Per Item - Both Drawer Configurations Enabled
 **Priority:** High  
 **Test Type:** Positive  
 **Automation Status:** Required  
@@ -151,7 +151,7 @@ Cash drawer closure required after each pay per item payment with both configura
 
 ---
 
-### TC-POS-9699-010: Pay Per Item - Require Full Tender Enabled Only
+### TC-PROJ-2346-010: Pay Per Item - Require Full Tender Enabled Only
 **Priority:** High  
 **Test Type:** Positive  
 **Automation Status:** Required  

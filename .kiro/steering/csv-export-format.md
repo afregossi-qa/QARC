@@ -19,16 +19,16 @@ Folder,Requirements,Existing Case ID,Summary,Description,Precondition,Test Steps
 
 1. **First Row (Test Case Header)**
    - Contains ALL test case metadata
-   - Folder: Feature folder name (e.g., "POS-9967 - Implement Delta based config download")
-   - Requirements: Ticket number (e.g., "POS-9967")
+   - Folder: Feature folder name (e.g., "PROJ-4567 - Implement Feature implementation")
+   - Requirements: Ticket number (e.g., "PROJ-4567")
    - Existing Case ID: Test case ID (e.g., "TC-001")
-   - Summary: Full test case title with ticket prefix and feature brief using format: `"POS-XXXX | {Feature Brief} : {Test Case Title}"` (e.g., `"POS-9967 | Delta Config Sync : Three-Entity Initial Sync"`)
+   - Summary: Full test case title with ticket prefix and feature brief using format: `"POS-XXXX | {Feature Brief} : {Test Case Title}"` (e.g., `"PROJ-4567 | Delta Config Sync : Three-Entity Initial Sync"`)
    - Description: Complete test description including objective, test data, and notes
    - Precondition: All preconditions (bullet list format with " - " prefix)
    - Test Steps: First test step with expected result
    - Expected Result: Overall expected result for entire test case
    - Priority: Priority level (e.g., "Critical", "High", "Medium")
-   - Tags: Comma-separated tags (e.g., "POS-9967,DeltaBased,Employees")
+   - Tags: Comma-separated tags (e.g., "PROJ-4567,DeltaBased,Employees")
    - Automation Status: Automation status (e.g., "To be Automated")
    - Status: MUST be "Published" for all test cases
    - AI-Automated: Whether the test case has AI-driven automation (e.g., "Yes", "No")
@@ -93,15 +93,15 @@ Always include ticket number as first tag, followed by feature-specific tags
 
 ```csv
 Folder,Requirements,Existing Case ID,Summary,Description,Precondition,Test Steps,Expected Result,Priority,Tags,Automation Status,Status,AI-Automated,AI-Generated
-"POS-9967 - Delta Config Download",POS-9967,TC-001,"POS-9967 | Delta Config Sync : Three-Entity Initial Sync","Verify POS performs full sync for all three entities on fresh startup
+"PROJ-4567 - Delta Config Download",PROJ-4567,TC-001,"PROJ-4567 | Delta Config Sync : Three-Entity Initial Sync","Verify POS performs full sync for all three entities on fresh startup
 
 Test Data:
 - Operational Unit: Test store with 10+ Employees
 - Environment: Dev or Staging","- POS v225 deployed
 - qu.txt configured with Configurations API URL
-- Till claimed","Launch POS application (fresh startup)","All three entities sync successfully via full sync, timestamps stored",Critical,"POS-9967,DeltaBased,Employees","To be Automated",Published,No,Yes
-"POS-9967 - Delta Config Download",POS-9967,TC-001,"POS-9967 | Delta Config Sync : Three-Entity Initial Sync","","","Monitor API calls during initialization","Three separate API calls captured",,"","",,,
-"POS-9967 - Delta Config Download",POS-9967,TC-001,"POS-9967 | Delta Config Sync : Three-Entity Initial Sync","","","Verify call to /api/v4/.../employees","Full sync endpoint called for Employees",,"","",,,
+- Till claimed","Launch POS application (fresh startup)","All three entities sync successfully via full sync, timestamps stored",Critical,"PROJ-4567,DeltaBased,Employees","To be Automated",Published,No,Yes
+"PROJ-4567 - Delta Config Download",PROJ-4567,TC-001,"PROJ-4567 | Delta Config Sync : Three-Entity Initial Sync","","","Monitor API calls during initialization","Three separate API calls captured",,"","",,,
+"PROJ-4567 - Delta Config Download",PROJ-4567,TC-001,"PROJ-4567 | Delta Config Sync : Three-Entity Initial Sync","","","Verify call to /api/v4/.../employees","Full sync endpoint called for Employees",,"","",,,
 ```
 
 ## Critical Rules
@@ -119,7 +119,7 @@ Test Data:
 ### Standard Tags by Feature
 - Delta-based sync: "DeltaBased"
 - Employee features: "Employees"
-- Shared Employee features: "SharedEmployee"
+- Shared Employee features: "Module Name"
 - Job Title features: "JobTitle"
 - Permission cache: "PermissionCache"
 - Error handling: "ErrorHandling"
