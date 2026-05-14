@@ -39,58 +39,70 @@ These files teach the agents about YOUR project. Edit them:
 
 | File | Purpose | Priority |
 |------|---------|----------|
-| `.kiro/steering/product.md` | Your product's domain, features, business concepts | **High** — agents use this to understand context |
-| `.kiro/steering/tech.md` | Your tech stack, API patterns, test commands | **High** — agents use this for technical decisions |
+| `.kiro/steering/product.md` | Your product's domain, features, business concepts | **High** |
+| `.kiro/steering/tech.md` | Your tech stack, API patterns, test commands | **High** |
 | `.kiro/steering/structure.md` | Folder conventions (usually fine as-is) | Low |
-| `.kiro/steering/lifecycle-states.md` | Pipeline state machine (usually fine as-is) | Low |
 
 ---
 
-## 4. Populate Memory
+## 4. Initialize Memory
 
-The `.kiro/memory/` folder is the framework's learning system. Copy the templates to get started:
+The Shared Brain uses a structured memory layout. Copy templates to create your working memory:
 
 ```bash
-cp .kiro/memory-templates/lessons_learned.md .kiro/memory/lessons_learned.md
-cp .kiro/memory-templates/pattern_registry.md .kiro/memory/pattern_registry.md
-cp .kiro/memory-templates/project_context.md .kiro/memory/project_context.md
+# Create the memory folder structure
+mkdir -p .kiro/memory/universal
+mkdir -p .kiro/memory/products/your-product
+mkdir -p .kiro/memory/platform/your-platform
+
+# Copy templates
+cp .kiro/memory-templates/universal/*.md .kiro/memory/universal/
+cp .kiro/memory-templates/products/pos/*.md .kiro/memory/products/your-product/
+```
+
+Then update `.kiro/steering/shared-brain.md` to point to your product folder:
+
+```markdown
+1. `.kiro/memory/universal/lessons_learned.md`
+2. `.kiro/memory/universal/pattern_registry.md`
+3. `.kiro/memory/products/your-product/lessons_learned.md`
+4. `.kiro/memory/products/your-product/pattern_registry.md`
+5. `.kiro/memory/products/your-product/project_context.md`
 ```
 
 | File | What it does |
 |------|-------------|
-| `project_context.md` | Your module map, service relationships, environment architecture |
-| `lessons_learned.md` | Grows automatically as agents discover patterns |
-| `pattern_registry.md` | Grows automatically as you diagnose issues |
-| `cognitive-memory-protocol.md` | **Don't edit** — this is the protocol definition (already in `.kiro/memory/`) |
+| `universal/` | Cross-product knowledge — shared across all projects |
+| `products/{name}/project_context.md` | Your module map, service relationships, architecture |
+| `products/{name}/lessons_learned.md` | Grows automatically as agents discover patterns |
+| `products/{name}/pattern_registry.md` | Grows automatically as you diagnose issues |
 
-These files start empty. They fill up as you use the pipeline — the Shared Brain hook auto-appends after every Reviewer report.
+These files start empty. They fill up as you use the pipeline — LEARN hooks auto-append after every agent run.
 
 ---
 
 ## 5. Run Your First Pipeline
 
 1. Open Kiro IDE with this workspace
-2. In chat, invoke the Expert agent with a Jira ticket:
-   ```
-   @QA-Expert-Agent Analyze ticket PROJ-123
-   ```
-   Or go to Hooks and start "Trigger Expert Analysis" hook.
-3. The agent creates the folder structure and generates:
+2. Click the **"Trigger Expert"** button in the hooks panel
+3. Provide your Jira ticket ID and sprint version
+4. The agent creates the folder structure and generates:
    - `1_Expert/logic_explanation.md`
-   - `1_Expert/test_plan_PROJ-123.md`
+   - `1_Expert/test_plan_PENDING.md`
    - `1_Expert/manual_input.md`
-4. Review the outputs, then rename `test_plan_PROJ-123.md` → `test_plan_PROJ-123_OK.md`
-5. The Validator hook triggers automatically
+5. Review the outputs, then rename `test_plan_PENDING.md` → `test_plan_OK.md`
+6. The Validator hook triggers automatically
+
+See `ONBOARDING.md` for the full step-by-step walkthrough.
 
 ---
 
 ## 6. Folder Structure Created at Runtime
 
-When you trigger the Expert agent, it creates:
 ```
 {year}/Q{quarter}/Version {version}/PROJ-{TICKET} - {description}/
 ├── 1_Expert/       ← Test plan, logic analysis, manual input
-├── 2_Validator/    ← Structured test cases, for AIO posting or CSV export
+├── 2_Validator/    ← Structured test cases, CSV export
 ├── 3_Evidence/     ← Screenshots, logs, API captures
 ├── 4_Reviewer/     ← Execution findings, closure report
 └── 5_Snapshots/    ← Auto-backups before overwrites
@@ -98,22 +110,7 @@ When you trigger the Expert agent, it creates:
 
 ---
 
-## 7. Pipeline Flow
-
-```
-Expert → [Human Review] → Validator → [Human Review] → Export → Execute → Reviewer → Closure
-                                                                              ↓
-                                                                    (UNSTABLE → Remediation loop)
-```
-
-Every `→ [Human Review] →` gate uses the file-rename convention:
-- `_PENDING.md` = agent draft, awaiting your review
-- `_OK.md` = approved, triggers next stage
-- `_UPDATED.md` = rejected with feedback, triggers revision
-
----
-
-## 8. Customization Tips
+## 7. Customization Tips
 
 - **Don't need AIO Tests?** Disable the server and skip the Exporter agent
 - **Don't use Azure DevOps?** Disable the server — Expert will rely on Jira only
@@ -123,7 +120,7 @@ Every `→ [Human Review] →` gate uses the file-rename convention:
 
 ---
 
-## 9. Troubleshooting
+## 8. Troubleshooting
 
 | Problem | Solution |
 |---------|----------|
