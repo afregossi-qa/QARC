@@ -116,20 +116,9 @@ When you trigger the Expert agent, it creates:
 
 See `.kiro/steering/` for all workflow and standards documentation.
 
----
-
-## Authors
-
-**Agostina Fregossi** — Architecture design & implementation
-**Kiro AI** — Execution engine
 
 ---
 
-## Contributing
-
-This framework is a starting point, not a finished product. The agents, hooks, and steering files are designed to be extended and adapted. If you find a better way to structure test cases, a smarter hook trigger, or a new agent workflow — improve it. The Shared Brain will learn from your changes.
-
----
 
 ## Agent Design Principles
 
@@ -170,3 +159,10 @@ QARC agents are designed to be sharp, efficient, and honest. When extending or c
 **Promote deliberately.** Elevation from `[LOGGED]` to `[PROMOTED]` is a separate, conscious step that only the Reviewer hook performs. Lightweight LEARN hooks never promote.
 
 These principles are enforced through steering files (`context_efficiency.md`, `evidence_standards.md`) and guard hooks (`enforce-folder-structure`, `snapshot-before-write`). They're not suggestions — they're structural constraints baked into the pipeline.
+
+
+## Contributing
+
+This framework is a starting point, not a finished product. The agents, hooks, and steering files are designed to be extended and adapted. If you find a better way to structure test cases, a smarter hook trigger, or a new agent workflow — improve it. The Shared Brain will learn from your changes.
+
+---
