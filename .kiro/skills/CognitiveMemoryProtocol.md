@@ -13,7 +13,7 @@ BEFORE executing any task, the agent must:
 ## Phase 2: The Relate (Execution)
 During execution, the agent must:
 1. Cross-reference requirements (Jira acceptance criteria) against implementation (PR code changes in logic_explanation.md). Identify gaps in both directions.
-2. Reference why a specific decision was made based on the memory files (e.g., "Including timezone edge case as per lessons_learned.md from POS-9967").
+2. Reference why a specific decision was made based on the memory files (e.g., "Including timezone edge case as per lessons_learned.md from PROJ-4567").
 3. Factor in `manual_input.md` domain knowledge — human testers often know product behaviors that aren't documented elsewhere.
 
 ## Phase 3: The Learning (Output)

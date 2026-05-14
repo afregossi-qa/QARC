@@ -6,8 +6,8 @@ fileMatchPattern: '**/QA_DASHBOARD.md,**/SUMMARY.md'
 # QA Dashboard Standards
 
 ## File Locations
-- **Dashboard**: `QA_DASHBOARD.md` inside each ticket's folder (e.g., `POS-9969 - Description/QA_DASHBOARD.md`)
-- **Summary**: `SUMMARY.md` inside each ticket's folder (e.g., `POS-9969 - Description/SUMMARY.md`)
+- **Dashboard**: `QA_DASHBOARD.md` inside each ticket's folder (e.g., `PROJ-4569 - Description/QA_DASHBOARD.md`)
+- **Summary**: `SUMMARY.md` inside each ticket's folder (e.g., `PROJ-4569 - Description/SUMMARY.md`)
 - Both files live alongside `logic_explanation.md`, `test_plan_POS-[ID].md`, and the `Evidence/` subfolder.
 
 ## Dashboard & Summary Lifecycle

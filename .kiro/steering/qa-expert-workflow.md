@@ -25,7 +25,7 @@ Fetch ticket data, discover existing AIO test cases, generate logic audit and te
 - If PR diff >500 lines: focus on modified logic blocks and exported functions only
 
 ### 3. AIO DISCOVERY
-- Search: `aio-tests:search_cases` with ticket ID (e.g., 'POS-9967')
+- Search: `aio-tests:search_cases` with ticket ID (e.g., 'PROJ-4567')
 - If found: `aio-tests:get_case` for each (max 30 cases)
 - Present table: AIO Key | Title | Priority | Steps Count
 - Ask user: (A) Append as-is, (B) Adapt/merge, (C) Ignore
