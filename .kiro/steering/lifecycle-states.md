@@ -14,7 +14,7 @@ Each ticket folder may contain a `.state.json` file that tracks pipeline phase h
 
 ```json
 {
-  "ticketId": "POS-9967",
+  "ticketId": "PROJ-9967",
   "currentPhase": "VALIDATOR_PENDING",
   "phases": {
     "INIT": { "enteredAt": "2026-03-15T10:00:00Z", "exitedAt": "2026-03-15T10:05:00Z" },

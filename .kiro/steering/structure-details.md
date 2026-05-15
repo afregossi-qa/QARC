@@ -10,7 +10,7 @@ fileMatchPattern: "**/1_Expert/**,**/2_Validator/**,**/3_Evidence/**,**/4_Review
 
 ### Root Level
 - `{year}/{quarter}/Version {number}/`: Quarterly grouping of sprint version folders
-- `POS-{ticket-number} - {description}/`: Feature-specific test documentation folders
+- `{TICKET_ID} - {description}/`: Feature-specific test documentation folders (TICKET_ID is the full Jira key, e.g., POS-9967, ACV2-642)
 - `Documentation/`: General framework documentation (not ticket-specific)
 
 ### Quarterly & Version Folder Convention
@@ -36,7 +36,7 @@ fileMatchPattern: "**/1_Expert/**,**/2_Validator/**,**/3_Evidence/**,**/4_Review
 
 ### MUST go in 2_Validator/
 - `FINAL_TEST_CASES*.md`
-- `POS-*_TCMS_Import.csv`
+- `*_TCMS_Import.csv`
 - `FINAL_QA_SUMMARY*.md`
 - `*_PENDING.md`, `*_OK.md`, `*_API.md`
 
@@ -56,9 +56,9 @@ fileMatchPattern: "**/1_Expert/**,**/2_Validator/**,**/3_Evidence/**,**/4_Review
 - Iteration-labeled baselines (e.g., `_BASELINE_R1.md`)
 
 ### ALLOWED in 6_Automation/
-- `REGRESSION_TEST_CASES_POS-{ticket}.md`
-- `automation_steps_POS-{ticket}.md`
-- `Automation_Blueprint_POS-{ticket}.md`
+- `REGRESSION_TEST_CASES_{TICKET_ID}.md`
+- `automation_steps_{TICKET_ID}.md`
+- `Automation_Blueprint_{TICKET_ID}.md`
 - `scripts/*.py`, `scripts/*.java`
 - `logs/*`
 
@@ -76,7 +76,7 @@ fileMatchPattern: "**/1_Expert/**,**/2_Validator/**,**/3_Evidence/**,**/4_Review
 - Additional test cases from exploratory testing
 - Manual testing observations and notes
 
-### test_plan_POS-{ticket}.md
+### test_plan_{TICKET_ID}.md
 - Test strategy and scope
 - Test cases organized by category
 - Test coverage matrix

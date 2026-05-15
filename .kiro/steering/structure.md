@@ -8,7 +8,7 @@ inclusion: auto
 ## Ticket Folder Layout
 
 ```
-POS-{ticket} - {description}/
+{TICKET_ID} - {description}/
 ├── 1_Expert/       # logic_explanation, test_plan, manual_input
 ├── 2_Validator/    # FINAL_TEST_CASES, CSV export, QA summary
 ├── 3_Evidence/     # Raw data ONLY (JSON, PNG, JPG)
@@ -17,7 +17,7 @@ POS-{ticket} - {description}/
 └── 6_Automation/   # Test scripts and logs (optional)
 ```
 
-Tickets live in `{year}/Q{N}/Version {V}/`. Hooks use `**` globs — depth doesn't matter.
+Tickets live in `{year}/Q{N}/Version {V}/`. The `{TICKET_ID}` is the full Jira key (e.g., `POS-9967`, `ACV2-642`, `QUPOS-123`). Hooks use `**` globs — depth doesn't matter.
 
 ## Suffix Convention
 

@@ -168,6 +168,8 @@ Each test case spans **multiple rows** — one row per test step.
 
 ### CSV Example (2 test cases)
 
+> In the example below, `POS-XXXX` is a placeholder. Replace with the actual Jira ticket ID from the folder name (e.g., `POS-10681`, `ACV2-642`, `QUPOS-123`).
+
 ```csv
 Folder,Requirements,Existing Case ID,Summary,Description,Precondition,Test Steps,Expected Result,Priority,Tags,Automation Status
 "POS-XXXX - Feature Name",POS-XXXX,TC-001,"POS-XXXX - Full Sync on Startup","Verify the system performs full sync on startup

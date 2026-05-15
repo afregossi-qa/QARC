@@ -27,7 +27,7 @@ Map to 11-column CSV structure per `@csv-export-format.md`:
 
 ### 4. EXPORT
 Write to Validator/:
-- `POS-{TICKET_ID}_TCMS_Import.csv`
+- `{TICKET_ID}_TCMS_Import.csv`
 
 ## Output Rules
 | Rule | Requirement |

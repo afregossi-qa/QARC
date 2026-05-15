@@ -48,14 +48,14 @@ Finalize QA assets by merging AI drafts with human expertise and identifying hig
 Write to `Validator/` folder:
 - `FINAL_TEST_CASES_{TICKET_ID}.md` — Formatted cases with `Automation Status` and `Regression Potential` in each TC header AND in the Test Summary Matrix (local-only tags, never synced to AIO).
 - `FINAL_QA_SUMMARY_{TICKET_ID}.md` — Executive overview, risk assessment, and a **Regression Priority List** (highlighting all [High] cases) with automation readiness metrics.
-- `POS-{TICKET_ID}_TCMS_Import.csv` — TCMS-compatible export.
+- `{TICKET_ID}_TCMS_Import.csv` — TCMS-compatible export.
 
 ## Input/Output Mapping
 | Read From | Write To |
 |-----------|----------|
 | Expert/manual_input.md | Validator/FINAL_TEST_CASES |
 | Expert/test_plan_*.md | Validator/FINAL_QA_SUMMARY |
-| Expert/logic_explanation.md | Validator/POS-{TICKET_ID}_TCMS_Import |
+| Expert/logic_explanation.md | Validator/{TICKET_ID}_TCMS_Import |
 
 ## Quality Rules
 - **Gatekeeping**: If a test case is tagged **[High]**, ensure the preconditions are extremely detailed, as this will be the input for the **Step Translator**.
