@@ -24,7 +24,7 @@ inclusion: manual
 
 1. Read `Validator/FINAL_TEST_CASES_*_OK.md`
 2. Apply @csv-export-format.md
-3. Save `Validator/POS-{ticketId}_TCMS_Import.csv`
+3. Save `Validator/{ticketId}_TCMS_Import.csv`
 4. Update `.state.json` via @LifecycleStateManager.md transitionTo: phase=EXECUTION_PENDING, agent=QA-Exporter-Agent, note="CSV export generated from approved test cases."
 
 ## VALIDATOR_API → AIO Sync Workflow

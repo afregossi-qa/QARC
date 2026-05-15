@@ -14,7 +14,7 @@ Sync validated test cases to AIO Tests API. Full CRUD: create, update, delete.
 
 ### 1. LOAD PRIOR STATE
 - Read `AIO_SYNC_LOG.md` from ticket root (if exists)
-- Parse table: Local ID (TC-01) → AIO Key (POS-TC-8880)
+- Parse table: Local ID (TC-01) → AIO Key (e.g., QUPOS-TC-8880)
 - No log = create-only mode
 
 ### 2. PARSE CURRENT STATE
@@ -23,7 +23,7 @@ Sync validated test cases to AIO Tests API. Full CRUD: create, update, delete.
 - **EXCLUDE local-only fields**: `Automation Status: Required | Manual` and `Regression Potential: High | Medium | Low` from TC headers are internal pipeline tags for the Validator, Regression Architect, and Translator agents. Do NOT send these to AIO. The AIO `automationStatus` field uses its own values (`To Be Automated`, `In Progress`, `Automated`, `Manual`).
 
 ### 2.1 FORMAT TEST CASE TITLES
-- Every test case title MUST follow: `POS-XXXX | {Feature Brief} : {Test Case Title}`
+- Every test case title MUST follow: `{TICKET_ID} | {Feature Brief} : {Test Case Title}`
 - The **Feature Brief** is a short 2-5 word descriptor of the ticket's feature area, derived from the folder name or Jira summary
 - Example: `PROJ-1234 | SOD Forecast Print : Hourly Section Display with Data`
 - Example: `PROJ-1234 | TC Activity Reload : Auto-logoff from Time Clock screen — no reload`

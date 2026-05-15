@@ -7,7 +7,7 @@ Manages the `.state.json` file in ticket folders to track pipeline phase transit
 
 ```json
 {
-  "ticketId": "POS-XXXX",
+  "ticketId": "{TICKET_ID}",
   "currentPhase": "VALIDATOR_PENDING",
   "phases": {
     "INIT": { "enteredAt": "ISO", "exitedAt": "ISO" },
