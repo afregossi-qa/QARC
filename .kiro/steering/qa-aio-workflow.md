@@ -91,7 +91,15 @@ Write `AIO_SYNC_LOG.md` to ticket root:
 - Source file's `Automation Status: Manual/Required` is an internal pipeline tag
 - AIO field must always be `To Be Automated` on create/update
 
+### Custom Fields: AI-Generated & AI-Automated
+- **AI-Generated**: Always `"Yes"` for pipeline-generated test cases (all TCs from the Validator output)
+- **AI-Automated**: Check `6_Automation/` folder in the ticket directory:
+  - If automation scripts exist for the TC → `"Yes"`
+  - If no scripts exist → `"No"`
+- These fields are NOT available via REST API — include determination in sync log
+- Sync log MUST include a table showing the values per TC for manual/CSV update
+
 ### Sync Log: Must match reference format
 - Reference: `2026/Q1/Version 227/POS-10267 - .../AIO_SYNC_LOG.md`
-- Required sections: Sync Summary, Update History, Test Case Mapping, Priority Distribution, AIO Tests Links, Notes
-- Must include `⚠️ Manual action required: Add tags and Jira links in AIO UI`
+- Required sections: Sync Summary, Update History, Test Case Mapping, Priority Distribution, Custom Fields Status, AIO Tests Links, Notes
+- Must include `⚠️ Manual action required: Add tags, Jira links, and set AI-Generated/AI-Automated fields in AIO UI or via CSV import`

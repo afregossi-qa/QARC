@@ -23,6 +23,28 @@ Activate this skill when pushing test cases to AIO Tests via the `aio-tests` MCP
 | Test Steps | `steps` | Array of `{ step, expectedResult }` objects |
 | Jira Ticket | `jiraTicket` | Only works on `create_case` (not guaranteed to persist) |
 | Tags | `tags` | Only works on `create_case` (not guaranteed to persist) |
+| AI-Generated | *(custom field)* | `"Yes"` for all pipeline-generated TCs. **Not available via REST API** — set via CSV import only. |
+| AI-Automated | *(custom field)* | `"Yes"` if automation scripts exist (6_Automation/ has scripts for this TC), `"No"` otherwise. **Not available via REST API** — set via CSV import only. |
+
+## Custom Fields: AI-Generated & AI-Automated (Mandatory)
+
+These two custom fields MUST be populated for every test case synced to AIO:
+
+| Field | Value Logic | Default |
+|-------|-------------|---------|
+| **AI-Generated** | `"Yes"` if the test case was authored by the QA pipeline (Expert → Validator agents). `"No"` only if manually written by a human tester. | `"Yes"` (all pipeline TCs) |
+| **AI-Automated** | `"Yes"` if the Automation Pipeline (Architect → Translator → Executor) has produced executable scripts in `6_Automation/`. `"No"` if no automation scripts exist yet. | `"No"` (until automation runs) |
+
+### How to Populate
+- **REST API (`create_case` / `update_case`)**: These fields are NOT supported by the AIO REST API. The agent MUST note them in the `AIO_SYNC_LOG.md` for manual action or CSV import.
+- **CSV Import**: Include as columns in the export CSV. The Exporter Agent handles this automatically via `@csv-export-format.md`.
+- **Sync Log Reminder**: Every `AIO_SYNC_LOG.md` MUST include a note: `⚠️ Set AI-Generated=Yes and AI-Automated={Yes/No} via AIO UI or CSV import for all synced cases.`
+
+### Determination Logic for AI-Automated
+1. Check if `6_Automation/` folder exists in the ticket directory
+2. If scripts (`.java`, `.py`) exist for the specific TC → `"Yes"`
+3. If no scripts exist or `6_Automation/` is empty → `"No"`
+4. If the local `Automation Status` tag is `Required` but no scripts exist yet → `"No"` (will become `"Yes"` after Translator/Executor run)
 
 ## API Limitations (Confirmed)
 - **Tags**: Accepted in create payload but do NOT persist via REST API. Must use AIO UI or CSV import.
@@ -111,6 +133,7 @@ Before calling `create_case` or `update_case`, verify EVERY case against this ch
 | 8 | Description/precondition use real newlines | `"line1\\nline2"` (escaped literal) | Multi-line string with actual line breaks in the parameter value |
 | 9 | Precondition sub-items use `  * ` indent | `Terminal 1: ...` on same line | `  * Terminal 1: AFREGO-DEV2 / 192.168.1.6` as indented sub-bullet |
 | 10 | Source file is `_API.md` when it exists | Reading `_UPDATED.md` or `_PENDING.md` | Always prefer `_API.md` > `_OK.md` > `_PENDING.md` |
+| 11 | AI-Generated/AI-Automated noted in sync log | No mention of custom fields | `⚠️ Set AI-Generated=Yes and AI-Automated=No via AIO UI or CSV import` |
 
 **This checklist is non-negotiable. Apply it on EVERY create and update call.**
 

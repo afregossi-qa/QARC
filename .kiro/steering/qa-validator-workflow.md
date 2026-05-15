@@ -57,6 +57,50 @@ Write to `Validator/` folder:
 | Expert/test_plan_*.md | Validator/FINAL_QA_SUMMARY |
 | Expert/logic_explanation.md | Validator/{TICKET_ID}_TCMS_Import |
 
+## Post-Revision Integrity Check (MANDATORY after applying feedback)
+
+When revising test cases based on QA feedback (`_UPDATED.md` comments), you MUST perform this integrity check BEFORE writing the final output:
+
+### 1. Count Verification
+- Count the total test cases in the **source file** (the `_UPDATED.md` or prior version)
+- Count the total test cases in your **output draft**
+- If counts differ, verify the difference is INTENTIONAL (explicitly requested removals/additions in the feedback)
+- If any TC is missing that was NOT explicitly removed by feedback → **RE-ADD IT** with full content
+
+### 2. Sequential Numbering Audit
+- All TC IDs must be sequential with NO gaps: TC-001, TC-002, TC-003, ..., TC-NNN
+- If TCs were removed, ALL subsequent TCs must be renumbered to close the gap
+- The Test Summary Matrix MUST match the detailed sections 1:1 (same count, same IDs, same titles)
+
+### 3. Content Completeness Check
+For EVERY test case in the output, verify it has ALL required sections:
+- `### TC-{TICKET_ID}-NNN: {Title}` (header)
+- `**Priority:**` line
+- `**Test Type:**` line
+- `**Automation Status:**` line
+- `**Regression Potential:**` line
+- `**Source:**` line
+- `**Preconditions:**` section (with bullet list)
+- `**Test Steps:**` section (numbered steps with `**Expected:**` for each)
+- `**Expected Result:**` section
+- `**Test Data:**` section
+
+If ANY test case is missing a section, reconstruct it from the source file or Expert inputs.
+
+### 4. Matrix-to-Detail Sync
+- Every row in the Test Summary Matrix MUST have a corresponding detailed TC section below
+- Every detailed TC section MUST have a corresponding row in the Matrix
+- Mismatches = FAILURE — fix before writing output
+
+### 5. Feedback Application Audit
+At the top of the output file, add a revision comment block documenting:
+- Which TCs were removed (and why)
+- Which TCs were added (and why)
+- Which TCs had preconditions/steps modified
+- Final TC count before and after
+
+**FAILURE MODE**: If you cannot reconstruct a missing TC from available sources, flag it with `<!-- MISSING: TC-NNN content could not be recovered — manual review required -->` in the output and note it in the revision comment.
+
 ## Quality Rules
 - **Gatekeeping**: If a test case is tagged **[High]**, ensure the preconditions are extremely detailed, as this will be the input for the **Step Translator**.
 - Human input ALWAYS overrides AI logic.
