@@ -12,13 +12,14 @@ inclusion: manual
 
 ## EXPERT_OK → Validator Workflow
 
-1. Read `Expert/test_plan_*.md`, `Expert/manual_input.md`, `Expert/logic_explanation.md`
-2. Apply @TestCasesDesign.md formatting
-3. Use @ContextIntegrator.md to merge (human overrides AI)
-4. Use @TestCaseStandardizer.md for format
-5. Save `Validator/FINAL_TEST_CASES_{ticketId}_PENDING.md`
-6. Save `Validator/FINAL_QA_SUMMARY.md`
-7. Update `.state.json` via @LifecycleStateManager.md transitionTo: phase=VALIDATOR_PENDING, agent=QA-Validator-Agent, note="Generated FINAL_TEST_CASES from approved test plan."
+1. If `Validator/FINAL_TEST_CASES_*` exists, read it first — extract `## QA Comments` section
+2. Read `Expert/test_plan_*.md`, `Expert/manual_input.md`, `Expert/logic_explanation.md`
+3. Apply @TestCasesDesign.md formatting
+4. Use @ContextIntegrator.md to merge (priority: QA Comments > manual_input > test_plan > logic_explanation)
+5. Use @TestCaseStandardizer.md for format
+6. Save `Validator/FINAL_TEST_CASES_{ticketId}_PENDING.md` (with empty `## QA Comments` section at top)
+7. Save `Validator/FINAL_QA_SUMMARY.md`
+8. Update `.state.json` via @LifecycleStateManager.md transitionTo: phase=VALIDATOR_PENDING, agent=QA-Validator-Agent, note="Generated FINAL_TEST_CASES from approved test plan."
 
 ## VALIDATOR_CSV → Exporter Workflow
 
