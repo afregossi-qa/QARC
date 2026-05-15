@@ -9,6 +9,7 @@ How to adapt this framework to your project.
 - [Kiro IDE](https://kiro.dev) installed
 - [uv](https://docs.astral.sh/uv/getting-started/installation/) — Python package runner (for Atlassian MCP server)
 - [Node.js](https://nodejs.org/) — runs the AIO Tests MCP server and Azure DevOps MCP
+- [.NET SDK 8.0+](https://dotnet.microsoft.com/download) — required for the LiteDB evidence reader (`Tools/LiteDbReader`)
 - A Jira project with tickets to test
 - (Optional) AIO Tests for test case management
 - (Optional) Azure DevOps for PR review integration

@@ -18,6 +18,8 @@ POS_Automation_UI/
 
 # Local tools (include source, exclude build outputs)
 Tools/Start_WinAppDriver.bat
+Tools/**/bin/
+Tools/**/obj/
 Z_Testing/
 
 # Documentation (published to Confluence — not needed in repo)
@@ -47,11 +49,10 @@ Field-Triage/
 .kiro/agents/qa-field-triage-agent.json
 .kiro/skills/qa-field-triage-prompt.md
 .kiro/hooks/trigger-field-triage.kiro.hook
-.kiro/steering/litedb-capability.md
+
 .kiro/steering/regression-mapping-logic.md
 .kiro/memory-templates/templates/relational-investigation-template.md
 .kiro/agents/Documents/
-Tools/
 
 # Automation-related (not part of core QA lifecycle — documented separately)
 POS_Automation_BACK/
