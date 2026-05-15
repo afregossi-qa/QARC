@@ -25,9 +25,9 @@ Sync validated test cases to AIO Tests API. Full CRUD: create, update, delete.
 ### 2.1 FORMAT TEST CASE TITLES
 - Every test case title MUST follow: `{TICKET_ID} | {Feature Brief} : {Test Case Title}`
 - The **Feature Brief** is a short 2-5 word descriptor of the ticket's feature area, derived from the folder name or Jira summary
-- Example: `POS-10267 | SOD Forecast Print : Hourly Section Display with Data`
-- Example: `POS-10563 | TC Activity Reload : Auto-logoff from Time Clock screen — no reload`
-- Extract ticket ID from folder name (e.g., `POS-10267 - POS Start of Day - Print Forecast by Hour` → `POS-10267`)
+- Example: `PROJ-1234 | SOD Forecast Print : Hourly Section Display with Data`
+- Example: `PROJ-1234 | TC Activity Reload : Auto-logoff from Time Clock screen — no reload`
+- Extract ticket ID from folder name (e.g., `PROJ-1234 - POS Start of Day - Print Forecast by Hour` → `PROJ-1234`)
 - The feature brief MUST be identical across all test cases for the same ticket
 - If title already has the full prefix, do not duplicate it
 
@@ -100,6 +100,6 @@ Write `AIO_SYNC_LOG.md` to ticket root:
 - Sync log MUST include a table showing the values per TC for manual/CSV update
 
 ### Sync Log: Must match reference format
-- Reference: `2026/Q1/Version 227/POS-10267 - .../AIO_SYNC_LOG.md`
+- Reference: `2026/Q1/Version 227/PROJ-1234 - .../AIO_SYNC_LOG.md`
 - Required sections: Sync Summary, Update History, Test Case Mapping, Priority Distribution, Custom Fields Status, AIO Tests Links, Notes
 - Must include `⚠️ Manual action required: Add tags, Jira links, and set AI-Generated/AI-Automated fields in AIO UI or via CSV import`
