@@ -18,21 +18,21 @@ inclusion: manual
 4. Use @TestCaseStandardizer.md for format
 5. Save `Validator/FINAL_TEST_CASES_{ticketId}_PENDING.md`
 6. Save `Validator/FINAL_QA_SUMMARY.md`
-7. Update `.state.json`: phase=VALIDATOR_PENDING, lastAgent=QA-Validator-Agent
+7. Update `.state.json` via @LifecycleStateManager.md transitionTo: phase=VALIDATOR_PENDING, agent=QA-Validator-Agent, note="Generated FINAL_TEST_CASES from approved test plan."
 
 ## VALIDATOR_CSV → Exporter Workflow
 
 1. Read `Validator/FINAL_TEST_CASES_*_OK.md`
 2. Apply @csv-export-format.md
 3. Save `Validator/POS-{ticketId}_TCMS_Import.csv`
-4. Update `.state.json`: phase=EXECUTION_PENDING, lastAgent=QA-Exporter-Agent
+4. Update `.state.json` via @LifecycleStateManager.md transitionTo: phase=EXECUTION_PENDING, agent=QA-Exporter-Agent, note="CSV export generated from approved test cases."
 
 ## VALIDATOR_API → AIO Sync Workflow
 
 1. Read `Validator/FINAL_TEST_CASES_*_OK.md`
 2. Use AIO Tests MCP tools to sync
 3. Save `AIO_SYNC_LOG.md`
-4. Update `.state.json`: phase=EXECUTION_PENDING, lastAgent=QA-AIO-Direct-Agent
+4. Update `.state.json` via @LifecycleStateManager.md transitionTo: phase=EXECUTION_PENDING, agent=QA-AIO-Direct-Agent, note="Test cases synced to AIO Tests."
 
 ## REVIEWER_PENDING → Reviewer Workflow
 
@@ -44,7 +44,7 @@ inclusion: manual
 6. Save `Reviewer/EXECUTION_FINDINGS_{ticketId}.md`
 7. Save `Reviewer/FINAL_CLOSURE_REPORT_{ticketId}.md`
 8. Determine verdict (STABLE/UNSTABLE)
-9. Update `.state.json`: phase=verdict, lastAgent=QA-Evidence-Reviewer-Agent
+9. Update `.state.json` via @LifecycleStateManager.md setVerdict: verdict={STABLE|UNSTABLE}, agent=QA-Evidence-Reviewer-Agent, note="Verdict based on evidence analysis: {brief reason}."
 
 ## UNSTABLE → Remediation Workflow
 
@@ -54,4 +54,4 @@ inclusion: manual
 4. Update/create `REMEDIATION_LOG.md`
 5. Adjust test cases based on failures
 6. Save `Validator/FINAL_TEST_CASES_*_PENDING.md`
-7. Update `.state.json`: phase=REMEDIATION_R{N}, lastAgent=Remediation-Workflow
+7. Update `.state.json` via @LifecycleStateManager.md transitionTo: phase=REMEDIATION_R{N}, agent=Remediation-Workflow, note="Remediation round {N}: adjusted {count} test cases based on failures."

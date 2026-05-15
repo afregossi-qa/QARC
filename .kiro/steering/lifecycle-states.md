@@ -10,7 +10,7 @@ description: Deprecated state machine documentation - kept for audit reference o
 ## Overview
 Each ticket folder may contain a `.state.json` file that tracks pipeline phase history for audit purposes. This file is no longer used for routing — the file-rename suffix convention drives all pipeline transitions.
 
-## State File Schema
+## State File Schema (v2 — with Audit Log)
 
 ```json
 {
@@ -25,9 +25,59 @@ Each ticket folder may contain a `.state.json` file that tracks pipeline phase h
   "lastAgent": "QA-Validator-Agent",
   "lastUpdated": "2026-03-15T11:30:00Z",
   "remediationCount": 0,
-  "verdict": null
+  "verdict": null,
+  "auditLog": [
+    {
+      "timestamp": "2026-03-15T10:00:00Z",
+      "agent": "ProjectHydrator",
+      "action": "initState",
+      "fromPhase": null,
+      "toPhase": "INIT",
+      "note": "Ticket folder created and hydrated."
+    },
+    {
+      "timestamp": "2026-03-15T10:05:00Z",
+      "agent": "QA-Expert-Agent",
+      "action": "transitionTo",
+      "fromPhase": "INIT",
+      "toPhase": "EXPERT_DRAFT",
+      "note": "Expert started analysis."
+    },
+    {
+      "timestamp": "2026-03-15T11:00:00Z",
+      "agent": "human",
+      "action": "transitionTo",
+      "fromPhase": "EXPERT_DRAFT",
+      "toPhase": "EXPERT_OK",
+      "note": "Expert outputs approved."
+    },
+    {
+      "timestamp": "2026-03-15T11:30:00Z",
+      "agent": "QA-Validator-Agent",
+      "action": "transitionTo",
+      "fromPhase": "EXPERT_OK",
+      "toPhase": "VALIDATOR_PENDING",
+      "note": "Generated FINAL_TEST_CASES from approved test plan."
+    }
+  ]
 }
 ```
+
+### Audit Log Entry Schema
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `timestamp` | ISO 8601 | Yes | When the action occurred |
+| `agent` | string | Yes | Agent name or `"human"` |
+| `action` | enum | Yes | `initState`, `transitionTo`, `setVerdict`, `note` |
+| `fromPhase` | string/null | Yes | Previous phase (null for init) |
+| `toPhase` | string/null | Yes | New phase (null for notes) |
+| `note` | string | Yes | What happened and why (max 120 chars) |
+
+### Rules
+- **Never overwrite** `auditLog` — always append.
+- The deprecated `notes` field (singular string) should not be used.
+- If a `.state.json` has no `auditLog` key, backfill from `phases` history on next write.
 
 ## Phase Definitions
 
@@ -72,18 +122,16 @@ INIT → EXPERT_DRAFT → EXPERT_OK → VALIDATOR_PENDING → VALIDATOR_OK
 ## Usage in Hooks
 
 Hooks should update `.state.json` when:
-1. Entering a new phase (set `enteredAt`, clear `exitedAt`)
+1. Entering a new phase (set `enteredAt`, clear `exitedAt`, append to `auditLog`)
 2. Exiting a phase (set `exitedAt`)
-3. Changing verdict (set `verdict` field)
-4. Starting remediation (increment `remediationCount`)
+3. Changing verdict (set `verdict` field, append to `auditLog`)
+4. Starting remediation (increment `remediationCount`, append to `auditLog`)
+5. Adding observations or corrections (append `"action": "note"` entry)
 
 Example update in hook prompt:
 ```
-After saving outputs, update .state.json:
-- Set currentPhase to "VALIDATOR_PENDING"
-- Set phases.VALIDATOR_PENDING.enteredAt to current ISO timestamp
-- Set lastAgent to "QA-Validator-Agent"
-- Set lastUpdated to current ISO timestamp
+After saving outputs, update .state.json via @LifecycleStateManager.md:
+- Call transitionTo(ticketPath, "VALIDATOR_PENDING", "QA-Validator-Agent", "Generated FINAL_TEST_CASES from approved test plan.")
 ```
 
 ## State-Based Pipeline Router
