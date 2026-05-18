@@ -104,6 +104,13 @@ server.tool(
   }
 );
 
+// Helper: convert literal \n escape sequences to actual newline characters
+// AIO Tests renders actual newlines as line breaks (same as CSV import behavior)
+function formatText(text) {
+  if (!text) return text;
+  return text.replace(/\\n/g, "\n");
+}
+
 // --- Tool: create_case ---
 server.tool(
   "create_case",
@@ -111,28 +118,33 @@ server.tool(
   {
     projectKey: z.string().optional().describe("Jira project key"),
     title: z.string().describe("Test case title"),
-    description: z.string().optional().describe("Test case description/objective"),
-    precondition: z.string().optional().describe("Preconditions text"),
+    description: z.string().optional().describe("Test case description/objective. Use \\n for line breaks (auto-converted to HTML)."),
+    precondition: z.string().optional().describe("Preconditions text. Use \\n for line breaks (auto-converted to HTML)."),
     priority: z.string().optional().describe("Priority name (e.g., Critical, High, Medium)"),
     automationStatus: z.string().optional().describe("Automation status (e.g., To Be Automated, Manual)"),
     folderID: z.number().optional().describe("Folder ID to place the case in"),
     jiraTicket: z.string().optional().describe("Jira issue key to link (e.g., POS-9970)"),
     tags: z.array(z.string()).optional().describe("Array of tag names"),
+    customFields: z.array(z.object({
+      ID: z.number().describe("Custom field ID (e.g., 8 for AI-Automated, 9 for AI-Generated)"),
+      value: z.any().describe("Custom field value (e.g., true/false for Boolean, string for text)")
+    })).optional().describe("Array of custom field values to set"),
     steps: z.array(z.object({
       step: z.string().describe("Step action description"),
       expectedResult: z.string().optional().describe("Expected result for this step")
     })).optional().describe("Array of test steps")
   },
-  async ({ projectKey, title, description, precondition, priority, automationStatus, folderID, jiraTicket, tags, steps }) => {
+  async ({ projectKey, title, description, precondition, priority, automationStatus, folderID, jiraTicket, tags, customFields, steps }) => {
     const key = projectKey || PROJECT_KEY;
     const body = { title, scriptType: { name: "Classic" } };
-    if (description) body.description = description;
-    if (precondition) body.precondition = precondition;
+    if (description) body.description = formatText(description);
+    if (precondition) body.precondition = formatText(precondition);
     if (priority) body.priority = { name: priority };
     if (automationStatus) body.automationStatus = { name: automationStatus };
     if (folderID) body.folder = { ID: folderID };
     if (jiraTicket) body.jiraIssueKey = jiraTicket;
     if (tags && tags.length > 0) body.tags = tags.map(t => ({ name: t }));
+    if (customFields && customFields.length > 0) body.customFields = customFields;
     if (steps && steps.length > 0) {
       body.steps = steps.map((s, i) => ({
         step: s.step,
@@ -157,17 +169,21 @@ server.tool(
     projectKey: z.string().optional().describe("Jira project key"),
     caseKey: z.string().describe("Test case key (e.g., POS-TC-8879)"),
     title: z.string().optional().describe("New title"),
-    description: z.string().optional().describe("New description"),
-    precondition: z.string().optional().describe("New preconditions"),
+    description: z.string().optional().describe("New description. Use \\n for line breaks (auto-converted to HTML)."),
+    precondition: z.string().optional().describe("New preconditions. Use \\n for line breaks (auto-converted to HTML)."),
     priority: z.string().optional().describe("Priority name (e.g., Critical, High, Medium)"),
     automationStatus: z.string().optional().describe("Automation status"),
     folderID: z.number().optional().describe("Folder ID to move the case to"),
+    customFields: z.array(z.object({
+      ID: z.number().describe("Custom field ID (e.g., 8 for AI-Automated, 9 for AI-Generated)"),
+      value: z.any().describe("Custom field value (e.g., true/false for Boolean, string for text)")
+    })).optional().describe("Array of custom field values to set"),
     steps: z.array(z.object({
       step: z.string(),
       expectedResult: z.string().optional()
     })).optional().describe("Array of test steps (replaces existing steps)")
   },
-  async ({ projectKey, caseKey, title, description, precondition, priority, automationStatus, folderID, steps }) => {
+  async ({ projectKey, caseKey, title, description, precondition, priority, automationStatus, folderID, customFields, steps }) => {
     const key = projectKey || PROJECT_KEY;
 
     // GET existing case first (PUT is a full replace, omitted fields get wiped)
@@ -183,13 +199,20 @@ server.tool(
     };
 
     // Merge each field: use caller's value if provided, otherwise keep existing
-    body.description = description !== undefined ? description : (existing.description || "");
-    body.precondition = precondition !== undefined ? precondition : (existing.precondition || "");
+    body.description = description !== undefined ? formatText(description) : (existing.description || "");
+    body.precondition = precondition !== undefined ? formatText(precondition) : (existing.precondition || "");
     body.priority = priority ? { name: priority } : (existing.priority || undefined);
     body.automationStatus = automationStatus ? { name: automationStatus } : (existing.automationStatus || undefined);
     body.folder = folderID ? { ID: folderID } : (existing.folder || undefined);
     body.status = existing.status || undefined;
     body.caseType = existing.caseType || undefined;
+
+    // Custom fields: merge caller's values with existing
+    if (customFields && customFields.length > 0) {
+      body.customFields = customFields;
+    } else if (existing.customFields) {
+      body.customFields = existing.customFields;
+    }
 
     if (steps) {
       body.steps = steps.map((s, i) => ({
@@ -267,6 +290,10 @@ server.tool(
       folderID: z.number().optional(),
       jiraTicket: z.string().optional(),
       tags: z.array(z.string()).optional(),
+      customFields: z.array(z.object({
+        ID: z.number(),
+        value: z.any()
+      })).optional(),
       steps: z.array(z.object({
         step: z.string(),
         expectedResult: z.string().optional()
@@ -278,13 +305,14 @@ server.tool(
     const results = [];
     for (const tc of cases) {
       const body = { title: tc.title, scriptType: { name: "Classic" } };
-      if (tc.description) body.description = tc.description;
-      if (tc.precondition) body.precondition = tc.precondition;
+      if (tc.description) body.description = formatText(tc.description);
+      if (tc.precondition) body.precondition = formatText(tc.precondition);
       if (tc.priority) body.priority = { name: tc.priority };
       if (tc.automationStatus) body.automationStatus = { name: tc.automationStatus };
       if (tc.folderID) body.folder = { ID: tc.folderID };
       if (tc.jiraTicket) body.jiraIssueKey = tc.jiraTicket;
       if (tc.tags && tc.tags.length > 0) body.tags = tc.tags.map(t => ({ name: t }));
+      if (tc.customFields && tc.customFields.length > 0) body.customFields = tc.customFields;
       if (tc.steps && tc.steps.length > 0) {
         body.steps = tc.steps.map((s, i) => ({
           step: s.step,
