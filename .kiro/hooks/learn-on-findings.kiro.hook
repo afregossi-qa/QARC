@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Learn on Findings Update",
+  "description": "When an expert analysis, verification analysis, or evidence JSON file is updated in a ticket folder, prompts the agent to extract new lessons and append them to the shared brain (lessons_learned.md and pattern_registry.md).",
+  "version": "1",
+  "when": {
+    "type": "postToolUse",
+    "toolTypes": [
+      "write"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Check if the file just written is inside a ticket folder's 1_Expert/ or 3_Evidence/ path AND contains new findings (look for keywords: \"REVISED\", \"Discovery\", \"UPDATED\", \"Root Cause\", \"confirmed\", \"new_investigation\"). If YES: extract the key lesson(s) and append them to `.kiro/memory/products/pos/lessons_learned.md` (use the standard format: [DATE] [TICKET] [LOGGED] [FIELD] — lesson). Also check if a new error signature or diagnostic pattern should be added to `.kiro/memory/products/pos/pattern_registry.md`. Deduplicate against existing entries before appending. If the file does NOT contain new findings or is not in 1_Expert/ or 3_Evidence/, do nothing."
+  }
+}
