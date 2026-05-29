@@ -20,9 +20,27 @@ Fetch ticket data, discover existing AIO test cases, generate logic audit and te
 - Create `.state.json` at ticket root with INIT phase
 
 ### 2. FETCH
-- Jira: `jira_get_issue` for ticket details, acceptance criteria
-- Azure: `repo_search_commits` and `repo_list_pull_request_threads` for PR diffs
+- **Main ticket**: `jira_get_issue` with `fields=*all` and `comment_limit=50` — read ALL comments for dev clarifications, design changes, and testing notes
+- **Linked tickets**: For EVERY linked ticket (blocks, is blocked by, relates to), fetch with `fields=summary,status,description,attachment` and `comment_limit=20` — comments on linked tickets often contain API contracts, test results, confirmed behaviors, and critical design decisions
+- **Attachments**: Note all image attachments (mockups, screenshots) from main and linked tickets
+- **Image Analysis**: Use `jira_get_issue_images` on the main ticket AND any linked tickets that have image attachments. Analyze all mockups/screenshots to extract:
+  - UI layout and component placement
+  - Button labels, field names, and navigation flows
+  - Error state messaging and formatting
+  - Print/receipt format specifications
+  - Resolution and display constraints
+  Images are a primary requirements source — they define expected behavior that text descriptions often leave ambiguous.
+- **Confluence**: If any linked ticket or comment references a Confluence page, fetch it
+- **Azure PRs**: `repo_search_commits` and `repo_list_pull_request_threads` for PR diffs
 - If PR diff >500 lines: focus on modified logic blocks and exported functions only
+
+**CRITICAL**: Linked ticket comments are a primary source of truth. They frequently contain:
+- Confirmed API contracts (endpoints, request/response schemas, curl examples)
+- Dev clarifications on expected behavior (e.g., "this is by design")
+- QA test results from backend testing (pass/fail status)
+- Swagger/API documentation links
+- Bug findings and their resolutions
+Never skip linked ticket comments — they resolve gaps that the main ticket description leaves open.
 
 ### 3. AIO DISCOVERY
 - Search: `aio-tests:search_cases` with ticket ID (e.g., 'PROJ-9967')
