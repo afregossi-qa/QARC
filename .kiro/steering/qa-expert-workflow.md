@@ -30,7 +30,16 @@ Fetch ticket data, discover existing AIO test cases, generate logic audit and te
   - Print/receipt format specifications
   - Resolution and display constraints
   Images are a primary requirements source — they define expected behavior that text descriptions often leave ambiguous.
-- **Confluence**: If any linked ticket or comment references a Confluence page, fetch it
+- **Referenced Documents** (CRITICAL): After fetching the main ticket and all linked tickets, scan ALL text (description, comments, attachment names) for document references. Extract and read ANY linked resource:
+  - **Confluence pages**: URLs matching `*.atlassian.net/wiki/*` or `*.atlassian.net/spaces/*` → use `confluence_get_page`
+  - **Google Docs/Sheets**: URLs matching `docs.google.com/*` or `sheets.google.com/*` → use `web_fetch` to retrieve content
+  - **Figma/design links**: URLs matching `figma.com/*` → note as design reference (cannot fetch, but document the link)
+  - **Swagger/API docs**: URLs matching `*/swagger/*` or `*/api-docs/*` → use `web_fetch` to retrieve API contract
+  - **IDEA/Polaris links**: URLs matching `*.atlassian.net/jira/polaris/*` → note the IDEA reference
+  - **Azure DevOps wiki/docs**: URLs matching `*.visualstudio.com/*wiki*` → use `web_fetch`
+  - **Any other URL** in description or comments that appears to be a requirements/design/spec document → attempt `web_fetch`
+  
+  Do NOT do a separate Confluence search. Instead, follow the references that already exist in the ticket data. These linked documents are the authoritative source — they contain PRDs, design specs, API contracts, and acceptance criteria that the Jira description often only summarizes.
 - **Azure PRs**: `repo_search_commits` and `repo_list_pull_request_threads` for PR diffs
 - If PR diff >500 lines: focus on modified logic blocks and exported functions only
 
