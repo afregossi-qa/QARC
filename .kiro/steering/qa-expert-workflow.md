@@ -55,10 +55,12 @@ Never skip linked ticket comments — they resolve gaps that the main ticket des
 - Map acceptance criteria to test scenarios
 
 ### 5. OUTPUT
-Write to Expert/ folder:
-- `logic_explanation.md` — Requirements analysis, PR review, gaps
-- `manual_input.md` — Template for human notes
-- `test_plan_{TICKET_ID}.md` — Complete test plan
+Write to Expert/ folder following the EXACT format defined in `@expert-output-templates.md`:
+- `logic_explanation.md` — Must include: Ticket Overview table, Feature Summary, Architecture & Data Flow, technical section, Gap Analysis (numbered), Linked Ticket Analysis, Risk Assessment table, Testing Focus Areas
+- `manual_input.md` — Must include: Purpose statement, checkbox General Observations (pre-filled confirmed + open questions with blanks), Simple Flow with observation prompts, Full Flows (A/B/C) with blank fields, Clarifications Needed, Screenshots/Evidence table
+- `test_plan_PENDING.md` — Must include: Notes (pre-filled findings), Description with Scope/Out of Scope, Test Areas with TC# numbering (Area.Number format), Test Environment Requirements table, Dependencies table
+
+**FORMAT IS MANDATORY** — Read `@expert-output-templates.md` before generating any output file.
 
 ## AIO Integration Rules
 - Append: Mark cases as `[AIO Existing]`
