@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "name": "Sync State on Phase Complete",
+  "description": "Automatically updates .state.json when a pipeline stage produces its key deliverable file, advancing the status to match actual progress.",
+  "version": "1",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/1_Expert/test_plan*.md",
+      "**/2_Validator/FINAL_TEST_CASES*.md",
+      "**/2_Validator/FINAL_QA_SUMMARY*.md",
+      "**/3_Evidence/EVIDENCE_READY.md",
+      "**/4_Reviewer/FINAL_CLOSURE_REPORT*.md",
+      "**/4_Reviewer/EXECUTION_FINDINGS*.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A pipeline deliverable was just created. Update the .state.json in the same ticket folder:\n\n1. Detect the ticket folder from the created file path (go up to the folder containing .state.json).\n2. Read the current .state.json.\n3. Determine the new status based on which file was created:\n   - 1_Expert/test_plan*.md → status: \"expert_analysis_complete\", lastAgent: \"QA-Expert-Agent\"\n   - 2_Validator/FINAL_TEST_CASES*.md → status: \"validator_complete\", lastAgent: \"QA-Validator-Agent\"\n   - 2_Validator/FINAL_QA_SUMMARY*.md → status: \"validator_complete\", lastAgent: \"QA-Validator-Agent\"\n   - 3_Evidence/EVIDENCE_READY.md → status: \"evidence_collected\", lastAgent: \"QA-Evidence-Reviewer-Agent\"\n   - 4_Reviewer/EXECUTION_FINDINGS*.md → status: \"reviewer_in_progress\", lastAgent: \"QA-Reviewer-Agent\"\n   - 4_Reviewer/FINAL_CLOSURE_REPORT*.md → status: \"reviewer_complete\", lastAgent: \"QA-Reviewer-Agent\"\n4. Update .state.json with the new status, lastAgent, and set lastUpdated to current ISO timestamp.\n5. Preserve all other fields (ticketId, summary, version, quarter, year, linkedTickets, prStatus).\n\nDo NOT advance status backwards. If current status is already at or past the detected phase, skip the update."
+  }
+}
