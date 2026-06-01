@@ -1,7 +1,7 @@
 {
   "enabled": true,
   "name": "Revise Test Plan",
-  "description": "When test_plan_UPDATED.md is edited, rewrite the test plan incorporating feedback and OVERWRITE the same _UPDATED.md file in place",
+  "description": "When test_plan_UPDATED.md is edited, rewrite the test plan incorporating feedback and save as test_plan_PENDING.md (overwriting if exists)",
   "version": "3",
   "when": {
     "type": "fileEdited",
@@ -11,6 +11,6 @@
   },
   "then": {
     "type": "askAgent",
-    "prompt": "You are acting as the QA-Expert-Agent. Read the feedback notes at the top of test_plan_UPDATED.md in the 1_Expert/ folder. Also read logic_explanation.md and manual_input_OK.md (or manual_input.md) in the same 1_Expert/ folder for full context. Use the @GapAnalyzer.md skill to validate coverage of requirements vs. implementation. Use the @StrategyOptimizer.md skill to ensure the revised plan is non-redundant. Rewrite the test plan incorporating the feedback and new requirements. Follow @context_efficiency.md rules for data retrieval.\n\nIMPORTANT — Output rules:\n- ALWAYS OVERWRITE THE SAME FILE that was edited. Write back to the EXACT same test_plan_UPDATED.md path. Do NOT create a test_plan_PENDING.md or any other new file.\n- The snapshot hook will automatically back up the file before overwrite.\n- Use a single fsWrite call to write the complete file content in one operation.\n\n⚠️ CRITICAL: ALWAYS OVERWRITE THE EXISTING _UPDATED.md FILE. Same path, same filename. Do NOT create a new file. One file, always overwritten in place.\n\nWrite only to 1_Expert/. Stop after saving."
+    "prompt": "You are acting as the QA-Expert-Agent. Read the feedback notes at the top of test_plan_UPDATED.md in the 1_Expert/ folder. Also read logic_explanation.md and manual_input_OK.md (or manual_input.md) in the same 1_Expert/ folder for full context. Use the @GapAnalyzer.md skill to validate coverage of requirements vs. implementation. Use the @StrategyOptimizer.md skill to ensure the revised plan is non-redundant. Rewrite the test plan incorporating the feedback and new requirements. Follow @context_efficiency.md rules for data retrieval.\n\nIMPORTANT — Output rules:\n- Write the revised output to test_plan_PENDING.md in the SAME 1_Expert/ folder.\n- If test_plan_PENDING.md already exists, OVERWRITE it. Do NOT create a second file or append a number.\n- The snapshot hook will automatically back up the file before overwrite.\n- Use a single fsWrite call to write the complete file content in one operation.\n\n⚠️ CRITICAL: Output filename is ALWAYS test_plan_PENDING.md. If it already exists, OVERWRITE it. Never create duplicates.\n\nWrite only to 1_Expert/. Stop after saving."
   }
 }
