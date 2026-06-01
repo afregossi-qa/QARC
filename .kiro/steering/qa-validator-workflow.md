@@ -32,14 +32,18 @@ Finalize QA assets by merging AI drafts with human expertise and identifying hig
     - `High`: Critical Path. Affects Payments, Tax calculations, Discount logic, or core Order flow (e.g., "Add to Cart", "Pay").
     - `Medium`: Secondary Logic. Affects reporting, UI display settings, or features localized to specific store types.
     - `Low`: Visual/Non-Functional. Cosmetic UI changes, logging, or rare edge cases with no financial impact.
-- **Format in TC header** (mandatory two lines after Test Type):
+  - **Regression Candidate** — one of: `Yes` | `No`
+    - `Yes`: TC qualifies for the permanent regression suite. Auto-assigned when ALL of: (1) Automation Status = Required, AND (2) Regression Potential = High. Also force `Yes` if the ticket description contains "Fix", "Regression", "Breakage", or "Core" AND the TC covers the fixed/core behavior.
+    - `No`: TC does not qualify. Exploratory, one-off, or low-impact scenarios.
+- **Format in TC header** (mandatory three lines after Test Type):
   ```
   **Automation Status:** Required
   **Regression Potential:** High
+  **Regression Candidate:** Yes
   ```
-- **Format in Test Summary Matrix** (mandatory two extra columns):
+- **Format in Test Summary Matrix** (mandatory three extra columns):
   ```
-  | Test Case ID | Title | Priority | Test Type | Automation Status | Regression Potential |
+  | Test Case ID | Title | Priority | Test Type | Automation Status | Regression Potential | Regression Candidate |
   ```
 - **NEVER skip these tags.** If unsure, default to `Required` / `Medium` and flag for human review.
 - **NEVER include AIO tag update instructions** in the FINAL_TEST_CASES output. No "AIO Tag Update Instructions" sections, no tag ADD/REMOVE/KEEP tables. The Validator only writes local tags — AIO sync is handled separately by the AIO Direct Agent.
@@ -47,14 +51,14 @@ Finalize QA assets by merging AI drafts with human expertise and identifying hig
 ### 4. OUTPUT
 Write to `Validator/` folder:
 - `FINAL_TEST_CASES_{TICKET_ID}.md` — Formatted cases with `Automation Status` and `Regression Potential` in each TC header AND in the Test Summary Matrix (local-only tags, never synced to AIO).
-- `FINAL_QA_SUMMARY_{TICKET_ID}.md` — Executive overview, risk assessment, and a **Regression Priority List** (highlighting all [High] cases) with automation readiness metrics.
+- `TC_COVERAGE_SUMMARY_{TICKET_ID}.md` — Coverage overview, risk assessment, and a **Regression Priority List** (highlighting all [High] cases) with automation readiness metrics.
 - `{TICKET_ID}_TCMS_Import.csv` — TCMS-compatible export.
 
 ## Input/Output Mapping
 | Read From | Write To |
 |-----------|----------|
 | Expert/manual_input.md | Validator/FINAL_TEST_CASES |
-| Expert/test_plan_*.md | Validator/FINAL_QA_SUMMARY |
+| Expert/test_plan_*.md | Validator/TC_COVERAGE_SUMMARY |
 | Expert/logic_explanation.md | Validator/{TICKET_ID}_TCMS_Import |
 
 ## Post-Revision Integrity Check (MANDATORY after applying feedback)
@@ -79,6 +83,7 @@ For EVERY test case in the output, verify it has ALL required sections:
 - `**Test Type:**` line
 - `**Automation Status:**` line
 - `**Regression Potential:**` line
+- `**Regression Candidate:**` line
 - `**Source:**` line
 - `**Preconditions:**` section (with bullet list)
 - `**Test Steps:**` section (numbered steps with `**Expected:**` for each)

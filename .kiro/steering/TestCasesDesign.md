@@ -21,11 +21,11 @@ fileMatchPattern: '**/test_plan_*.md,**/*_Test_Cases*.md,**/*_Test_Cases*.csv'
 - **Related Ticket: PROJ-2345**
 
 ## Test Summary Matrix
-| Test Case ID | Title | Priority | Test Type | Automation Status | Regression Potential |
-|--------------|-------|----------|-----------|-------------------|---------------------|
-| TC-PROJ-2346-008 | Pay Per Item - Require Cash Drawer Closure Enabled | High | Positive | Required | High |
-| TC-PROJ-2346-009 | Pay Per Item - Both Drawer Configurations Enabled | High | Positive | Required | High |
-| TC-PROJ-2346-010 | Pay Per Item - Require Full Tender Enabled Only | High | Positive | Required | High |
+| Test Case ID | Title | Priority | Test Type | Automation Status | Regression Potential | Regression Candidate |
+|--------------|-------|----------|-----------|-------------------|---------------------|---------------------|
+| TC-PROJ-2346-008 | Pay Per Item - Require Cash Drawer Closure Enabled | High | Positive | Required | High | Yes |
+| TC-PROJ-2346-009 | Pay Per Item - Both Drawer Configurations Enabled | High | Positive | Required | High | Yes |
+| TC-PROJ-2346-010 | Pay Per Item - Require Full Tender Enabled Only | High | Positive | Required | High | Yes |
 
 ---
 
@@ -36,6 +36,7 @@ fileMatchPattern: '**/test_plan_*.md,**/*_Test_Cases*.md,**/*_Test_Cases*.csv'
 **Test Type:** Positive  
 **Automation Status:** Required  
 **Regression Potential:** High  
+**Regression Candidate:** Yes  
 **Source:** Test Design Notes - Platform Settings
 
 **Preconditions:**
@@ -95,6 +96,7 @@ Cash drawer closure required after each pay per item payment
 **Test Type:** Positive  
 **Automation Status:** Required  
 **Regression Potential:** High  
+**Regression Candidate:** Yes  
 **Source:** Test Design Notes - Platform Settings
 
 **Preconditions:**
@@ -156,6 +158,7 @@ Cash drawer closure required after each pay per item payment with both configura
 **Test Type:** Positive  
 **Automation Status:** Required  
 **Regression Potential:** High  
+**Regression Candidate:** Yes  
 **Source:** Test Design Notes - Platform Settings
 
 **Preconditions:**

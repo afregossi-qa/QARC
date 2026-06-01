@@ -22,7 +22,7 @@ Scan subfolders for file existence and verdicts:
 | Folder | Check For |
 |--------|-----------|
 | Expert/ | logic_explanation.md, test_plan_*.md |
-| Validator/ | FINAL_TEST_CASES, FINAL_QA_SUMMARY |
+| Validator/ | FINAL_TEST_CASES, TC_COVERAGE_SUMMARY |
 | Reviewer/ | EXECUTION_FINDINGS, FINAL_CLOSURE_REPORT |
 
 ### 3. DETERMINE PHASE

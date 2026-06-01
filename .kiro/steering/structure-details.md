@@ -37,7 +37,7 @@ fileMatchPattern: "**/1_Expert/**,**/2_Validator/**,**/3_Evidence/**,**/4_Review
 ### MUST go in 2_Validator/
 - `FINAL_TEST_CASES*.md`
 - `*_TCMS_Import.csv`
-- `FINAL_QA_SUMMARY*.md`
+- `TC_COVERAGE_SUMMARY*.md`
 - `*_PENDING.md`, `*_OK.md`, `*_API.md`
 
 ### MUST go in 3_Evidence/
