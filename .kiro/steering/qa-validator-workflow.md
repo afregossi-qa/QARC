@@ -33,8 +33,12 @@ Finalize QA assets by merging AI drafts with human expertise and identifying hig
     - `Medium`: Secondary Logic. Affects reporting, UI display settings, or features localized to specific store types.
     - `Low`: Visual/Non-Functional. Cosmetic UI changes, logging, or rare edge cases with no financial impact.
   - **Regression Candidate** — one of: `Yes` | `No`
-    - `Yes`: TC qualifies for the permanent regression suite. Auto-assigned when ALL of: (1) Automation Status = Required, AND (2) Regression Potential = High. Also force `Yes` if the ticket description contains "Fix", "Regression", "Breakage", or "Core" AND the TC covers the fixed/core behavior.
-    - `No`: TC does not qualify. Exploratory, one-off, or low-impact scenarios.
+    - `Yes`: TC should be executed every release to catch regressions. Assign when ANY of:
+      (1) **Critical Path** — TC covers Payments, Tax, Discounts, Order flow, Permissions/Access Control, or Sync logic
+      (2) **Bug Fix Verification** — Ticket is a fix for a regression or breakage (keywords: "Fix", "Regression", "Breakage" in ticket description)
+      (3) **Core Feature Gate** — TC validates a feature that other features depend on (e.g., login, config download, permission checks)
+      (4) **High Regression Potential** — TC is already tagged `Regression Potential: High` regardless of automation status
+    - `No`: TC does not need per-release execution. Cosmetic/visual-only validations, one-off exploratory scenarios, boundary/edge cases with no financial or functional impact, environment-specific checks (resolution, formatting) that don't regress functionally.
 - **Format in TC header** (mandatory three lines after Test Type):
   ```
   **Automation Status:** Required
