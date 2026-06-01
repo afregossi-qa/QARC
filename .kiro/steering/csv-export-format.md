@@ -126,9 +126,14 @@ Test Data:
 - API validation: "API"
 - Configuration: "Configuration"
 - Persistence: "Persistence"
+- Reports: "Reports"
+- Regression candidate: "Regression" (add when source TC has `Regression Candidate: Yes`)
 
 ### Tag Format
 - Always include ticket number as first tag
+- Always include version tag (e.g., `v230`) extracted from folder path `Version {N}`
+- Always include feature area tag (e.g., `Reports`, `Employees`, `Payments`)
+- Add `Regression` tag for any TC where source has `Regression Candidate: Yes`
 - Use comma separation without spaces
 - Use PascalCase for multi-word tags
 
