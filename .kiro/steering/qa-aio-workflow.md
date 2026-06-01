@@ -99,7 +99,14 @@ Write `AIO_SYNC_LOG.md` to ticket root:
 - These fields are NOT available via REST API — include determination in sync log
 - Sync log MUST include a table showing the values per TC for manual/CSV update
 
+### Tags: Must be tracked per TC in sync log
+- **Base tags** (all TCs): `{TICKET_ID}`, `v{VERSION}`, `{Feature Area}` (e.g., `POS-10593, v230, Reports`)
+- **Regression tag**: Add `Regression` tag for any TC where source has `Regression Candidate: Yes`
+- Extract version from folder path (e.g., `Version 230` → `v230`)
+- Extract feature area from the ticket's functional domain (e.g., Reports, Payments, Checks)
+- The Custom Fields Status table MUST include a `Tags` column with the comma-separated tag values per TC
+
 ### Sync Log: Must match reference format
 - Reference: `2026/Q1/Version 227/PROJ-1234 - .../AIO_SYNC_LOG.md`
-- Required sections: Sync Summary, Update History, Test Case Mapping, Priority Distribution, Custom Fields Status, AIO Tests Links, Notes
+- Required sections: Sync Summary, Update History, Test Case Mapping, Priority Distribution, Custom Fields Status (with Tags column), Regression Candidates, AIO Tests Links, Notes
 - Must include `⚠️ Manual action required: Add tags, Jira links, and set AI-Generated/AI-Automated fields in AIO UI or via CSV import`

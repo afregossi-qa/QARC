@@ -46,6 +46,21 @@ These two custom fields MUST be populated for every test case synced to AIO:
 3. If no scripts exist or `6_Automation/` is empty → `"No"`
 4. If the local `Automation Status` tag is `Required` but no scripts exist yet → `"No"` (will become `"Yes"` after Translator/Executor run)
 
+### Tags Determination Logic
+Tags are NOT settable via REST API but MUST be tracked in the `AIO_SYNC_LOG.md` Custom Fields Status table with a `Tags` column.
+
+**Base tags (all TCs in a sync batch):**
+1. `{TICKET_ID}` — extracted from folder name (e.g., `POS-10593`)
+2. `v{VERSION}` — extracted from folder path `Version {N}` (e.g., `v230`)
+3. `{Feature Area}` — derived from the ticket's functional domain (e.g., `Reports`, `Payments`, `Checks`, `Employees`)
+
+**Conditional tags:**
+4. `Regression` — add ONLY if the source TC has `Regression Candidate: Yes`
+
+**Example Tags column values:**
+- Non-regression TC: `POS-10593, v230, Reports`
+- Regression candidate TC: `POS-10593, v230, Reports, Regression`
+
 ## API Limitations (Confirmed)
 - **Tags**: Accepted in create payload but do NOT persist via REST API. Must use AIO UI or CSV import.
 - **Jira Linking**: No REST API endpoint exists. Must use AIO UI or CSV import.
@@ -134,6 +149,7 @@ Before calling `create_case` or `update_case`, verify EVERY case against this ch
 | 9 | Precondition sub-items use `  * ` indent | `Terminal 1: ...` on same line | `  * Terminal 1: AFREGO-DEV2 / 192.168.1.6` as indented sub-bullet |
 | 10 | Source file is `_API.md` when it exists | Reading `_UPDATED.md` or `_PENDING.md` | Always prefer `_API.md` > `_OK.md` > `_PENDING.md` |
 | 11 | AI-Generated/AI-Automated noted in sync log | No mention of custom fields | `⚠️ Set AI-Generated=Yes and AI-Automated=No via AIO UI or CSV import` |
+| 12 | Tags column in Custom Fields Status table | No Tags column | Tags column with `{TICKET_ID}, v{VERSION}, {Area}` + `Regression` if applicable |
 
 **This checklist is non-negotiable. Apply it on EVERY create and update call.**
 
