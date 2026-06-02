@@ -17,6 +17,7 @@ Fetch ticket data, discover existing AIO test cases, generate logic audit and te
 - Determine quarter from current date (Q1=Jan-Mar, Q2=Apr-Jun, Q3=Jul-Sep, Q4=Oct-Dec)
 - Create ticket folder: `{year}/Q{quarter}/Version {version}/{TICKET_ID} - {description}/`
 - Create subfolders: `1_Expert/`, `2_Validator/`, `3_Evidence/`, `4_Reviewer/`, `5_Snapshots/`
+- Create evidence subfolders: `3_Evidence/localstate/`, `3_Evidence/external/`, `3_Evidence/screenshots/`, `3_Evidence/manual/`
 - Create `.state.json` at ticket root with INIT phase
 
 ### 2. FETCH
