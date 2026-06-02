@@ -110,3 +110,13 @@ Write `AIO_SYNC_LOG.md` to ticket root:
 - Reference: `2026/Q1/Version 227/PROJ-1234 - .../AIO_SYNC_LOG.md`
 - Required sections: Sync Summary, Update History, Test Case Mapping, Priority Distribution, Custom Fields Status (with Tags column), Regression Candidates, AIO Tests Links, Notes
 - Must include `⚠️ Manual action required: Add tags, Jira links, and set AI-Generated/AI-Automated fields in AIO UI or via CSV import`
+
+### State File: MUST update `.state.json` after sync
+- After writing `AIO_SYNC_LOG.md`, ALWAYS update the ticket root `.state.json`
+- Set `status` to `"AIO_Synced"`
+- Set `lastAgent` to `"QA-AIO-Direct-Agent"`
+- Update `lastRun` to current timestamp
+- Set `phases.validator` to `"complete"` (sync implies validation is done)
+- Add/update `phases.aio_sync` to `"complete"`
+- Add/update `aio` object with: `syncDate`, `totalCases`, `created`, `updated`, `deleted`, `folder`, `folderID`, `keys` (array of all AIO TC keys)
+- This is NON-OPTIONAL — every AIO sync must leave the state file current
