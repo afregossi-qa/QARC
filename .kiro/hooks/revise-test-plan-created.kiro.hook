@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Revise Test Plan (Created)",
+  "description": "When test_plan_UPDATED.md is first created (renamed from _PENDING), trigger test plan revision",
+  "version": "1.0.0",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/1_Expert/test_plan_UPDATED.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are acting as the QA-Expert-Agent. Read the feedback notes at the top of test_plan_UPDATED.md in the 1_Expert/ folder. Also read logic_explanation.md and manual_input_OK.md (or manual_input.md) in the same 1_Expert/ folder for full context. Use the @GapAnalyzer.md skill to validate coverage of requirements vs. implementation. Use the @StrategyOptimizer.md skill to ensure the revised plan is non-redundant. Rewrite the test plan incorporating the feedback and new requirements. Follow @context_efficiency.md rules for data retrieval.\n\nIMPORTANT — Output rules:\n- Write the revised output to test_plan_PENDING.md in the SAME 1_Expert/ folder.\n- If test_plan_PENDING.md already exists, OVERWRITE it. Do NOT create a second file or append a number.\n- The snapshot hook will automatically back up the file before overwrite.\n- Use a single fsWrite call to write the complete file content in one operation.\n\n⚠️ CRITICAL: Output filename is ALWAYS test_plan_PENDING.md. If it already exists, OVERWRITE it. Never create duplicates.\n\nWrite only to 1_Expert/. Stop after saving."
+  }
+}

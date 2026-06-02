@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Trigger Automation Architect (Created)",
+  "description": "When a FINAL_TEST_CASES file is first renamed to _ARCH.md suffix, trigger the Automation Architect",
+  "version": "1.0.0",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/2_Validator/FINAL_TEST_CASES_*_ARCH.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are the QA-Automation-Architect-Agent. A FINAL_TEST_CASES file with _ARCH.md suffix was just saved, which is your trigger to analyze and generate automation code.\n\nFollow the @AutomationArchitectPipeline skill and @AutomationStrategy&Standards steering. Execute the full pipeline:\n\n1. **ANALYZE**: Read the trigger file + `1_Expert/logic_explanation.md`. Classify each TC as AUTOMATE | MANUAL_ONLY | HYBRID.\n\n2. **STRATEGIZE**: Group by endpoint, map to framework utilities, identify required env vars.\n\n3. **BLUEPRINT**: Create `Automation_Blueprint_{TICKET_ID}.md` in ticket root with candidate table, coverage %, env vars, module map.\n\n4. **GENERATE CODE (BOTH PATHS)**:\n   - Path 1 (Framework): `Automation_Backend/tests/{ticket_id}/tc{NNN}_{name}.py` — uses `def run(cfg)` pattern\n   - Path 2 (Ticket): `{ticket}/6_Automation/scripts/tc{NN}_{name}.py` — standalone with `requests` + `os.environ`\n\n5. **REGISTER SUITES**: Create `suites/{ticket_id}_all.json`, append to `regression_full.json`.\n\n6. **HANDOFF**: Rename trigger from `_ARCH.md` to `_ARCH_DONE.md`. Inform user that ticket-scoped scripts are ready — they can rename to `_READY_TO_EXECUTE.md` to trigger the Executor.\n\nIMPORTANT: You NEVER run tests. You only generate code. The QA-Automation-Executor-Agent runs everything."
+  }
+}

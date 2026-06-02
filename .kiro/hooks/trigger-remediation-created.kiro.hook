@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Remediation Cycle (Created)",
+  "description": "When a closure report is first renamed to _REMEDIATE.md (UNSTABLE verdict), trigger remediation cycle",
+  "version": "1.0.0",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/4_Reviewer/FINAL_CLOSURE_REPORT_*_REMEDIATE.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A closure report was marked for remediation (UNSTABLE verdict). You are acting as QA-Evidence-Reviewer + QA-Validator for this cycle.\n\nRead @qa-reviewer-workflow.md for analysis standards and @TestCasesDesign.md for formatting.\n\n1. DETERMINE ITERATION — Check REMEDIATION_LOG.md at ticket root. If absent: R1. If present: increment highest N.\n2. BASELINE — Copy current FINAL_TEST_CASES from 2_Validator/ to 5_Snapshots/FINAL_TEST_CASES_*_BASELINE_R{N}.md.\n3. ANALYZE FAILURES — Use @EvidenceAuditAnalyzer.md on EXECUTION_FINDINGS in 4_Reviewer/. Identify failed TC IDs, root causes, patterns.\n4. UPDATE LOG — Create/append REMEDIATION_LOG.md at ticket root with: iteration, timestamp, failed TCs table, actions, status IN_PROGRESS.\n5. UPDATE TEST CASES — Adjust expected results, add new TCs for untested scenarios, mark removals. Save as 2_Validator/FINAL_TEST_CASES_{TICKET_ID}_PENDING.md (overwrite if exists, single fsWrite).\n6. STOP — Human reviews updated TCs, re-executes, drops evidence, re-triggers reviewer.\n\nFollow @context_efficiency.md. Write only to 2_Validator/, 5_Snapshots/, and ticket root."
+  }
+}
