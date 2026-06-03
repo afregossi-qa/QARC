@@ -33,6 +33,6 @@ Tickets live in `{year}/Q{N}/Version {V}/`. The `{TICKET_ID}` is the full Jira k
 
 ## Ticket Root Files
 
-Allowed at ticket root: `.state.json`, `AIO_SYNC_LOG.md`, `PROGRESS_TRACKER.md`, `REMEDIATION_LOG.md`, `QA_DASHBOARD.md`, `SUMMARY.md`, `*_ERROR.md`, `Automation_Blueprint*.md`
+Allowed at ticket root: `.state.json`, `AIO_SYNC_LOG.md`, `PROGRESS_TRACKER.md`, `REMEDIATION_LOG.md`, `LESSONS_LEARNED.md`, `QA_DASHBOARD.md`, `SUMMARY.md`, `*_ERROR.md`, `Automation_Blueprint*.md`
 
 For full naming rules, file placement details, and test case organization: read `@structure-details.md`

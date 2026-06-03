@@ -42,9 +42,9 @@ Tags: `[FIELD]` for production insights, `[AUTO]` for test design insights, `[FR
 
 ## REFINE (Promotion Check)
 
-After recording a lesson, ask: **"Does this change what we know about how the product works?"**
+After recording a lesson, ask: **"Does this change what we know about how the product works, how it fails, or how it should be investigated?"**
 
-- If YES (new architectural truth, not a one-off) → mark as `[PROMOTED]` and update `.kiro/steering/product.md` + `project_context.md`
+- If YES (new architectural truth, behavioral constraint, retry/timing rule, safety-net gap, or operational rule that would affect future investigations) → mark as `[PROMOTED]` and update `project_context.md` in the appropriate section (Module Relationships, Key Services, Sync Behavior, Local Database, Cloud Posting, Timestamps, or create a new section if needed).
 - If NO (specific incident only) → leave as `[LOGGED]`
 
 **Promotion test**: Will this lesson affect how future investigations are approached? If yes → PROMOTE.
