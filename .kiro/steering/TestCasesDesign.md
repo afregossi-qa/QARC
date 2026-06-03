@@ -27,6 +27,8 @@ fileMatchPattern: '**/test_plan_*.md,**/*_Test_Cases*.md,**/*_Test_Cases*.csv'
 | TC-PROJ-2346-009 | Pay Per Item - Both Drawer Configurations Enabled | High | Positive | Required | High | Yes |
 | TC-PROJ-2346-010 | Pay Per Item - Require Full Tender Enabled Only | High | Positive | Required | High | Yes |
 
+> **Tagging Reference:** Apply `@regression-automation-criteria.md` when assigning Automation Status, Regression Potential, and Regression Candidate values. Automation Status = Required when 3+ criteria from §2 are met. Regression Candidate = Yes when any condition from §1 is met.
+
 ---
 
 ## Platform Settings Test Cases

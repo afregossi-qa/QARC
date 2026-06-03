@@ -143,9 +143,9 @@ Test Data:
 - Medium: P2 tests that are nice to have
 
 ## Automation Status Values
-- "To be Automated": Test case planned for automation
-- "Automated": Test case already automated
-- "Manual Only": Test case cannot be automated
+- "To be Automated": Test case planned for automation (source TC has `Automation Status: Required` or meets 3+ criteria from `@regression-automation-criteria.md` §2)
+- "Manual": Test case will remain manual (source TC has `Automation Status: Manual` — disqualified or fewer than 3 criteria met)
+- "Automated": Test case already automated (6_Automation/ has executable scripts)
 
 > **IMPORTANT**: These are AIO-compatible values only. Do NOT confuse with the local-only `Automation Status: Required | Manual` and `Regression Potential: High | Medium | Low` tags found in TC headers of `FINAL_TEST_CASES` markdown files. Those local tags are for internal pipeline agents (Validator, Regression Architect, Translator) and must NEVER appear in CSV exports or AIO API calls.
 
@@ -166,4 +166,4 @@ Test Data:
 > Populated on the metadata row only. Reflects the authorship origin of the test case content.
 
 ## Reference Example
-See `.kiro/steering/QA_Test_Case_Template.md` for the complete test case authoring guide and `.kiro/steering/AIO_Import_Test_Sample.csv` for a validated CSV import sample.
+See `.kiro/steering/TestCasesDesign.md` for the test case formatting standards and `.kiro/steering/AIO_Import_Test_Sample.csv` for a validated CSV import sample.

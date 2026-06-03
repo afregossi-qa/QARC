@@ -24,21 +24,23 @@ Finalize QA assets by merging AI drafts with human expertise and identifying hig
 ### 3. STANDARDIZE & TAG (The Regression Gate)
 - Rewrite all test cases to match `@TestCasesDesign.md` format.
 - **Consolidation rule**: Merge specific validations into broader scenarios to reduce test bloat.
+- **REFERENCE**: Consult `@regression-automation-criteria.md` for the official selection criteria when assigning tags below. Apply the documented rules (§1 for Regression tagging, §2 for Automation status).
 - **MANDATORY — Local Automation & Regression Tags**: For EVERY test case, you MUST assign the following tags in the TC header AND in the Test Summary Matrix. These tags are LOCAL ONLY (stored in the markdown files, never synced to AIO).
   - **Automation Status** — one of: `Required` | `Manual`
-    - `Required`: Core financial/order flows, smoke tests, critical bug fixes, CRUD operations, sync/delta logic, permission flows.
-    - `Manual`: Cosmetic changes, one-off exploratories, hardware-dependent, low-risk UI tweaks.
+    - `Required`: Test meets 3+ criteria from `@regression-automation-criteria.md` §2 (Critical/High priority, run frequently, time-consuming, stable requirements, high ROI, high defect yield, repetitive across configs).
+    - `Manual`: Test is disqualified per §2 disqualifiers (unstable requirements, one-time execution, complex physical device interaction, unresolved env/data blockers) OR meets fewer than 3 criteria.
   - **Regression Potential** — one of: `High` | `Medium` | `Low`
     - `High`: Critical Path. Affects Payments, Tax calculations, Discount logic, or core Order flow (e.g., "Add to Cart", "Pay").
     - `Medium`: Secondary Logic. Affects reporting, UI display settings, or features localized to specific store types.
     - `Low`: Visual/Non-Functional. Cosmetic UI changes, logging, or rare edge cases with no financial impact.
   - **Regression Candidate** — one of: `Yes` | `No`
-    - `Yes`: TC should be executed every release to catch regressions. Assign when ANY of:
-      (1) **Critical Path** — TC covers Payments, Tax, Discounts, Order flow, Permissions/Access Control, or Sync logic
-      (2) **Bug Fix Verification** — Ticket is a fix for a regression or breakage (keywords: "Fix", "Regression", "Breakage" in ticket description)
-      (3) **Core Feature Gate** — TC validates a feature that other features depend on (e.g., login, config download, permission checks)
-      (4) **High Regression Potential** — TC is already tagged `Regression Potential: High` regardless of automation status
-    - `No`: TC does not need per-release execution. Cosmetic/visual-only validations, one-off exploratory scenarios, boundary/edge cases with no financial or functional impact, environment-specific checks (resolution, formatting) that don't regress functionally.
+    - `Yes`: TC should be executed every release to catch regressions. Assign when ANY condition from `@regression-automation-criteria.md` §1 is met:
+      (1) **Core Business Flow** — TC covers ordering, payments, login, sync, tax, discounts, permissions/access control
+      (2) **Bug Fix Verification** — Ticket is linked to a bug that escaped to production or UAT (keywords: "Fix", "Regression", "Breakage" in ticket description)
+      (3) **Cross-Module Integration** — TC tests an integration point between modules/services
+      (4) **Critical or High Priority** — TC priority aligns with exit criteria (100% Critical+High executed)
+      (5) **High Daily Usage** — Feature is used daily by cashiers/managers
+    - `No`: TC does not need per-release execution. One-time migration/setup validations, exploratory/ad-hoc test notes, tests for features not yet released to production, cosmetic/visual-only validations, boundary/edge cases with no financial or functional impact.
 - **Format in TC header** (mandatory three lines after Test Type):
   ```
   **Automation Status:** Required

@@ -68,7 +68,7 @@ Write `AIO_SYNC_LOG.md` to ticket root:
 
 ## Critical Rules
 - Only execute on user demand (never auto-run)
-- Always link cases to Jira ticket from folder name
+- Always link cases to Jira ticket by passing `jiraTicket` parameter in `create_case` (extract ticket ID from folder name)
 - `AIO_SYNC_LOG.md` is single source of truth — never guess keys
 - Send complete case content on updates (no partial updates)
 - Log deleted case key + title for traceability
@@ -92,24 +92,32 @@ Write `AIO_SYNC_LOG.md` to ticket root:
 - AIO field must always be `To Be Automated` on create/update
 
 ### Custom Fields: AI-Generated & AI-Automated
-- **AI-Generated**: Always `"Yes"` for pipeline-generated test cases (all TCs from the Validator output)
-- **AI-Automated**: Check `6_Automation/` folder in the ticket directory:
-  - If automation scripts exist for the TC → `"Yes"`
-  - If no scripts exist → `"No"`
-- These fields are NOT available via REST API — include determination in sync log
-- Sync log MUST include a table showing the values per TC for manual/CSV update
+- **AI-Generated (ID: 9)**: Always pass `true` for pipeline-generated test cases (all TCs from the Validator output)
+- **AI-Automated (ID: 8)**: Check `6_Automation/` folder in the ticket directory:
+  - If automation scripts exist for the TC → pass `true`
+  - If no scripts exist → pass `false`
+- **ALWAYS pass `customFields` array in `create_case` and `update_case`**:
+  ```json
+  "customFields": [
+    {"ID": 9, "value": true},
+    {"ID": 8, "value": false}
+  ]
+  ```
+- The Custom Fields Status table in sync log tracks final values per TC for audit
 
-### Tags: Must be tracked per TC in sync log
+### Tags: Must be included in API calls
 - **Base tags** (all TCs): `{TICKET_ID}`, `v{VERSION}`, `{Feature Area}` (e.g., `POS-10593, v230, Reports`)
 - **Regression tag**: Add `Regression` tag for any TC where source has `Regression Candidate: Yes`
 - Extract version from folder path (e.g., `Version 230` → `v230`)
 - Extract feature area from the ticket's functional domain (e.g., Reports, Payments, Checks)
-- The Custom Fields Status table MUST include a `Tags` column with the comma-separated tag values per TC
+- **ALWAYS pass the `tags` array in `create_case`** — AIO supports tags on creation and will auto-create any tag that doesn't already exist
+- Tags CANNOT be updated via `update_case` (API limitation) — only set on creation
+- The Custom Fields Status table MUST still include a `Tags` column for traceability
 
 ### Sync Log: Must match reference format
 - Reference: `2026/Q1/Version 227/PROJ-1234 - .../AIO_SYNC_LOG.md`
 - Required sections: Sync Summary, Update History, Test Case Mapping, Priority Distribution, Custom Fields Status (with Tags column), Regression Candidates, AIO Tests Links, Notes
-- Must include `⚠️ Manual action required: Add tags, Jira links, and set AI-Generated/AI-Automated fields in AIO UI or via CSV import`
+- Must include `✅ All fields set via API: tags, Jira link, AI-Generated, AI-Automated. No manual action required.`
 
 ### State File: MUST update `.state.json` after sync
 - After writing `AIO_SYNC_LOG.md`, ALWAYS update the ticket root `.state.json`
