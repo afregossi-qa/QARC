@@ -18,7 +18,7 @@ Transform validated Markdown test plans into TCMS-compatible CSVs.
 ### 2. PARSE
 - Read `Validator/FINAL_TEST_CASES_*.md`
 - Extract: TC ID, Title, Priority, Preconditions, Steps, Expected Results
-- **EXCLUDE local-only fields**: `Automation Status` and `Regression Potential` from TC headers are internal pipeline tags — do NOT map them to CSV columns. The CSV `Automation Status` column uses AIO values (`To be Automated`, `Automated`, `Manual Only`) per `@csv-export-format.md`.
+- **EXCLUDE local-only fields**: `Automation Status` and `Regression Potential` from TC headers are internal pipeline tags — do NOT map them to CSV columns. The CSV `Automation Status` column uses AIO values (`To be Automated`, `Automated`, `Manual`) per `@csv-export-format.md`.
 - **EXTRACT for Tags**: Read `Regression Candidate` field from each TC header. If `Yes`, include `Regression` in the Tags column for that TC.
 
 ### 3. TRANSFORM

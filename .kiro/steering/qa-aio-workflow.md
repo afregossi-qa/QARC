@@ -60,6 +60,8 @@ Write `AIO_SYNC_LOG.md` to ticket root:
 - Deleted Test Cases section for audit trail
 
 ## Priority Mapping
+> See `@AIO-API-Mapper.md` for full field mapping, custom fields, title format, and pre-push validation checklist.
+
 | Local | AIO |
 |-------|-----|
 | P0 | Critical |
@@ -73,51 +75,17 @@ Write `AIO_SYNC_LOG.md` to ticket root:
 - Send complete case content on updates (no partial updates)
 - Log deleted case key + title for traceability
 - On API error: log detail and STOP
+- Apply `@AIO-API-Mapper.md` Pre-Push Validation Checklist on EVERY create/update call
 
-## Formatting Standards (MANDATORY — never skip)
+## Formatting Standards
 
-### Title: `POS-XXXX | {Feature Brief} : {Test Case Title}`
-- Extract ticket ID from folder name
-- Derive feature brief (2-5 words) from ticket description
-- NEVER include local TC ID prefix (TC-POS-XXXX-NN) in AIO title
-- Use pipe `|` after ticket ID, colon `:` before test case title
-- Feature brief must be identical across all TCs for the same ticket
-
-### Description: Must include `**Test Data:**` section
-- Always append test data below the objective text
-- If source has no explicit Test Data, extract from preconditions/environment
-
-### Automation Status: Always `To Be Automated`
-- Source file's `Automation Status: Manual/Required` is an internal pipeline tag
-- AIO field must always be `To Be Automated` on create/update
-
-### Custom Fields: AI-Generated & AI-Automated
-- **AI-Generated (ID: 9)**: Always pass `true` for pipeline-generated test cases (all TCs from the Validator output)
-- **AI-Automated (ID: 8)**: Check `6_Automation/` folder in the ticket directory:
-  - If automation scripts exist for the TC → pass `true`
-  - If no scripts exist → pass `false`
-- **ALWAYS pass `customFields` array in `create_case` and `update_case`**:
-  ```json
-  "customFields": [
-    {"ID": 9, "value": true},
-    {"ID": 8, "value": false}
-  ]
-  ```
-- The Custom Fields Status table in sync log tracks final values per TC for audit
-
-### Tags: Must be included in API calls
-- **Base tags** (all TCs): `{TICKET_ID}`, `v{VERSION}`, `{Feature Area}` (e.g., `POS-10593, v230, Reports`)
-- **Regression tag**: Add `Regression` tag for any TC where source has `Regression Candidate: Yes`
-- Extract version from folder path (e.g., `Version 230` → `v230`)
-- Extract feature area from the ticket's functional domain (e.g., Reports, Payments, Checks)
-- **ALWAYS pass the `tags` array in `create_case`** — AIO supports tags on creation and will auto-create any tag that doesn't already exist
-- Tags CANNOT be updated via `update_case` (API limitation) — only set on creation
-- The Custom Fields Status table MUST still include a `Tags` column for traceability
-
-### Sync Log: Must match reference format
-- Reference: `2026/Q1/Version 227/PROJ-1234 - .../AIO_SYNC_LOG.md`
-- Required sections: Sync Summary, Update History, Test Case Mapping, Priority Distribution, Custom Fields Status (with Tags column), Regression Candidates, AIO Tests Links, Notes
-- Must include `✅ All fields set via API: tags, Jira link, AI-Generated, AI-Automated. No manual action required.`
+> **All formatting rules are defined in `@AIO-API-Mapper.md`.** Key points:
+> - Title: `POS-XXXX | {Feature Brief} : {Test Case Title}`
+> - Description: Must include `**Test Data:**` section
+> - Automation Status: `To Be Automated` (default) or `Manual` (if source says Manual)
+> - Custom Fields: `[{"ID": 9, "value": "Yes"}, {"ID": 8, "value": "No"}]` — values are STRINGS
+> - Tags: `{TICKET_ID}, v{VERSION}, {Feature Area}` + `Regression` if applicable
+> - Regression/Automation criteria: per `@regression-automation-criteria.md`
 
 ### State File: MUST update `.state.json` after sync
 - After writing `AIO_SYNC_LOG.md`, ALWAYS update the ticket root `.state.json`

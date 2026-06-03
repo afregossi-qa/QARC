@@ -95,4 +95,4 @@ When writing test cases (per `TestCasesDesign.md`), set these fields:
 ---
 
 **Last Updated:** June 3, 2026
-**Version:** 1.0
+**Version:** 1.1 — Integrated into Validator workflow, TestCasesDesign, AIO-API-Mapper, and csv-export-format. Enforced across pipeline.

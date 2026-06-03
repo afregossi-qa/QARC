@@ -1,3 +1,8 @@
+---
+inclusion: auto
+description: Token/context budgeting rules and anti-patterns for all agents
+---
+
 # Context & Token Efficiency Standards
 
 ## File Size Thresholds

@@ -32,4 +32,4 @@ AFTER recording a lesson, the agent must ask: **"Does this change what we know a
    - "Job titles always return isFullDataset:true" → PROMOTED (architectural truth)
    - "OutBoxCheck entries are purged after successful upload" → PROMOTED (product behavior)
    - "tc02 failed due to transient 500" → LOGGED (specific incident, not promoted)
-3. **Context Update**: If promoted, update `.kiro/steering/product.md` with the new product knowledge. Change the lesson status from `[LOGGED]` to `[PROMOTED]`.
+3. **Context Update**: If promoted, update `.kiro/memory/products/pos/project_context.md` with the new product knowledge. Change the lesson status from `[LOGGED]` to `[PROMOTED]`.
