@@ -22,6 +22,16 @@ Verify execution proof against test plan. Audit evidence and produce findings/cl
 - Scan for keywords: Error, Fail, 200, 500, Exception
 - Cross-reference with expected results from `Validator/FINAL_TEST_CASES`
 
+### 2b. IMAGE ANALYSIS
+- Scan the `3_Evidence/screenshots/` folder for image files: *.png, *.jpg, *.jpeg, *.gif, *.bmp, *.webp
+- For each image found:
+  - Read and describe what is visually present (UI state, error dialogs, data displayed, status bar timestamps)
+  - Correlate timestamps visible in screenshots with log entries when possible
+  - Map the screenshot to the corresponding test case based on filename or folder structure
+  - Record observations in findings using format: `[IMG: filename.png] Observation: ...`
+- If an image cannot be read or is corrupted, note: `[IMG: filename.png] NOT ANALYZED — file unreadable`
+- Do NOT infer behavior beyond what is visually shown in the image
+
 ### 3. OUTPUT
 Write to Reviewer/ folder:
 - `EXECUTION_FINDINGS_{TICKET_ID}.md` — Test results, pass/fail status, issues found
@@ -32,9 +42,9 @@ Write to Reviewer/ folder:
 |---------------|-----------------|
 | JSON logs | Keyword scan + structure validation |
 | API responses | Status code + payload verification |
-| Screenshots | Visual analysis only for UI test cases |
+| Screenshots/Images | Full visual analysis: UI state, text content, timestamps, error messages, data values |
 | Error logs | Full context around error keywords |
-| LiteDB files | Binary — cannot be read, note as 'not analyzed (binary)' |
+| LiteDB files | Binary — use LiteDbReader tool to query, note collections and record counts |
 
 ## Strict Analysis Standards (MANDATORY)
 
