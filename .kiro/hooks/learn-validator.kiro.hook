@@ -1,7 +1,8 @@
 {
-  "name": "LEARN — Validator Output",
-  "version": "1.0.0",
-  "description": "Captures lessons from Validator stage outputs into the Shared Brain (lessons_learned.md only).",
+  "enabled": false,
+  "name": "LEARN — Validator Output (DISABLED — lessons captured at Reviewer stage)",
+  "version": "1.0.1",
+  "description": "DISABLED: Validator outputs rarely contain novel insights. Learning happens at Reviewer stage via learn-on-findings.kiro.hook instead.",
   "when": {
     "type": "fileCreated",
     "patterns": ["**/2_Validator/FINAL_TEST_CASES*.md"]

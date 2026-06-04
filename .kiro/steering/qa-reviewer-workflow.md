@@ -17,10 +17,13 @@ Verify execution proof against test plan. Audit evidence and produce findings/cl
 - Read `@evidence_standards.md` for report lifecycle rules
 
 ### 2. AUDIT
-- Examine raw evidence in `Evidence/` folder
+- List ALL files in `Evidence/` including subfolders (`manual/`, `localstate/`, `external/`, `screenshots/`)
+- Read all evidence regardless of naming convention — use content-based matching to map to test cases
 - Apply Head/Tail rule: first 50 + last 50 lines for logs >100 lines
 - Scan for keywords: Error, Fail, 200, 500, Exception
 - Cross-reference with expected results from `Validator/FINAL_TEST_CASES`
+
+Note: This workflow is triggered via the **"Validate Evidence & Review"** hook (userTriggered). The hook auto-detects the ticket from the user's active editor file. It can be re-triggered multiple times — each run produces a fresh analysis of ALL current evidence and overwrites previous findings.
 
 ### 2b. IMAGE ANALYSIS
 - Scan the `3_Evidence/screenshots/` folder for image files: *.png, *.jpg, *.jpeg, *.gif, *.bmp, *.webp

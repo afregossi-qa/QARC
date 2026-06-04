@@ -97,14 +97,20 @@ INIT → EXPERT_DRAFT → EXPERT_OK → VALIDATOR_PENDING → VALIDATOR_OK
 ### Phase 4: Evidence Collection
 **Manual step:** Execute test cases and drop evidence files into `3_Evidence/`
 
-Naming convention: `tc01_description.json`, `tc02_screenshot.png`
+Evidence can go in any subfolder (`manual/`, `localstate/`, `external/`, `screenshots/`) and can be named freely — the reviewer uses content-based matching to map files to test cases.
 
-**When done, run:**
-```powershell
-.\.kiro\scripts\advance-phase.ps1 -TicketPath "path/to/ticket" -NewPhase "REVIEWER_PENDING"
-```
+You can keep testing and adding/updating evidence incrementally. The review is only triggered when you explicitly request it.
 
-**Hook triggers automatically** → QA-Evidence-Reviewer-Agent analyzes evidence
+**When ready to review, use ONE of these methods:**
+
+| Method | How |
+|--------|-----|
+| **Click hook (recommended)** | Open any file in the ticket's `3_Evidence/` folder, then click **"Validate Evidence & Review"** in the Agent Hooks panel. The hook auto-detects the ticket from your active file. |
+| **Pipeline script** | `.\.kiro\scripts\advance-phase.ps1 -TicketPath "path/to/ticket" -NewPhase "REVIEWER_PENDING"` |
+
+**Re-triggerable:** You can trigger the review multiple times. Each run performs a fresh analysis of ALL current evidence and overwrites previous findings.
+
+**Hook triggers** → QA-Evidence-Reviewer-Agent scans all evidence and analyzes
 
 ### Phase 5: Review Complete
 **Outputs:**
@@ -121,7 +127,7 @@ Naming convention: `tc01_description.json`, `tc02_screenshot.png`
 | Revise Test Cases | `advance-phase.ps1 -NewPhase "VALIDATOR_REVISE"` | QA-Validator-Agent (revision mode) |
 | Export CSV | `advance-phase.ps1 -NewPhase "VALIDATOR_CSV"` | QA-Exporter-Agent |
 | Export AIO | `advance-phase.ps1 -NewPhase "VALIDATOR_API"` | QA-AIO-Direct-Agent |
-| Start Review | `advance-phase.ps1 -NewPhase "REVIEWER_PENDING"` | QA-Evidence-Reviewer-Agent |
+| Start Review | Click **"Validate Evidence & Review"** hook (auto-detects ticket from open file) or `advance-phase.ps1 -NewPhase "REVIEWER_PENDING"` | QA-Evidence-Reviewer-Agent |
 
 ## Technical Details
 
@@ -154,4 +160,4 @@ Naming convention: `tc01_description.json`, `tc02_screenshot.png`
 If automatic triggering fails, you can always ask the agent directly:
 - `@qa-validator-agent generate test cases for POS-XXXX`
 - `@qa-exporter-agent export test cases for POS-XXXX`
-- `@qa-evidence-reviewer-agent review evidence for POS-XXXX`
+- For the reviewer: open any file in the ticket's evidence folder and click the **"Validate Evidence & Review"** hook

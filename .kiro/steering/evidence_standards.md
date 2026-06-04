@@ -55,7 +55,7 @@ Reads unmatched evidence files and analyzes content looking for:
 - All P0/P1 covered (via either pass) → reviewer proceeds
 - Any P0/P1 missing after both passes → `Evidence/EVIDENCE_GAP_REPORT.md` produced, reviewer blocked
 - P2 missing → logged as warning, does not block
-- QA tester adds missing files and re-saves `EVIDENCE_READY.md` to retry
+- QA tester adds missing evidence and re-triggers the **"Validate Evidence & Review"** hook to retry
 
 ### EVIDENCE_GAP_REPORT.md
 Generated automatically when evidence gaps are detected. Contains:

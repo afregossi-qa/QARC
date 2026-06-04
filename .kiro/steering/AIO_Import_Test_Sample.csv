@@ -1,3 +1,7 @@
+---
+inclusion: fileMatch
+fileMatchPattern: "*_TCMS_Import.csv"
+---
 Folder,Requirements,Existing Case ID,Summary,Description,Precondition,Test Steps,Expected Result,Priority,Tags,Automation Status,AI-Automated,AI-Generated
 "QA-SAMPLE - AIO Import Validation",QA-SAMPLE,TC-001,"QA-SAMPLE - Full Sync on Fresh Startup","Verify the application performs full sync for all collections on a fresh startup without any modifiedFrom parameter
 

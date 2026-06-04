@@ -37,7 +37,7 @@ inclusion: manual
 ## REVIEWER_PENDING → Reviewer Workflow
 
 1. Read `Validator/FINAL_TEST_CASES_*.md`
-2. List `Evidence/` files (exclude EVIDENCE_READY.md)
+2. List ALL files in `Evidence/` including subfolders (`manual/`, `localstate/`, `external/`, `screenshots/`)
 3. Apply Head/Tail rule: files >100 lines → first 50 + last 50
 4. Use @EvidenceAuditAnalyzer.md for matching
 5. Use @ReportLifecycleUpdater.md for reports
@@ -45,6 +45,8 @@ inclusion: manual
 7. Save `Reviewer/FINAL_CLOSURE_REPORT_{ticketId}.md`
 8. Determine verdict (STABLE/UNSTABLE)
 9. Update `.state.json` via @LifecycleStateManager.md setVerdict: verdict={STABLE|UNSTABLE}, agent=QA-Evidence-Reviewer-Agent, note="Verdict based on evidence analysis: {brief reason}."
+
+**Trigger method:** QA tester clicks **"Validate Evidence & Review"** hook with any ticket file open (auto-detects ticket path). Re-triggerable — each run overwrites previous findings with fresh analysis of all current evidence.
 
 ## UNSTABLE → Remediation Workflow
 

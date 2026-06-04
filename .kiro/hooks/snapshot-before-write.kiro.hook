@@ -1,6 +1,6 @@
 {
-  "enabled": true,
-  "name": "Snapshot Before Write",
+  "enabled": false,
+  "name": "Snapshot Before Write (DISABLED — use git for rollback)",
   "description": "Before any write operation to 1_Expert/, 2_Validator/, or 4_Reviewer/ folders, check if the target file already exists. If it does, copy it to 5_Snapshots/ with a timestamp suffix for rollback purposes.",
   "version": "3",
   "when": {

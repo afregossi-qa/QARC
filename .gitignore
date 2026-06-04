@@ -89,6 +89,9 @@ POS_Automation_BACK/
 # Junk files
 $null
 
+# IDE folders (user-specific, not needed in repo)
+.vscode/
+
 # OS files
 Thumbs.db
 .DS_Store
