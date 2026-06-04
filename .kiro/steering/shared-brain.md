@@ -1,24 +1,34 @@
----
-description: Implements the RECALL-RELATE-LEARN loop by forcing checks of lessons, patterns, and project context.
-inclusion: auto
----
+# Shared Brain — RECALL-RELATE-LEARN
 
-# Shared Brain — RECALL Protocol
+## RECALL (Before Every Task)
 
-**Before every task, read these files (in order):**
+Read these files in order:
 
-1. `.kiro/memory/universal/lessons_learned.md` — Domain-agnostic lessons (all products)
-2. `.kiro/memory/universal/pattern_registry.md` — Cross-product error signatures
-3. `.kiro/memory/products/{product}/lessons_learned.md` — Product-specific lessons
-4. `.kiro/memory/products/{product}/pattern_registry.md` — Product-specific error patterns
-5. `.kiro/memory/products/{product}/project_context.md` — Product module dependencies
+1. `.kiro/memory/products/{product}/project_context.md` — Module dependencies, architectural truths
+2. `.kiro/memory/products/{product}/lessons_learned.md` — Product-specific lessons
+3. `.kiro/memory/products/{product}/pattern_registry.md` — Error signatures & diagnostics
+4. `.kiro/memory/universal/lessons_learned.md` — Cross-product lessons
+5. `.kiro/memory/universal/pattern_registry.md` — Cross-product patterns
 
-The `{product}` folder matches the team's Jira project (e.g., `pos/`, `acv2/`, `qupos/`). If a file is empty or missing, skip it and proceed.
+The `{product}` folder matches the Jira project (e.g., `pos/`). If a file is missing, skip it.
 
-Reference memory in reasoning: e.g., "Per lessons_learned, TCP 3000ms = IPv4/IPv6 mismatch."
+Reference memory in reasoning: e.g., "Per project_context, Save() is the sole writer of MenuHead fields."
 
-**After every task (LEARN):** Append new findings to the appropriate memory file. Deduplicate first.
-- Domain-agnostic findings → `universal/`
-- Product-specific findings → `products/{product}/`
+**`[PROMOTED]` entries are hard constraints** — apply them as rules, not suggestions.
 
-For full protocol details (RELATE, REFINE, setup): read `@shared-brain-details.md`
+## RELATE (During Analysis)
+
+1. **Cross-reference**: Does this ticket touch a module in project_context.md? What are its dependencies?
+2. **Pattern match**: Does the error signature match pattern_registry.md? Don't reinvent a diagnostic path that already exists.
+3. **Gap detection**: If investigation reveals something NOT in memory, flag it for LEARN.
+
+## LEARN (Handled by Hook)
+
+Learning happens automatically via `learn-on-findings.kiro.hook` when a closure report is marked `_STABLE` or `_VALIDATED`. No agent needs to manually write to memory files.
+
+## Rules
+
+- **Never skip RECALL.** First step of every task, every time.
+- Memory files are **append-only**. Never delete or rewrite existing entries.
+- `[PROMOTED]` entries are periodically archived to `lessons_learned_archive.md`.
+- Tags: `[FIELD]` = production insights, `[AUTO]` = test design, `[FRAMEWORK]` = pipeline.

@@ -79,6 +79,7 @@ POS_Automation_BACK/
 .kiro/steering/qa-executor-workflow.md
 .kiro/specs/qa-architect-test-analysis-enhancement/
 .kiro/hooks/trigger-architect.kiro.hook
+.kiro/hooks/trigger-architect-created.kiro.hook
 .kiro/hooks/trigger-debug-detective.kiro.hook
 .kiro/hooks/execute-api-tests-on-edit.kiro.hook
 .kiro/hooks/execute-api-tests.kiro.hook
