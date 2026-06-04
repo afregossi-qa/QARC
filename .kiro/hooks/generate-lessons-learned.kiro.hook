@@ -1,11 +1,12 @@
 {
   "name": "Generate Lessons Learned Report",
-  "version": "1.0.0",
-  "description": "When a FINAL_CLOSURE_REPORT is created (ticket closing), generates a LESSONS_LEARNED.md at the ticket root summarizing what was learned and promoted to the shared brain.",
+  "version": "1.1.0",
+  "description": "When a FINAL_CLOSURE_REPORT is created OR edited with _STABLE/_VALIDATED suffix (ticket closing), generates a LESSONS_LEARNED.md at the ticket root summarizing what was learned and promoted to the shared brain.",
   "when": {
-    "type": "fileCreated",
+    "type": "fileEdited",
     "patterns": [
-      "**/4_Reviewer/FINAL_CLOSURE_REPORT*.md"
+      "**/4_Reviewer/FINAL_CLOSURE_REPORT*_STABLE.md",
+      "**/4_Reviewer/FINAL_CLOSURE_REPORT*_VALIDATED.md"
     ]
   },
   "then": {

@@ -1,0 +1,13 @@
+{
+  "name": "Auto Dashboard on STABLE/VALIDATED",
+  "version": "1.0.0",
+  "description": "Triggers the QA Dashboard Agent automatically when the Final Closure Report is renamed with _STABLE or _VALIDATED suffix.",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["**/4_Reviewer/FINAL_CLOSURE_REPORT*_STABLE*", "**/4_Reviewer/FINAL_CLOSURE_REPORT*_VALIDATED*"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are acting as the QA-Dashboard-Agent.\n\nA Final Closure Report was just marked STABLE/VALIDATED. Automatically generate the QA Dashboard for this ticket.\n\n1. Identify the ticket folder from the triggering file path (go up from 4_Reviewer/ to the ticket root).\n\n2. Read @context_efficiency.md and @dashboard_standards.md steering files.\n\n3. Use the @LifecycleStateScraper.md skill to scan 1_Expert/, 2_Validator/, 3_Evidence/, and 4_Reviewer/ subfolders — only read headers/metadata to identify phases and extract key metrics (do not read full test plans).\n\n4. Use the @ExecutiveDocumentGenerator.md skill to build the QA_DASHBOARD.md and SUMMARY.md following @dashboard_standards.md layout. Limit narrative summaries to 200 words max.\n\n5. IMPORTANT — Output rules: If QA_DASHBOARD.md or SUMMARY.md already exist in the ticket root, you MUST overwrite them (not create second files). Use a single fsWrite call per file.\n\n6. Write QA_DASHBOARD.md and SUMMARY.md to the ticket root folder. Stop after saving."
+  }
+}
