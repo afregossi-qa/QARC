@@ -28,12 +28,14 @@ Note: This workflow is triggered via the **"Validate Evidence & Review"** hook (
 ### 2b. IMAGE ANALYSIS
 - Scan the `3_Evidence/screenshots/` folder for image files: *.png, *.jpg, *.jpeg, *.gif, *.bmp, *.webp
 - For each image found:
-  - Read and describe what is visually present (UI state, error dialogs, data displayed, status bar timestamps)
+  - Use the MCP tool `extract_image_from_file` (from image-extractor server) to read the image as base64
+  - Describe what is visually present (UI state, error dialogs, data displayed, status bar timestamps)
   - Correlate timestamps visible in screenshots with log entries when possible
   - Map the screenshot to the corresponding test case based on filename or folder structure
   - Record observations in findings using format: `[IMG: filename.png] Observation: ...`
 - If an image cannot be read or is corrupted, note: `[IMG: filename.png] NOT ANALYZED — file unreadable`
 - Do NOT infer behavior beyond what is visually shown in the image
+- **IMPORTANT**: Use `extract_image_from_file` MCP tool — NOT `read_file` (which rejects binary content)
 
 ### 3. OUTPUT
 Write to Reviewer/ folder:
@@ -45,7 +47,7 @@ Write to Reviewer/ folder:
 |---------------|-----------------|
 | JSON logs | Keyword scan + structure validation |
 | API responses | Status code + payload verification |
-| Screenshots/Images | **MANDATORY** — read each image with `read_file` tool, describe UI state, text, timestamps, values |
+| Screenshots/Images | **MANDATORY** — use `extract_image_from_file` MCP tool to read each image, describe UI state, text, timestamps, values |
 | Error logs | Full context around error keywords |
 | LiteDB files (.db) | **MANDATORY** — run `& "Tools/LiteDbReader5/bin/Debug/net6.0/LiteDbReader5.exe" "<path>" --list` then query collections. If it fails, use `--raw` mode. NEVER skip .db files. |
 
