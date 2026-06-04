@@ -45,9 +45,22 @@ Write to Reviewer/ folder:
 |---------------|-----------------|
 | JSON logs | Keyword scan + structure validation |
 | API responses | Status code + payload verification |
-| Screenshots/Images | Full visual analysis: UI state, text content, timestamps, error messages, data values |
+| Screenshots/Images | **MANDATORY** — read each image with `read_file` tool, describe UI state, text, timestamps, values |
 | Error logs | Full context around error keywords |
-| LiteDB files | Binary — use LiteDbReader tool to query, note collections and record counts |
+| LiteDB files (.db) | **MANDATORY** — run `& "Tools/LiteDbReader5/bin/Debug/net6.0/LiteDbReader5.exe" "<path>" --list` then query collections. If it fails, use `--raw` mode. NEVER skip .db files. |
+
+### LiteDB Tool Quick Reference
+```powershell
+# List collections
+& "<workspace>/Tools/LiteDbReader5/bin/Debug/net6.0/LiteDbReader5.exe" "<db-path>" --list
+
+# Query first N documents
+& "<workspace>/Tools/LiteDbReader5/bin/Debug/net6.0/LiteDbReader5.exe" "<db-path>" <Collection> <limit>
+
+# Fallback: raw binary string extraction
+& "<workspace>/Tools/LiteDbReader5/bin/Debug/net6.0/LiteDbReader5.exe" "<db-path>" --raw
+```
+The tool tries multiple connection strategies automatically (ReadOnly, Direct, Shared, Upgrade).
 
 ## Strict Analysis Standards (MANDATORY)
 
