@@ -63,6 +63,7 @@ POS_Automation_BACK/
 .kiro/agents/qa-maintenance-agent.json
 .kiro/agents/qa-debug-detective-agent.json
 .kiro/agents/qa-detective-agent.json
+.kiro/agents/qa-confluence-publisher-agent.json
 .kiro/skills/AutomationArchitectPipeline.md
 .kiro/skills/AutomationCandidateScraper.md
 .kiro/skills/Hotfix-Logic.md
