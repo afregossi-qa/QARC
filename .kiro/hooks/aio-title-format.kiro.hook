@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "AIO Title Format Check",
+  "description": "After creating or updating an AIO test case, verify the title follows the format: POS-XXXX | {Feature Brief} : {Test Case Title}. If wrong, flag for correction.",
+  "version": "1",
+  "when": {
+    "type": "postToolUse",
+    "toolTypes": [
+      ".*aio.*create_case.*",
+      ".*aio.*update_case.*"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "CHECK: The AIO test case title MUST follow this exact format: `POS-XXXX | {Feature Brief} : {Test Case Title}`. Example: `POS-10681 | Gratuity SC Cap : Full Refund Not Blocked`. If the title in the response does not match this format, immediately call update_case to fix it."
+  }
+}

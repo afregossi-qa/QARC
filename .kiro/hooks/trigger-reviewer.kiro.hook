@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Validate Evidence & Review",
+  "description": "Manually trigger to review all gathered evidence. Asks for ticket number, locates the folder, and performs full evidence analysis. Re-triggerable — overwrites previous findings with updated analysis.",
+  "version": "10",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are acting as the QA-Evidence-Reviewer-Agent.\n\nAsk the user: **What ticket number?** (e.g., 'POS-10611')\n\nOnce they provide the ticket ID, search for the matching folder in the workspace using the pattern `**/{TICKET_ID} - */`. If multiple matches exist, ask which one. If no match, ask for the full path.\n\nOnce you have the ticket path, read @qa-reviewer-workflow.md and execute the full workflow:\n\n1. SCAN ALL EVIDENCE — List everything in 3_Evidence/ (including subfolders: manual/, localstate/, external/, screenshots/). Read all files regardless of type or naming. This is a full inspection of whatever the tester gathered.\n2. EVIDENCE VALIDATION GATE — Two-pass matching (filename pattern → content analysis). Build coverage matrix against FINAL_TEST_CASES. If P0/P1 coverage gaps exist → write EVIDENCE_GAP_REPORT.md to 3_Evidence/ and STOP.\n3. INVOKE REVIEWER — Read @evidence_standards.md for analysis rules. Write EXECUTION_FINDINGS and FINAL_CLOSURE_REPORT to 4_Reviewer/ (overwrite if exists from a previous run).\n4. POST JIRA COMMENT — Extract ticket ID, post QA Closure comment with verdict, test results table, and production readiness statement.\n\nCRITICAL — DO NOT SKIP THESE:\n- **LiteDB (.db) files**: Run `& \"<workspace>/Tools/LiteDbReader5/bin/Debug/net6.0/LiteDbReader5.exe\" \"<db-path>\" --list` to get collections, then query them with a limit. NEVER mark .db files as 'binary not analyzed'.\n- **Screenshots (.png/.jpg)**: Use `read_file` on each image — you HAVE image_analysis capability. Describe what you see (UI state, text, timestamps, values). NEVER mark images as 'binary not analyzed'.\n\nNOTE: This hook can be re-triggered multiple times as new evidence is added. Each run overwrites previous findings with a fresh analysis of ALL current evidence.\n\nWrite only to 3_Evidence/, 4_Reviewer/, and Jira comment. Stop after saving.\n\nERROR RECOVERY: On failure, write REVIEWER_ERROR.md at ticket root (step failed + error + what completed). Then STOP."
+  }
+}

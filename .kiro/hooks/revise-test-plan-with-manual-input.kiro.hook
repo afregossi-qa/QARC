@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Draft Test Plan",
+  "description": "When manual_input_OK.md is saved, read its contents and draft a high-level test plan saved as test_plan_PENDING.md in the same folder",
+  "version": "2",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/1_Expert/manual_input_OK.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are acting as the QA-Expert-Agent. Read the contents of the manual_input_OK.md file that was just saved in the 1_Expert/ folder. Also read the logic_explanation.md in the same 1_Expert/ folder for full context. Use the @GapAnalyzer.md skill to cross-reference requirements vs. implementation. Use the @StrategyOptimizer.md skill to generate a non-redundant test plan. Draft a comprehensive test plan based on these inputs. Follow @context_efficiency.md rules for data retrieval. CLEANUP RULE: Before saving, list the 1_Expert/ folder and find any existing test_plan*.md files (e.g. test_plan_POS-*.md, test_plan_UPDATED.md, test_plan_PENDING.md). For each one found, snapshot it to 5_Snapshots/ with a timestamp suffix, then delete it from 1_Expert/. After cleanup, save the output exactly as test_plan_PENDING.md in 1_Expert/. This ensures only ONE test plan file exists at a time. Write only to 1_Expert/ (and 5_Snapshots/ for backups). Stop after saving."
+  }
+}

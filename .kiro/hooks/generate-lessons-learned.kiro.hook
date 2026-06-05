@@ -1,0 +1,16 @@
+{
+  "name": "Generate Lessons Learned Report",
+  "version": "1.1.0",
+  "description": "When a FINAL_CLOSURE_REPORT is created OR edited with _STABLE/_VALIDATED suffix (ticket closing), generates a LESSONS_LEARNED.md at the ticket root summarizing what was learned and promoted to the shared brain.",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/4_Reviewer/FINAL_CLOSURE_REPORT*_STABLE.md",
+      "**/4_Reviewer/FINAL_CLOSURE_REPORT*_VALIDATED.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A ticket is being closed (FINAL_CLOSURE_REPORT created). Generate a LESSONS_LEARNED.md at the ticket root.\n\nSteps:\n1) Identify the ticket ID and ticket folder root from the closure report path.\n2) Read the closure report to understand what was investigated/tested.\n3) Read .kiro/memory/products/pos/lessons_learned.md and find ALL entries tagged with this ticket ID.\n4) Read .kiro/memory/products/pos/pattern_registry.md and find entries referencing this ticket ID.\n5) Read .kiro/memory/products/pos/project_context.md and check if any section references this ticket.\n6) Read .kiro/memory/products/pos/lessons_learned_archive.md and find any PROMOTED entries for this ticket.\n\nWrite LESSONS_LEARNED.md at the ticket root with this structure:\n\n```markdown\n# Lessons Learned — {TICKET_ID}\n\n## Summary\n{One-paragraph summary of what this ticket was about and key outcomes}\n\n## Lessons Captured\n{List each lesson from lessons_learned.md tagged with this ticket, with its status}\n\n| # | Lesson | Status | Target File |\n|---|--------|--------|-------------|\n| 1 | {lesson text} | LOGGED / PROMOTED | lessons_learned.md |\n\n## Patterns Registered\n{List any new error signatures or patterns added to pattern_registry.md from this ticket}\n- If none: 'No new patterns registered.'\n\n## Promoted to Project Context\n{List what was promoted to project_context.md, with the section it landed in}\n- If none: 'No promotions to project_context.md.'\n\n## Promotion Audit\n{For each PROMOTED entry, confirm it actually exists in project_context.md}\n- ✅ {lesson} → Found in section: {section name}\n- ❌ {lesson} → MISSING from project_context.md — needs backfill\n\n## Notes\n{Any observations about gaps, items that should have been promoted but weren't, or corrections needed}\n```\n\nRules:\n- Only include lessons/patterns that reference THIS ticket ID\n- The Promotion Audit section is critical — actually verify each promoted lesson landed in project_context.md\n- If you find a promoted entry that did NOT land in project_context.md, flag it with ❌ and note it needs backfill\n- Write the file at the ticket folder root (same level as .state.json, QA_DASHBOARD.md)\n- If no lessons exist for this ticket, still create the file with 'No lessons captured for this ticket.' in each section"
+  }
+}

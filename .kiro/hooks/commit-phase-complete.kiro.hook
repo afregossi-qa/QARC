@@ -1,0 +1,19 @@
+{
+  "name": "Commit Phase Complete",
+  "version": "1.0.0",
+  "description": "After a key pipeline output is created (Expert, Validator, Reviewer, AIO sync), prompt to commit the ticket folder changes.",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/1_Expert/test_plan_PENDING.md",
+      "**/2_Validator/FINAL_TEST_CASES_*_PENDING.md",
+      "**/4_Reviewer/FINAL_CLOSURE_REPORT_*.md",
+      "**/4_Reviewer/EXECUTION_FINDINGS_*.md",
+      "**/AIO_SYNC_LOG.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A pipeline phase just completed. Commit the changes:\n\n1. Detect the ticket folder from the created file path.\n2. Run: git add \"{ticket_folder}/\"\n3. Determine which phase completed based on the file:\n   - test_plan_PENDING.md → phase: Expert\n   - FINAL_TEST_CASES_*_PENDING.md → phase: Validator\n   - EXECUTION_FINDINGS_*.md → phase: Reviewer\n   - FINAL_CLOSURE_REPORT_*.md → phase: Reviewer\n   - AIO_SYNC_LOG.md → phase: AIO Sync\n4. Run: git commit -m \"{ticket_id}: {phase} phase complete\"\n\nIf git add finds nothing to stage (no changes), skip the commit silently."
+  }
+}

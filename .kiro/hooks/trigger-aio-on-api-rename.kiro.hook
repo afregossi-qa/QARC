@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Post Test Cases API",
+  "version": "3",
+  "description": "Triggers QA-AIO-Direct-Agent when a file ending in _API.md is saved in any 2_Validator/ folder.",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/2_Validator/*_API.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are acting as the QA-AIO-Direct-Agent.\n\nA FINAL_TEST_CASES file was just renamed to _API.md, triggering AIO sync.\n\n**Auto-detect the ticket folder** from the edited file path (extract the parent of 2_Validator/).\n\nThen execute the full sync workflow:\n\n1. **READ INPUTS**: Read the *_API.md file that triggered this hook in 2_Validator/.\n\n2. **CHECK EXISTING**: Read AIO_SYNC_LOG.md from the ticket root (if exists) to find previously synced case keys.\n\n3. **SYNC TO AIO**: Follow @qa-aio-workflow.md and @AIO-API-Mapper.md strictly.\n   - Title format: `{TICKET_ID} | {Feature Brief} : {Test Case Title}` (extract ticket ID and derive brief from folder name)\n   - Description: MUST include `**Test Data:**` section\n   - Automation Status: ALWAYS `To Be Automated`\n   - Use aio-tests MCP server, target 'AI Generated' folder\n   - If cases exist in sync log → update. If new → create.\n\n4. **DETERMINE CUSTOM FIELDS**: For the sync log, determine AI-Generated and AI-Automated values:\n   - AI-Generated: `Yes` for all pipeline-generated TCs (default for all Validator output)\n   - AI-Automated: Check if `6_Automation/` folder has scripts for the ticket. If yes → `Yes`, if no → `No`\n   - Include a Custom Fields Status table in the sync log with values per TC\n\n5. **GENERATE LOG**: If AIO_SYNC_LOG.md already exists in the ticket root, overwrite it (not create a second file). Write AIO_SYNC_LOG.md to ticket root following the reference format. Include: Sync Summary, Update History, Test Case Mapping, Priority Distribution, Custom Fields Status (AI-Generated/AI-Automated per TC), AIO Tests Links, Notes with manual action reminder including: `⚠️ Manual action required: Add tags, Jira links, and set AI-Generated/AI-Automated fields in AIO UI or via CSV import`.\n\nFollow @context_efficiency.md rules. Write only to ticket root. Stop after saving."
+  }
+}

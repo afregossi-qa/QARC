@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Revise Test Cases (Created)",
+  "description": "When FINAL_TEST_CASES_*_UPDATED.md is first created (renamed from _PENDING or _OK), trigger test case revision",
+  "version": "1.0.0",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/2_Validator/FINAL_TEST_CASES_*_UPDATED.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are acting as the QA-Validator-Agent. Read the feedback notes at the top of the edited FINAL_TEST_CASES_*_UPDATED.md file in the 2_Validator/ folder or any change in the file. Also read the test_plan_OK.md and logic_explanation.md from 1_Expert/ for full context. Read the @TestCasesDesign.md steering file for formatting standards. Use the @ContextIntegrator.md skill to ensure human feedback overrides AI logic. Use the @TestCaseStandardizer.md skill to rewrite all test cases into the exact format required by @TestCasesDesign.md. Follow @context_efficiency.md rules.\n\nIMPORTANT — Output rules:\n- Extract the ticket ID from the _UPDATED.md filename.\n- Write the revised output to FINAL_TEST_CASES_[TicketID]_PENDING.md in the SAME 2_Validator/ folder.\n- If FINAL_TEST_CASES_[TicketID]_PENDING.md already exists, OVERWRITE it. Do NOT create a second file or append a number.\n- The snapshot hook will automatically back up the file before overwrite.\n- Use a single fsWrite call to write the complete file content in one operation — do NOT split across fsWrite + fsAppend.\n- After writing _PENDING.md, DELETE the _UPDATED.md file. Suffixes represent lifecycle state — the file transitions from _UPDATED → _PENDING, it is NOT a new file alongside the old one.\n\nMANDATORY POST-REVISION INTEGRITY CHECK (from @qa-validator-workflow.md): Before writing output, verify: (1) Count all TCs in source vs output — missing TCs not explicitly removed by feedback MUST be re-added with full content; (2) TC IDs are sequential with NO gaps — renumber if TCs were removed; (3) Every TC has ALL required sections (header, Priority, Test Type, Automation Status, Regression Potential, Regression Candidate, Source, Preconditions, Test Steps with Expected per step, Expected Result, Test Data); (4) Test Summary Matrix rows match detailed TC sections 1:1 — same count, same IDs, same titles; (5) Add a revision comment block at top documenting what was removed/added/modified and before/after TC count. If a TC cannot be recovered, flag with <!-- MISSING --> comment.\n\n⚠️ CRITICAL: Output filename is ALWAYS FINAL_TEST_CASES_[TicketID]_PENDING.md. If it already exists, OVERWRITE it. Never create duplicates.\n\nWrite only to 2_Validator/. Stop."
+  }
+}

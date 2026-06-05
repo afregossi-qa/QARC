@@ -1,0 +1,17 @@
+{
+  "name": "Commit Memory Updates",
+  "version": "1.0.0",
+  "description": "Auto-commits memory file changes after the Shared Brain Learn phase appends new lessons or patterns.",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/**/lessons_learned.md",
+      "**/**/pattern_registry.md",
+      "**/**/project_context.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A memory file was just updated (lessons_learned.md, pattern_registry.md, or project_context.md). Commit the changes:\n\n1. Run: git add .kiro/memory/products/pos/lessons_learned.md .kiro/memory/products/pos/pattern_registry.md .kiro/memory/products/pos/project_context.md .kiro/steering/product.md\n2. Run: git commit -m \"memory: shared brain learn phase update\"\n\nIf the files are not tracked (symlink scenario), skip the commit silently."
+  }
+}

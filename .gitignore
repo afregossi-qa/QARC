@@ -1,0 +1,98 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+
+# Kiro MCP server dependencies
+.kiro/mcp-servers/**/node_modules/
+
+# Nested git repos and external frameworks
+POS_Automation_UI/
+
+# Build artifacts
+**/bin/
+**/obj/
+
+# Local tools (include source, exclude build outputs)
+Tools/Start_WinAppDriver.bat
+Tools/**/bin/
+Tools/**/obj/
+Z_Testing/
+
+# Documentation (published to Confluence — not needed in repo)
+Documentation/
+
+# Ticket data (created by agents at runtime — not part of framework)
+2026/
+Z_OtherTickets/
+
+# Sensitive settings (may contain API tokens)
+.kiro/settings/mcp.json
+.kiro/settings/mcp.json.bak
+
+# Project-specific specs (not part of generic framework)
+.kiro/specs/expired-job-title-filtering/
+
+# Memory (project-specific, populated at runtime by agents)
+.kiro/memory/
+
+# Example product configs (contain company-specific info)
+examples/pos/product.md
+examples/pos/tech.md
+
+# Field triage work (local investigations, not part of framework distribution)
+field-triage/
+Field-Triage/
+.kiro/agents/qa-field-triage-agent.json
+.kiro/skills/qa-field-triage-prompt.md
+.kiro/hooks/trigger-field-triage.kiro.hook
+
+.kiro/steering/regression-mapping-logic.md
+.kiro/memory-templates/templates/relational-investigation-template.md
+.kiro/agents/Documents/
+
+# Automation-related (not part of core QA lifecycle — documented separately)
+POS_Automation_BACK/
+.kiro/agents/qa-automation-architect-agent.json
+.kiro/agents/qa-automation-executor-agent.json
+.kiro/agents/qa-automation-step-translator.json
+.kiro/agents/qa-regression-architect-agent.json
+.kiro/agents/qa-maintenance-agent.json
+.kiro/agents/qa-debug-detective-agent.json
+.kiro/agents/qa-detective-agent.json
+.kiro/agents/qa-confluence-publisher-agent.json
+.kiro/skills/AutomationArchitectPipeline.md
+.kiro/skills/AutomationCandidateScraper.md
+.kiro/skills/Hotfix-Logic.md
+.kiro/skills/JavaDesktopCodeGenerator.md
+.kiro/skills/step-to-method-mapping.md
+.kiro/skills/TechnicalSpecGenerator.md
+.kiro/skills/POSAuthHydrator.md
+.kiro/steering/automation-policy.md
+.kiro/steering/automation-pipeline-funnel.md
+.kiro/steering/automation-steps.md
+.kiro/steering/AutomationStrategy&Standards.md
+.kiro/steering/qa-architect-workflow.md
+.kiro/steering/qa-executor-workflow.md
+.kiro/specs/qa-architect-test-analysis-enhancement/
+.kiro/hooks/trigger-architect.kiro.hook
+.kiro/hooks/trigger-architect-created.kiro.hook
+.kiro/hooks/trigger-debug-detective.kiro.hook
+.kiro/hooks/execute-api-tests-on-edit.kiro.hook
+.kiro/hooks/execute-api-tests.kiro.hook
+.kiro/hooks/run-automation-backend.kiro.hook
+.kiro/hooks/state-pipeline-router.kiro.hook
+.kiro/hooks/process-phase-trigger.kiro.hook
+
+# Junk files
+$null
+
+# IDE folders (user-specific, not needed in repo)
+.vscode/
+
+# OS files
+Thumbs.db
+.DS_Store

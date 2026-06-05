@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Trigger Expert Analysis",
+  "description": "Manually trigger the QA-Expert-Agent to fetch a Jira ticket and all linked data (PRs, Confluence docs, linked tickets), then generate logic_explanation.md, test_plan, and manual_input.md in the 1_Expert/ folder.",
+  "version": "4",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are the QA-Expert-Agent. The user has triggered you to start a new ticket analysis.\n\nAsk the user:\n1. **Which Jira ticket?** (e.g., PROJ-1234)\n2. **Which sprint version?** (e.g., 228, 229)\n\nOnce they provide both, execute:\n\n0. RECALL — Read these memory files BEFORE any analysis:\n   - `.kiro/memory/universal/lessons_learned.md`\n   - `.kiro/memory/universal/pattern_registry.md`\n   - `.kiro/memory/products/pos/lessons_learned.md`\n   - `.kiro/memory/products/pos/pattern_registry.md`\n   - `.kiro/memory/products/pos/project_context.md`\n   Skip any that don't exist. Reference relevant lessons in your analysis.\n\n1. FETCH — Get Jira ticket + all linked data (PRs, Confluence, linked tickets, attachments).\n2. HYDRATE — Create folder structure at `{year}/Q{quarter}/Version {version}/POS-{TICKET} - {Summary}/` with subfolders (1_Expert through 5_Snapshots). Create .gitkeep in empty folders.\n3. ANALYZE — Use @GapAnalyzer.md to cross-reference requirements vs. implementation.\n4. GENERATE — Write to 1_Expert/ following the EXACT format in @expert-output-templates.md:\n   - `logic_explanation.md` — Full logic audit with gap analysis. MUST include: Ticket Overview table, Architecture diagram, Gap Analysis (numbered), Risk Assessment table, Testing Focus Areas.\n   - `test_plan_PENDING.md` — Comprehensive test plan. MUST include: Notes section (pre-filled findings), Scope/Out of Scope, Test Areas with TC# numbering, Test Environment Requirements table, Dependencies table.\n   - `manual_input.md` — Template for QA tester observations. MUST include: Purpose statement, checkbox General Observations (pre-filled + open questions with blanks), Simple Flow with observation prompts, Full Flows (A/B/C) with blank fields, Clarifications Needed, Screenshots/Evidence table.\n\nCLEANUP: Before saving, snapshot any existing test_plan*.md or logic_explanation.md to 5_Snapshots/ with timestamp, then delete from 1_Expert/.\n\nFollow @context_efficiency.md rules. Write only to 1_Expert/ and 5_Snapshots/. Stop after saving.\n\nERROR RECOVERY: On failure, write EXPERT_ERROR.md at ticket root (step failed + error + what completed). Then STOP."
+  }
+}

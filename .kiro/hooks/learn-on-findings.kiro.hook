@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "Shared Brain — Learn on Closure",
+  "version": "4.0.0",
+  "description": "Unified learning hook. Fires when a closure report is finalized (_STABLE/_VALIDATED). Extracts lessons, registers patterns, and promotes architectural truths to project_context.md. Replaces learn-expert, learn-validator, learn-debug-detective, learn-field-triage, and shared-brain-learn.",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/4_Reviewer/FINAL_CLOSURE_REPORT*_STABLE.md",
+      "**/4_Reviewer/FINAL_CLOSURE_REPORT*_VALIDATED.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A Final Closure Report was just marked STABLE or VALIDATED. Execute the full LEARN + REFINE cycle.\n\nSTEP 1 — EXTRACT:\n1) Read the triggering closure report.\n2) Identify: root causes confirmed, unexpected behaviors, architectural truths validated, diagnostic techniques that worked, error signatures discovered.\n3) Skip anything that is just a test pass/fail status — only capture insights.\n\nSTEP 2 — DEDUPLICATE:\n4) Open .kiro/memory/products/pos/lessons_learned.md.\n5) For each candidate lesson, scan existing entries. If a substantially similar lesson exists (same root cause, same behavioral insight), SKIP it.\n\nSTEP 3 — APPEND NEW LESSONS:\n6) For each genuinely new lesson, append to lessons_learned.md using format:\n   [DATE] [TICKET-ID] [LOGGED] — {concise lesson in one sentence with bold key insight}\n\nSTEP 4 — REGISTER PATTERNS:\n7) If new error signatures or log patterns were discovered, check .kiro/memory/products/pos/pattern_registry.md for duplicates.\n8) If genuinely new, append using format:\n   ### {Error Name}\n     {Exact log line or pattern}\n   - Cause: {root cause}\n   - Diagnosis: {steps to confirm}\n   - Resolution: {fix or workaround}\n   - Ticket: {ticket ID}\n\nSTEP 5 — PROMOTE (selective):\n9) For each new lesson ask: 'Does this reveal how the product works, how it fails, or how it should be investigated — in a way that applies BEYOND this one ticket?'\n10) If YES (architectural truth, behavioral constraint, sync rule, safety-net gap, operational rule), change status to [PROMOTED] and update .kiro/memory/products/pos/project_context.md in the appropriate section.\n11) If it only applies to this specific incident, leave as [LOGGED].\n\nRules:\n- Do NOT rewrite or edit existing entries in any memory file\n- Do NOT modify .kiro/steering/ files\n- If nothing new is found, do nothing — do not write empty entries\n- Maximum 5 lessons per ticket (pick the most impactful)"
+  }
+}
