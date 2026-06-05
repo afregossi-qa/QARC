@@ -1,16 +1,22 @@
 # Shared Brain — RECALL-RELATE-LEARN
 
-## RECALL (Before Every Task)
+## Scope
+
+This protocol applies **only** when working on Jira tickets or product-related tasks. Do NOT execute RECALL for general questions, documentation edits, configuration changes, or non-ticket conversations.
+
+## RECALL (Before Every Ticket Task)
 
 Read these files in order:
 
 1. `.kiro/memory/products/{product}/project_context.md` — Module dependencies, architectural truths
 2. `.kiro/memory/products/{product}/lessons_learned.md` — Product-specific lessons
 3. `.kiro/memory/products/{product}/pattern_registry.md` — Error signatures & diagnostics
-4. `.kiro/memory/universal/lessons_learned.md` — Cross-product lessons
-5. `.kiro/memory/universal/pattern_registry.md` — Cross-product patterns
+4. `.kiro/memory/platform/{platform}/lessons_learned.md` — Platform-specific lessons
+5. `.kiro/memory/platform/{platform}/pattern_registry.md` — Platform-specific patterns
+6. `.kiro/memory/universal/lessons_learned.md` — Cross-product lessons
+7. `.kiro/memory/universal/pattern_registry.md` — Cross-product patterns
 
-The `{product}` folder matches the Jira project (e.g., `pos/`). If a file is missing, skip it.
+The `{product}` folder matches the Jira project (e.g., `pos/`). The `{platform}` folder matches the target platform (e.g., `windows/`). If a file is missing, skip it.
 
 Reference memory in reasoning: e.g., "Per project_context, Save() is the sole writer of MenuHead fields."
 
@@ -28,7 +34,8 @@ Learning happens automatically via `learn-on-findings.kiro.hook` when a closure 
 
 ## Rules
 
-- **Never skip RECALL.** First step of every task, every time.
+- **Never skip RECALL** — first step of every ticket task, every time.
+- **Skip RECALL entirely** for non-ticket work (docs, config, general questions).
 - Memory files are **append-only**. Never delete or rewrite existing entries.
 - `[PROMOTED]` entries are periodically archived to `lessons_learned_archive.md`.
 - Tags: `[FIELD]` = production insights, `[AUTO]` = test design, `[FRAMEWORK]` = pipeline.

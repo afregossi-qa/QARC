@@ -58,16 +58,25 @@ For smoother pipeline execution, add frequently-used tools to `autoApprove` arra
 
 ## 3. Initialize Memory (Shared Brain)
 
-The Shared Brain uses a structured memory layout. Copy templates to create your working memory:
+The Shared Brain uses a 3-layer memory architecture. Copy templates to create your working memory:
 
 ```bash
 # Create the memory folder structure
 mkdir -p .kiro/memory/universal
 mkdir -p .kiro/memory/products/your-product
+mkdir -p .kiro/memory/platform/windows
+```
 
+| Layer | Path | Purpose |
+|-------|------|---------|
+| **Product** | `products/{name}/` | Product-specific knowledge (module maps, lessons, error patterns) |
+| **Platform** | `platform/{platform}/` | Platform-specific behaviors and failure modes (e.g., `windows/`, `android/`) |
+| **Universal** | `universal/` | Cross-product knowledge shared across all projects |
+
+```bash
 # Copy templates
-cp .kiro/memory-templates/universal/*.md .kiro/memory/universal/
-cp .kiro/memory-templates/products/pos/*.md .kiro/memory/products/your-product/
+cp .kiro/memory/templates/universal/*.md .kiro/memory/universal/
+cp .kiro/memory/templates/products/pos/*.md .kiro/memory/products/your-product/
 ```
 
 | File | What it does |
@@ -75,10 +84,15 @@ cp .kiro/memory-templates/products/pos/*.md .kiro/memory/products/your-product/
 | `products/{name}/project_context.md` | Your module map, service relationships, architecture |
 | `products/{name}/lessons_learned.md` | Grows automatically as agents discover patterns |
 | `products/{name}/pattern_registry.md` | Error signatures and diagnostic paths |
-| `universal/` | Cross-product knowledge shared across all projects |
+| `platform/{platform}/lessons_learned.md` | Platform-specific lessons (created when needed) |
+| `platform/{platform}/pattern_registry.md` | Platform-specific error patterns (created when needed) |
+| `universal/lessons_learned.md` | Cross-product lessons |
+| `universal/pattern_registry.md` | Cross-product error patterns |
 | `cognitive-memory-protocol.md` | The RECALL-RELATE-LEARN protocol (don't edit) |
 
 These files start mostly empty. They fill up as you use the pipeline — the `learn-on-findings` hook auto-appends after every ticket closure.
+
+> **Note:** The Shared Brain RECALL protocol only activates for Jira ticket / product-related work. It is skipped entirely for documentation edits, config changes, or general questions.
 
 ---
 
