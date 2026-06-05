@@ -200,6 +200,17 @@
         "probe_api",
         "create_cases_bulk"
       ]
+    },
+    "image-extractor": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-image-extractor"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "extract_image_from_file"
+      ]
     }
   }
 }
