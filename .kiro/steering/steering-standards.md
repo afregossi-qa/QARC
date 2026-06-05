@@ -49,8 +49,7 @@ Skills files (`.kiro/skills/`) do NOT use front-matter — they are referenced v
 | Regression/automation criteria | `regression-automation-criteria.md` | steering |
 | Project structure | `structure.md` + `structure-details.md` | steering |
 | Memory protocol | `shared-brain.md` + `CognitiveMemoryProtocol.md` | steering + skill |
-| Pipeline phases | `qa-workflows.md` | steering |
-| Operator guide | `pipeline-workflow.md` | steering |
+| Agent workflows | `qa-{agent}-workflow.md` (one per agent) | steering |
 
 ## Content Guidelines
 
@@ -86,9 +85,9 @@ Skills files (`.kiro/skills/`) do NOT use front-matter — they are referenced v
 
 | Category | Count | Location |
 |----------|-------|----------|
-| Steering files | 31 | `.kiro/steering/` |
-| Skills files | 22 | `.kiro/skills/` |
-| Hooks | 37 | `.kiro/hooks/` |
-| Auto-included (always-on) | 3 | `context_efficiency.md`, `shared-brain.md`, `structure.md` |
+| Steering files (core) | 16 | `.kiro/steering/` |
+| Skills files (core) | 12 | `.kiro/skills/` |
+| Hooks (core) | 25 | `.kiro/hooks/` |
+| Auto-included (always-on) | 2 | `context_efficiency.md`, `structure.md` |
 
-**Last Updated:** June 3, 2026
+**Last Updated:** June 4, 2026
