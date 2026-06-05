@@ -49,8 +49,8 @@ QARC doesn't fine-tune or train any AI model. It uses **context engineering** â€
 | Category | Count | Location |
 |----------|-------|----------|
 | Agents | 6 | `.kiro/agents/` |
-| Hooks | 25 | `.kiro/hooks/` |
-| Steering | 16 | `.kiro/steering/` |
+| Hooks | 27 | `.kiro/hooks/` |
+| Steering | 18 | `.kiro/steering/` |
 | Skills | 12 | `.kiro/skills/` |
 | Memory files | 8 | `.kiro/memory/` |
 
