@@ -50,9 +50,24 @@ if ($Raw) {
     $readerArgs += $Limit.ToString()
 }
 
-# --- Try v5 first ---
-Write-Host "// Attempting LiteDB v5 reader..." -ForegroundColor DarkGray
+# --- Try v4 first (most POS files are v4) ---
+Write-Host "// Attempting LiteDB v4 reader..." -ForegroundColor DarkGray
 $prevEA = $ErrorActionPreference
+$ErrorActionPreference = "SilentlyContinue"
+$v4Output = & $v4Exe @readerArgs 2>&1
+$v4Exit = $LASTEXITCODE
+$ErrorActionPreference = $prevEA
+
+if ($v4Exit -eq 0) {
+    $v4Output | ForEach-Object {
+        if ($_ -is [System.Management.Automation.ErrorRecord]) { return }
+        Write-Output $_
+    }
+    exit 0
+}
+
+# --- v4 failed → try v5 ---
+Write-Host "// v4 failed, trying LiteDB v5 reader..." -ForegroundColor Yellow
 $ErrorActionPreference = "SilentlyContinue"
 $v5Output = & $v5Exe @readerArgs 2>&1
 $v5Exit = $LASTEXITCODE
@@ -67,21 +82,6 @@ $v5Failed = ($v5Exit -ne 0) -or `
 
 if (-not $v5Failed) {
     $v5Output | ForEach-Object {
-        if ($_ -is [System.Management.Automation.ErrorRecord]) { return }
-        Write-Output $_
-    }
-    exit 0
-}
-
-# --- v5 failed → try v4 ---
-Write-Host "// v5 failed, trying LiteDB v4 reader..." -ForegroundColor Yellow
-$ErrorActionPreference = "SilentlyContinue"
-$v4Output = & $v4Exe @readerArgs 2>&1
-$v4Exit = $LASTEXITCODE
-$ErrorActionPreference = $prevEA
-
-if ($v4Exit -eq 0) {
-    $v4Output | ForEach-Object {
         if ($_ -is [System.Management.Automation.ErrorRecord]) { return }
         Write-Output $_
     }
