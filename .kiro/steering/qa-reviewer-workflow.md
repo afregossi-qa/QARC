@@ -42,6 +42,23 @@ Write to Reviewer/ folder:
 - `EXECUTION_FINDINGS_{TICKET_ID}.md` — Test results, pass/fail status, issues found
 - `FINAL_CLOSURE_REPORT_{TICKET_ID}.md` — Final verdict, recommendations, sign-off
 
+### 3a. QA REVIEWER ATTRIBUTION (MANDATORY)
+In both EXECUTION_FINDINGS and FINAL_CLOSURE_REPORT, the header field **"QA Reviewer"** MUST display TWO roles:
+- The **human QA engineer** who is supervising and validating the AI-driven process
+- The **AI agent** that performed the evidence analysis
+
+Format:
+```
+**QA Reviewer:** {Human Name} (QA Supervisor) | AI Evidence Reviewer Agent
+```
+
+To determine the human QA supervisor:
+1. Check the Jira ticket assignee (via `mcp_atlassian_jira_get_issue`)
+2. If no assignee, use the reporter
+3. If neither available, use "QA Team"
+
+This ensures the closure report posted to Jira properly attributes ownership to the human QA who validated the process.
+
 ## Evidence Analysis Rules
 | Evidence Type | Analysis Method |
 |---------------|-----------------|
@@ -49,20 +66,45 @@ Write to Reviewer/ folder:
 | API responses | Status code + payload verification |
 | Screenshots/Images | **MANDATORY** — use `extract_image_from_file` MCP tool to read each image, describe UI state, text, timestamps, values |
 | Error logs | Full context around error keywords |
-| LiteDB files (.db) | **MANDATORY** — run `& "Tools/LiteDbReader5/bin/Debug/net6.0/LiteDbReader5.exe" "<path>" --list` then query collections. If it fails, use `--raw` mode. NEVER skip .db files. |
+| LiteDB files (.db) | **MANDATORY** — run `& "Tools/litedb-query.ps1" "<path>"` then query collections. Handles v4 and v5 automatically. NEVER skip .db files. |
 
 ### LiteDB Tool Quick Reference
 ```powershell
-# List collections
-& "<workspace>/Tools/LiteDbReader5/bin/Debug/net6.0/LiteDbReader5.exe" "<db-path>" --list
+# List collections (auto-detects v4 or v5)
+& "<workspace>/Tools/litedb-query.ps1" "<db-path>"
 
-# Query first N documents
-& "<workspace>/Tools/LiteDbReader5/bin/Debug/net6.0/LiteDbReader5.exe" "<db-path>" <Collection> <limit>
+# Query first N documents from a collection
+& "<workspace>/Tools/litedb-query.ps1" "<db-path>" <Collection> <limit>
 
 # Fallback: raw binary string extraction
-& "<workspace>/Tools/LiteDbReader5/bin/Debug/net6.0/LiteDbReader5.exe" "<db-path>" --raw
+& "<workspace>/Tools/litedb-query.ps1" "<db-path>" -Raw
 ```
-The tool tries multiple connection strategies automatically (ReadOnly, Direct, Shared, Upgrade).
+The wrapper tries LiteDB v5 first, then v4, then raw extraction as last resort.
+
+### Evidence Data Sampling in Reports (MANDATORY for .db and .json files)
+
+When writing EXECUTION_FINDINGS or FINAL_CLOSURE_REPORT, you MUST include an **Evidence Data Sample** section showing actual data from evidence files. This provides validators and reviewers with concrete proof of the data state.
+
+**Format for LiteDB evidence:**
+```markdown
+### Evidence Data Sample — {db_filename}
+
+| _id | Field1 | Field2 | LastUpdate |
+|-----|--------|--------|------------|
+| value | value | value | timestamp |
+| value | value | value | timestamp |
+| value | value | value | timestamp |
+
+*Source: `3_Evidence/localstate/{filename}` — {collection_name} collection ({total_count} documents, {shown_count} sampled)*
+```
+
+**Rules:**
+- Show 3-5 representative documents per database file
+- Include ALL key fields that are relevant to the test case being validated
+- If comparing before/after states, show BOTH tables side-by-side with clear labels
+- For large collections (>50 docs), note the total count and explain sampling criteria
+- For JSON evidence: show the relevant response body or key fields inline as a code block
+- Timestamp fields are critical — always include them for temporal validation
 
 ## Strict Analysis Standards (MANDATORY)
 
