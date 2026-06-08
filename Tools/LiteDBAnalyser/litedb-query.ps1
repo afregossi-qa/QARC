@@ -50,7 +50,7 @@ if ($Raw) {
     $readerArgs += $Limit.ToString()
 }
 
-# --- Try v4 first (most POS files are v4) ---
+# --- Try v4 first (most POS files are v4, v5 was pulled back. We should keep the v5 code for any remaining dependencies or future migration. ---
 Write-Host "// Attempting LiteDB v4 reader..." -ForegroundColor DarkGray
 $prevEA = $ErrorActionPreference
 $ErrorActionPreference = "SilentlyContinue"
