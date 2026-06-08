@@ -29,15 +29,15 @@ param(
 )
 
 # Tool paths (prefer Release, fallback to Debug)
-$v5Exe = Join-Path $PSScriptRoot "LiteDbReader5\bin\Release\net6.0\LiteDbReader5.exe"
-$v4Exe = Join-Path $PSScriptRoot "LiteDbReader\bin\Release\net6.0\LiteDbReader.exe"
-if (!(Test-Path $v5Exe)) { $v5Exe = Join-Path $PSScriptRoot "LiteDbReader5\bin\Debug\net6.0\LiteDbReader5.exe" }
-if (!(Test-Path $v4Exe)) { $v4Exe = Join-Path $PSScriptRoot "LiteDbReader\bin\Debug\net6.0\LiteDbReader.exe" }
+$v5Exe = Join-Path $PSScriptRoot "v5\bin\Release\net6.0\LiteDbReader5.exe"
+$v4Exe = Join-Path $PSScriptRoot "v4\bin\Release\net6.0\LiteDbReader.exe"
+if (!(Test-Path $v5Exe)) { $v5Exe = Join-Path $PSScriptRoot "v5\bin\Debug\net6.0\LiteDbReader5.exe" }
+if (!(Test-Path $v4Exe)) { $v4Exe = Join-Path $PSScriptRoot "v4\bin\Debug\net6.0\LiteDbReader.exe" }
 
 # Validate
 if (!(Test-Path $DbPath)) { Write-Error "File not found: $DbPath"; exit 1 }
-if (!(Test-Path $v5Exe)) { Write-Error "LiteDbReader5 not found. Run: dotnet build Tools/LiteDbReader5 -c Release"; exit 1 }
-if (!(Test-Path $v4Exe)) { Write-Error "LiteDbReader not found. Run: dotnet build Tools/LiteDbReader -c Release"; exit 1 }
+if (!(Test-Path $v5Exe)) { Write-Error "LiteDbReader5 not found. Run: dotnet build Tools/LiteDBAnalyser/v5 -c Release"; exit 1 }
+if (!(Test-Path $v4Exe)) { Write-Error "LiteDbReader not found. Run: dotnet build Tools/LiteDBAnalyser/v4 -c Release"; exit 1 }
 
 # Build argument list for the exe readers
 $readerArgs = @($DbPath)

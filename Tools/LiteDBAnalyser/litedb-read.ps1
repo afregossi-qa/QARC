@@ -12,8 +12,8 @@ param(
 )
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$v4Reader = Join-Path $scriptDir "LiteDbReader"
-$v5Reader = Join-Path $scriptDir "LiteDbReader5"
+$v4Reader = Join-Path $scriptDir "v4"
+$v5Reader = Join-Path $scriptDir "v5"
 
 if (-not (Test-Path $DbPath)) {
     Write-Error "Database file not found: $DbPath"
