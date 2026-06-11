@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Surface Pipeline Error",
+  "description": "When an agent writes a {PHASE}_ERROR.md at a ticket root after a failure, summarize it for the human and mark .state.json as blocked so the dashboard reflects it.",
+  "version": "1.0.0",
+  "when": {
+    "type": "fileCreated",
+    "patterns": [
+      "**/*_ERROR.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "An agent just wrote an error file — surface it.\n\n1. Identify the ticket folder (parent directory of the error file) and ticket ID from the path.\n2. Read the error file's contents (step that failed, error message, what completed).\n3. If `.state.json` exists in the ticket folder, update it:\n   - Set `status` to `blocked_{phase}` (derive {phase} from the filename: EXPERT_ERROR.md -> expert, VALIDATOR_ERROR.md -> validator, REVIEWER_ERROR.md -> reviewer, etc.)\n   - Set `lastAgent` to the agent that failed\n   - Set `lastUpdated` to the current ISO timestamp\n   - Add or replace a `lastError` field: { file, summary, timestamp }\n   - Preserve all other fields. Do NOT advance status forward, and do not overwrite a status that is already further along than the failure point.\n4. Reply to the user directly in chat (exception to the 'no chat' rule — this is a failure alert, not a pipeline artifact) with a concise summary: ticket ID, which phase failed, one-sentence cause, what completed successfully before failure, and the suggested next action (fix the underlying issue, then re-run the corresponding trigger/slash command).\n\nDo not modify any pipeline deliverable files (1_Expert/, 2_Validator/, 3_Evidence/, 4_Reviewer/). Only `.state.json` and the chat reply."
+  }
+}

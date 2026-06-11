@@ -72,7 +72,7 @@ Generated automatically when evidence gaps are detected. Contains:
 These rules apply to ALL agents performing ANY evidence or log analysis — not just the Reviewer. They are non-negotiable.
 
 1. **Facts only**: Every claim must be traceable to a specific evidence file, line number, or timestamp. If it cannot be cited, it cannot be stated as fact.
-2. **Binary files**: LiteDB (.db) files MUST be read using `Tools/LiteDbReader5/bin/Debug/net6.0/LiteDbReader5.exe`. Images (.png/.jpg) MUST be read using the `read_file` tool. Only state "not analyzed" if the tool fails after attempting all strategies.
+2. **Binary files**: LiteDB (.db) files MUST be read using `Tools/litedb-query.ps1` (auto-detects v4/v5 — see @qa-reviewer-workflow.md for usage). Images (.png/.jpg) MUST be read using the `read_file` tool. Only state "not analyzed" if the tool fails after attempting all strategies.
 3. **No extrapolation**: If behavior X was observed in scenario A, do not claim it also occurs in scenario B unless scenario B was independently tested with its own evidence.
 4. **Observation vs interpretation**: Findings must clearly separate what was observed (data) from what it means (analysis). Use explicit labels like "OBSERVATION:" and "INTERPRETATION:".
 5. **Honest gaps**: If evidence for a test case is weak (e.g., tester notes only, no log/screenshot), mark it as "weak evidence — tester notes only" rather than upgrading it to full coverage.

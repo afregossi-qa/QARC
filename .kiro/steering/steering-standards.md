@@ -87,7 +87,7 @@ Skills files (`.kiro/skills/`) do NOT use front-matter — they are referenced v
 |----------|-------|----------|
 | Steering files (core) | 18 | `.kiro/steering/` |
 | Skills files (core) | 12 | `.kiro/skills/` |
-| Hooks (core) | 27 | `.kiro/hooks/` |
+| Hooks (core) | 28 | `.kiro/hooks/` |
 | Auto-included (always-on) | 2 | `context_efficiency.md`, `structure.md` |
 
-**Last Updated:** June 5, 2026
+**Last Updated:** June 11, 2026

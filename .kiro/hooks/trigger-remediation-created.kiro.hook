@@ -2,7 +2,7 @@
   "enabled": true,
   "name": "Remediation Cycle (Created)",
   "description": "When a closure report is first renamed to _REMEDIATE.md (UNSTABLE verdict), trigger remediation cycle",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "when": {
     "type": "fileCreated",
     "patterns": [
@@ -11,6 +11,6 @@
   },
   "then": {
     "type": "askAgent",
-    "prompt": "A closure report was marked for remediation (UNSTABLE verdict). You are acting as QA-Evidence-Reviewer + QA-Validator for this cycle.\n\nRead @qa-reviewer-workflow.md for analysis standards and @TestCasesDesign.md for formatting.\n\n1. DETERMINE ITERATION — Check REMEDIATION_LOG.md at ticket root. If absent: R1. If present: increment highest N.\n2. BASELINE — Copy current FINAL_TEST_CASES from 2_Validator/ to 5_Snapshots/FINAL_TEST_CASES_*_BASELINE_R{N}.md.\n3. ANALYZE FAILURES — Use @EvidenceAuditAnalyzer.md on EXECUTION_FINDINGS in 4_Reviewer/. Identify failed TC IDs, root causes, patterns.\n4. UPDATE LOG — Create/append REMEDIATION_LOG.md at ticket root with: iteration, timestamp, failed TCs table, actions, status IN_PROGRESS.\n5. UPDATE TEST CASES — Adjust expected results, add new TCs for untested scenarios, mark removals. Save as 2_Validator/FINAL_TEST_CASES_{TICKET_ID}_PENDING.md (overwrite if exists, single fsWrite).\n6. STOP — Human reviews updated TCs, re-executes, drops evidence, re-triggers reviewer.\n\nFollow @context_efficiency.md. Write only to 2_Validator/, 5_Snapshots/, and ticket root."
+    "prompt": "A closure report was marked for remediation (UNSTABLE verdict). You are acting as QA-Evidence-Reviewer + QA-Validator for this cycle.\n\nRead @qa-reviewer-workflow.md for analysis standards and @TestCasesDesign.md for formatting.\n\n1. DETERMINE ITERATION — Check REMEDIATION_LOG.md at ticket root. If absent: R1. If present: increment highest N.\n2. ESCALATION CHECK — If the iteration from step 1 is R4 or higher (3+ remediation cycles already completed for this ticket): STOP here. Write REMEDIATION_ESCALATION.md at ticket root summarizing total iterations attempted, the recurring failure pattern(s) across REMEDIATION_LOG.md entries, and a recommendation that a QA architect/lead review the underlying design or test approach before further automated remediation. If .state.json exists, set status to \"escalation_needed\", lastAgent to \"QA-Validator-Agent\", lastUpdated to current ISO timestamp (preserve other fields). Reply to the user in chat with the escalation summary (exception to 'no chat'). Do NOT proceed to steps 3-7.\n3. BASELINE — Copy current FINAL_TEST_CASES from 2_Validator/ to 5_Snapshots/FINAL_TEST_CASES_*_BASELINE_R{N}.md.\n4. ANALYZE FAILURES — Use @EvidenceAuditAnalyzer.md on EXECUTION_FINDINGS in 4_Reviewer/. Identify failed TC IDs, root causes, patterns.\n5. UPDATE LOG — Create/append REMEDIATION_LOG.md at ticket root with: iteration, timestamp, failed TCs table, actions, status IN_PROGRESS.\n6. UPDATE TEST CASES — Adjust expected results, add new TCs for untested scenarios, mark removals. Save as 2_Validator/FINAL_TEST_CASES_{TICKET_ID}_PENDING.md (overwrite if exists, single fsWrite).\n7. STOP — Human reviews updated TCs, re-executes, drops evidence, re-triggers reviewer.\n\nFollow @context_efficiency.md. Write only to 2_Validator/, 5_Snapshots/, and ticket root (including REMEDIATION_ESCALATION.md if escalating)."
   }
 }
