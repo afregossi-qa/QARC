@@ -33,6 +33,9 @@ Z_OtherTickets/
 .kiro/settings/mcp.json
 .kiro/settings/mcp.json.bak
 
+# Claude Code local settings (contains API tokens — never commit)
+.claude/settings.local.json
+
 # Project-specific specs (not part of generic framework)
 .kiro/specs/expired-job-title-filtering/
 

@@ -1,0 +1,112 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/enforce-folder-structure.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/snapshot-before-write.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/commit-phase-complete.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/commit-memory-updates.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "mcpServers": {
+    "atlassian": {
+      "command": "uvx",
+      "args": ["mcp-atlassian"],
+      "env": {
+        "CONFLUENCE_URL": "${CONFLUENCE_URL}",
+        "CONFLUENCE_USERNAME": "${CONFLUENCE_USERNAME}",
+        "CONFLUENCE_API_TOKEN": "${ATLASSIAN_API_TOKEN}",
+        "JIRA_URL": "${JIRA_URL}",
+        "JIRA_USERNAME": "${JIRA_USERNAME}",
+        "JIRA_API_TOKEN": "${ATLASSIAN_API_TOKEN}",
+        "READ_ONLY_MODE": "false",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "disabledTools": [
+        "jira_get_user_profile",
+        "jira_get_issue_watchers",
+        "jira_get_project_versions",
+        "jira_get_project_components",
+        "jira_get_all_projects",
+        "jira_get_service_desk_for_project",
+        "confluence_search_user",
+        "confluence_get_page_history",
+        "confluence_get_page_diff",
+        "confluence_get_page_views",
+        "jira_add_watcher",
+        "jira_remove_watcher",
+        "jira_get_worklog",
+        "jira_add_worklog",
+        "jira_delete_issue",
+        "confluence_delete_page",
+        "confluence_delete_attachment",
+        "jira_batch_create_issues",
+        "jira_create_sprint",
+        "jira_update_sprint"
+      ]
+    },
+    "azure-devops": {
+      "command": "npx",
+      "args": ["-y", "@azure-devops/mcp", "${AZURE_DEVOPS_ORG_NAME}"],
+      "env": {
+        "AZURE_DEVOPS_ORGANIZATION": "${AZURE_DEVOPS_ORGANIZATION}",
+        "AZURE_DEVOPS_PAT": "${AZURE_DEVOPS_PAT}"
+      },
+      "disabled": true,
+      "disabledTools": [
+        "core_list_project_teams",
+        "core_list_projects",
+        "wit_create_work_item",
+        "wit_update_work_item",
+        "pipelines_run_pipeline",
+        "repo_create_pull_request",
+        "repo_create_branch"
+      ]
+    },
+    "aio-tests": {
+      "command": "node",
+      "args": [".kiro/mcp-servers/aio-tests/index.js"],
+      "env": {
+        "AIO_API_TOKEN": "${AIO_API_TOKEN}",
+        "AIO_PROJECT_KEY": "${AIO_PROJECT_KEY}"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "get_folders",
+        "list_cases",
+        "get_project_config",
+        "search_cases",
+        "get_case"
+      ],
+      "disabledTools": [
+        "link_jira_issue",
+        "probe_api",
+        "create_cases_bulk"
+      ]
+    }
+  }
+}
